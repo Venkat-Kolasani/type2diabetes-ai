@@ -1,0 +1,319 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { 
+  Users, 
+  Calendar, 
+  Code, 
+  Database,
+  Brain,
+  Award,
+  Github,
+  Linkedin,
+  Mail,
+  ExternalLink
+} from "lucide-react";
+
+export default function About() {
+  return (
+    <div className="min-h-screen bg-background py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            About the Project
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Learn about our team, the development process, and the technology behind 
+            our AI-powered diabetes risk prediction system
+          </p>
+        </div>
+
+        {/* Project Overview */}
+        <Card className="shadow-card mb-12">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Brain className="h-5 w-5" />
+              <span>Project Overview</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="prose max-w-none">
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                The DiabetesAI project represents a significant advancement in predictive healthcare, 
+                leveraging cutting-edge machine learning techniques to assess Type 2 Diabetes risk 
+                with unprecedented accuracy. Our mission is to democratize access to advanced health 
+                screening tools and enable early intervention for diabetes prevention.
+              </p>
+              
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Developed as part of a comprehensive research initiative, this system combines 
+                clinical expertise with advanced data science to create a robust, user-friendly 
+                platform for health risk assessment. The project bridges the gap between complex 
+                medical algorithms and practical healthcare applications.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div className="text-center p-4 bg-primary-light/20 rounded-lg">
+                  <Award className="h-8 w-8 text-primary mx-auto mb-2" />
+                  <div className="font-semibold text-foreground">Research Excellence</div>
+                  <div className="text-sm text-muted-foreground">Peer-reviewed methodology</div>
+                </div>
+                <div className="text-center p-4 bg-success-light/20 rounded-lg">
+                  <Users className="h-8 w-8 text-success mx-auto mb-2" />
+                  <div className="font-semibold text-foreground">User-Centered Design</div>
+                  <div className="text-sm text-muted-foreground">Intuitive interface</div>
+                </div>
+                <div className="text-center p-4 bg-warning-light/20 rounded-lg">
+                  <Database className="h-8 w-8 text-warning mx-auto mb-2" />
+                  <div className="font-semibold text-foreground">Data Privacy</div>
+                  <div className="text-sm text-muted-foreground">Secure & confidential</div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Team Section */}
+        <Card className="shadow-card mb-12">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Users className="h-5 w-5" />
+              <span>Our Team</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Team Member 1 */}
+              <div className="text-center p-6 bg-muted/30 rounded-lg">
+                <div className="w-20 h-20 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-2xl font-bold text-primary-foreground">JS</span>
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Dr. Jane Smith</h3>
+                <p className="text-sm text-muted-foreground mb-2">Lead Data Scientist</p>
+                <div className="flex justify-center space-x-2 mb-3">
+                  <Badge variant="outline">ML/AI</Badge>
+                  <Badge variant="outline">Healthcare</Badge>
+                </div>
+                <div className="flex justify-center space-x-2">
+                  <Button variant="ghost" size="sm">
+                    <Github className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    <Linkedin className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Team Member 2 */}
+              <div className="text-center p-6 bg-muted/30 rounded-lg">
+                <div className="w-20 h-20 bg-gradient-health rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-2xl font-bold text-success-foreground">MJ</span>
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Dr. Michael Johnson</h3>
+                <p className="text-sm text-muted-foreground mb-2">Clinical Advisor</p>
+                <div className="flex justify-center space-x-2 mb-3">
+                  <Badge variant="outline">Endocrinology</Badge>
+                  <Badge variant="outline">Research</Badge>
+                </div>
+                <div className="flex justify-center space-x-2">
+                  <Button variant="ghost" size="sm">
+                    <Github className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    <Linkedin className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Team Member 3 */}
+              <div className="text-center p-6 bg-muted/30 rounded-lg">
+                <div className="w-20 h-20 bg-gradient-warning rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-2xl font-bold text-warning-foreground">SW</span>
+                </div>
+                <h3 className="font-semibold text-foreground mb-1">Sarah Wilson</h3>
+                <p className="text-sm text-muted-foreground mb-2">Full Stack Developer</p>
+                <div className="flex justify-center space-x-2 mb-3">
+                  <Badge variant="outline">React</Badge>
+                  <Badge variant="outline">Python</Badge>
+                </div>
+                <div className="flex justify-center space-x-2">
+                  <Button variant="ghost" size="sm">
+                    <Github className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    <Linkedin className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Project Timeline */}
+        <Card className="shadow-card mb-12">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Calendar className="h-5 w-5" />
+              <span>Project Timeline</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                  <span className="text-sm font-medium text-primary-foreground">Q1</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground">Research & Data Collection</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Gathered comprehensive diabetes dataset, conducted literature review, 
+                    and established research methodology
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-success rounded-full flex items-center justify-center">
+                  <span className="text-sm font-medium text-success-foreground">Q2</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground">Model Development</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Developed and trained multiple machine learning models, 
+                    performed feature engineering and hyperparameter tuning
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-warning rounded-full flex items-center justify-center">
+                  <span className="text-sm font-medium text-warning-foreground">Q3</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground">System Implementation</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Built web application, implemented backend API, 
+                    and created user interface for model interaction
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-danger rounded-full flex items-center justify-center">
+                  <span className="text-sm font-medium text-danger-foreground">Q4</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground">Testing & Deployment</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Conducted thorough testing, validation studies, 
+                    and deployed the final system for public use
+                  </p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Technical Specifications */}
+        <Card className="shadow-card mb-12">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Code className="h-5 w-5" />
+              <span>Technical Specifications</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="font-semibold text-foreground mb-3">Frontend Technologies</h3>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center space-x-2">
+                    <Badge variant="outline">React 18</Badge>
+                    <span className="text-muted-foreground">Modern UI framework</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <Badge variant="outline">TypeScript</Badge>
+                    <span className="text-muted-foreground">Type-safe development</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <Badge variant="outline">Tailwind CSS</Badge>
+                    <span className="text-muted-foreground">Responsive design</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <Badge variant="outline">Recharts</Badge>
+                    <span className="text-muted-foreground">Data visualization</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-foreground mb-3">Backend Technologies</h3>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center space-x-2">
+                    <Badge variant="outline">Python Flask</Badge>
+                    <span className="text-muted-foreground">API framework</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <Badge variant="outline">Scikit-learn</Badge>
+                    <span className="text-muted-foreground">Machine learning</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <Badge variant="outline">Pandas</Badge>
+                    <span className="text-muted-foreground">Data processing</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <Badge variant="outline">NumPy</Badge>
+                    <span className="text-muted-foreground">Numerical computing</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Contact Information */}
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Mail className="h-5 w-5" />
+              <span>Contact Information</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-center space-y-4">
+              <p className="text-muted-foreground">
+                Have questions about our research or want to collaborate? 
+                We'd love to hear from you!
+              </p>
+              
+              <div className="flex justify-center space-x-4">
+                <Button variant="outline" size="lg">
+                  <Mail className="h-4 w-4 mr-2" />
+                  Email Us
+                </Button>
+                <Button variant="outline" size="lg">
+                  <Github className="h-4 w-4 mr-2" />
+                  View Code
+                </Button>
+                <Button variant="outline" size="lg">
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Research Paper
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
