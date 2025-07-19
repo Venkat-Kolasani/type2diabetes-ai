@@ -118,9 +118,9 @@ export default function Demo() {
       score += Math.max(0, (data.bmi - 25) * 0.01);
     }
     // Blood pressure factors
-    if (data.systolic_bp >= 140 || data.diastolic_bp >= 90) {
+    if ((data.systolic_bp !== null && data.systolic_bp >= 140) || (data.diastolic_bp !== null && data.diastolic_bp >= 90)) {
       score += 0.15;
-    } else if (data.systolic_bp >= 130 || data.diastolic_bp >= 85) {
+    } else if ((data.systolic_bp !== null && data.systolic_bp >= 130) || (data.diastolic_bp !== null && data.diastolic_bp >= 85)) {
       score += 0.08;
     }
     
