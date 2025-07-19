@@ -174,7 +174,7 @@ export default function Demo() {
       recs.push("Aim for at least 7,000-10,000 steps per day for better health outcomes.");
     }
     
-    if (data.sleep_duration < 7) {
+    if (data.sleep_duration !== null && data.sleep_duration < 7) {
       recs.push("Try to get 7-9 hours of sleep per night for optimal health.");
     }
     
