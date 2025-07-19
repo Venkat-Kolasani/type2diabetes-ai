@@ -29,14 +29,14 @@ export default function Landing() {
               AI-Powered Health Prediction
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-              Predict Type 2 Diabetes Risk with{" "}
+              Predict Type 2 Diabetes Progression{" "}
               <span className="bg-gradient-primary bg-clip-text text-transparent">
-                AI-Powered Precision
+                Using AI on Multivariate Health Indicators
               </span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Advanced machine learning model analyzing 15+ health indicators to provide 
-              personalized risk assessment with 94.2% accuracy
+              Our model leverages the AI-READI Flagship Dataset, analyzing diverse clinical, 
+              lifestyle, and physiological indicators for real-time Type 2 Diabetes progression insights.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="shadow-medical">
@@ -78,8 +78,8 @@ export default function Landing() {
                     <BarChart3 className="h-8 w-8 text-success-foreground" />
                   </div>
                 </div>
-                <div className="text-3xl font-bold text-foreground mb-2">15+</div>
-                <div className="text-muted-foreground">Risk Factors</div>
+                <div className="text-3xl font-bold text-foreground mb-2">2000+</div>
+                <div className="text-muted-foreground">Curated Health Indicators</div>
               </CardContent>
             </Card>
 
@@ -135,21 +135,21 @@ export default function Landing() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Advanced machine learning algorithms trained on thousands of health records 
-                  to identify subtle patterns and risk indicators.
+                  Leverages advanced machine learning algorithms trained on thousands of curated health variables 
+                  from the AI-READI dataset to detect early warning signs of Type 2 Diabetes.
                 </p>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Deep learning neural networks
+                    XGBoost model optimized for class imbalance
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Feature importance analysis
+                    Feature importance analysis for model transparency
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Continuous model improvement
+                    Trained on real-world, multi-dimensional health data (2,700+ variables)
                   </li>
                 </ul>
               </CardContent>
@@ -167,21 +167,21 @@ export default function Landing() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Analyzes multiple health indicators including blood work, lifestyle factors, 
-                  and demographic information for complete assessment.
+                  Analyzes a wide spectrum of clinical, behavioral, and demographic health indicators 
+                  for an accurate, holistic risk assessment.
                 </p>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Blood glucose & HbA1c analysis
+                    Clinical markers: HbA1c, Glucose, Blood Pressure, BMI
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Cardiovascular risk factors
+                    Lifestyle and behavioral factors: activity level, sleep, diet
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Lifestyle & genetic factors
+                    Demographics and genetic predispositions
                   </li>
                 </ul>
               </CardContent>
@@ -199,21 +199,21 @@ export default function Landing() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Receive tailored recommendations and risk timeline projections 
-                  based on your individual health profile.
+                  Delivers individualized risk projections and timeline predictions using explainable AI, 
+                  empowering users to take proactive health decisions.
                 </p>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    1, 5, and 10-year projections
+                    Risk trajectory predictions over time
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Actionable recommendations
+                    Explainable AI-based feedback
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Risk factor prioritization
+                    Tailored health recommendations
                   </li>
                 </ul>
               </CardContent>
@@ -226,7 +226,7 @@ export default function Landing() {
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-primary">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-            Ready to Assess Your Risk?
+            Ready to Track and Predict Your Diabetes Progression?
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
             Take the first step towards better health with our AI-powered diabetes risk assessment. 
@@ -239,9 +239,10 @@ export default function Landing() {
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
-              <Link to="/about">
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/demo">
                 Learn More
+                <ChevronRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>
