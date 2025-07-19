@@ -166,7 +166,7 @@ export default function Demo() {
       recs.push("Consider a weight management program to achieve a healthier BMI.");
     }
     
-    if (data.hba1c >= 5.7) {
+    if (data.hba1c !== null && data.hba1c >= 5.7) {
       recs.push("Monitor your blood sugar levels regularly and consult with a healthcare provider.");
     }
     
