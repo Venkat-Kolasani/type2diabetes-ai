@@ -549,37 +549,89 @@ joblib.dump(model, 'backend/models/diabetes_model.pkl')
 ## API Endpoints
 
 ### POST /api/predict
-**Purpose**: Make diabetes risk prediction
+**Description**: Get comprehensive diabetes risk prediction based on health metrics, lifestyle, and optional advanced data
+
 **Request Body**:
 ```json
 {
   "age": 45,
   "gender": "male",
   "bmi": 28.5,
-  "glucose": 120,
-  "hba1c": 6.2,
-  "systolic_bp": 130,
-  "diastolic_bp": 85,
-  "cholesterol": 200,
+  "systolic_bp": 125,
+  "diastolic_bp": 82,
+  "num_conditions": 2,
+  "num_visits": 4,
+  "hba1c": 5.8,
+  "glucose": 98,
   "triglycerides": 150,
-  "activity_level": 4,
+  "hdl_cholesterol": 45,
+  "ldl_cholesterol": 120,
+  "daily_steps": 6500,
+  "sleep_duration": 6.5,
+  "stress_level": 7,
+  "heart_rate": 72,
+  "o2_saturation": 97,
   "family_history": true,
-  "smoking": false
+  "smoking": false,
+  "activity_level": 3
 }
 ```
 
 **Response**:
 ```json
 {
-  "risk_score": 0.35,
+  "risk_score": 0.32,
   "risk_level": "medium",
-  "confidence": 0.78,
-  "timeline": "Moderate risk - monitor closely",
-  "top_factors": ["Family history", "High BMI", "Elevated HbA1c"],
-  "recommendations": ["Monitor blood glucose", "Maintain healthy weight"],
-  "timestamp": "2024-01-15T10:30:00"
+  "confidence": 0.92,
+  "timeline": [
+    { "years": 1, "risk": 0.32 },
+    { "years": 3, "risk": 0.45 },
+    { "years": 5, "risk": 0.55 },
+    { "years": 10, "risk": 0.72 }
+  ],
+  "top_factors": [
+    { "factor": "HbA1c", "impact": 0.30 },
+    { "factor": "BMI", "impact": 0.25 },
+    { "factor": "Blood Pressure", "impact": 0.18 },
+    { "factor": "Physical Activity", "impact": 0.15 },
+    { "factor": "Age", "impact": 0.12 }
+  ],
+  "recommendations": [
+    "Consider a weight management program to achieve a healthier BMI.",
+    "Aim for at least 7,000-10,000 steps per day for better health outcomes.",
+    "Try to get 7-9 hours of sleep per night for optimal health.",
+    "Consider stress-reduction techniques like meditation or yoga.",
+    "Monitor your blood sugar levels regularly and consult with a healthcare provider."
+  ],
+  "timestamp": "2023-11-15T14:30:00Z"
 }
 ```
+
+### Risk Assessment Details
+
+#### Risk Score Calculation
+- **Score Range**: 0.0 - 1.0 (low to high risk)
+- **Risk Levels**:
+  - Low: 0.0 - 0.39
+  - Medium: 0.4 - 0.69
+  - High: 0.7 - 1.0
+
+#### Top Factors Considered
+1. **Metabolic Markers**: HbA1c, fasting glucose, insulin resistance (HOMA-IR)
+2. **Anthropometrics**: BMI, waist circumference, body fat percentage
+3. **Lipid Profile**: Cholesterol, triglycerides, HDL/LDL ratio
+4. **Lifestyle Factors**: Physical activity, diet quality, sleep duration
+5. **Inflammatory Markers**: hs-CRP, inflammatory cytokines
+6. **Genetic Predisposition**: Family history, genetic risk score
+
+#### Response Fields
+- `risk_score`: Numeric value between 0 and 1 indicating overall risk
+- `risk_level`: Categorized risk (low/medium/high)
+- `confidence`: Model confidence in prediction (0-1)
+- `timeline`: Projected risk over time
+- `top_factors`: Most influential risk factors
+- `recommendations`: Personalized health recommendations
+- `timestamp`: When the prediction was generated
 
 ### GET /api/health
 **Purpose**: Check backend health status
