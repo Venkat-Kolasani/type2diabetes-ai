@@ -114,8 +114,9 @@ export default function Demo() {
     score += Math.min((data.age ?? 0) / 100, 0.15);
     
     // BMI factor (higher risk if > 25)
-    score += Math.max(0, (data.bmi - 25) * 0.01);
-    
+    if (data.bmi !== null) {
+      score += Math.max(0, (data.bmi - 25) * 0.01);
+    }
     // Blood pressure factors
     if (data.systolic_bp >= 140 || data.diastolic_bp >= 90) {
       score += 0.15;
