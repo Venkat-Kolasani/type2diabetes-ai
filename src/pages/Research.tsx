@@ -129,7 +129,7 @@ export default function Research() {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Missing Values:</span>
-                        <span className="font-medium">	Handled with preprocessing</span>
+                        <span className="font-medium">Handled with preprocessing</span>
                       </div>
                     </div>
                   </div>
