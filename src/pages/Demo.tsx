@@ -125,12 +125,14 @@ export default function Demo() {
     }
     
     // HbA1c factor (diabetes indicator)
-    if (data.hba1c >= 6.5) {
-      score += 0.25;
-    } else if (data.hba1c >= 5.7) {
-      score += 0.15;
-    } else if (data.hba1c >= 5.5) {
-      score += 0.05;
+    if (data.hba1c !== null) {
+      if (data.hba1c >= 6.5) {
+        score += 0.25;
+      } else if (data.hba1c >= 5.7) {
+        score += 0.15;
+      } else if (data.hba1c >= 5.5) {
+        score += 0.05;
+      }
     }
     
     // Glucose factor
