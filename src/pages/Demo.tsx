@@ -146,7 +146,7 @@ export default function Demo() {
     
     // Lifestyle factors
     score += (10 - Math.min(10, data.daily_steps / 1000)) * 0.02; // More steps = lower risk
-    score += Math.max(0, 7 - data.sleep_duration) * 0.02; // Less sleep = higher risk
+    score += Math.max(0, 7 - (data.sleep_duration ?? 0)) * 0.02; // Less sleep = higher risk
     score += (data.stress_level - 1) * 0.01; // More stress = higher risk
     
     // Cap the score between 0 and 1
