@@ -187,7 +187,6 @@ export default function Research() {
                         <li>• Fasting Glucose (mg/dL)</li>
                         <li>• HbA1c (%)</li>
                         <li>• Cholesterol Panel (LDL, HDL, Total)</li>
-          
                         <li>• Kidney Markers (Creatinine, BUN Ratio, Albumin)</li>
                       </ul>
                     </div>
