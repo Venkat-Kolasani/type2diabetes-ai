@@ -554,80 +554,26 @@ joblib.dump(model, 'backend/models/diabetes_model.pkl')
 **Request Body**:
 ```json
 {
-  // Demographics
   "age": 45,
   "gender": "male",
-  "ethnicity": "caucasian",
   "bmi": 28.5,
-  
-  // Clinical Data
-  "family_history": true,
-  "previous_diabetes": false,
-  "gestational_diabetes": false,
-  "hypertension": false,
-  "pcos": false,
-  "medications": ["statins"],
-  
-  // Lab Test Values
-  "glucose": 95,
-  "hba1c": 5.4,
   "systolic_bp": 125,
   "diastolic_bp": 82,
-  "cholesterol": 185,
-  "hdl_cholesterol": 55,
-  "ldl_cholesterol": 110,
+  "num_conditions": 2,
+  "num_visits": 4,
+  "hba1c": 5.8,
+  "glucose": 98,
   "triglycerides": 150,
-  "fasting_glucose": 92,
-  "two_hour_glucose_tolerance": 135,
-  "c_peptide": 2.1,
-  "insulin_level": 8.5,
-  "homa_ir": 1.9,
-  "crp": 1.2,
-  "vitamin_d": 32,
-  "ferritin": 85,
-  "uric_acid": 5.2,
-  
-  // Lifestyle & Wearable Data
-  "smoking_status": "never",
-  "alcohol_consumption": "occasional",
-  "physical_activity": "moderate",
-  "diet_quality": 7,
+  "hdl_cholesterol": 45,
+  "ldl_cholesterol": 120,
+  "daily_steps": 6500,
   "sleep_duration": 6.5,
-  "stress_level": 5,
-  "waist_circumference": 92,
-  "hip_circumference": 102,
-  "waist_hip_ratio": 0.9,
-  "body_fat_percentage": 28.5,
-  "muscle_mass_percentage": 65.5,
-  "resting_heart_rate": 68,
-  "hrv": 45,
-  "daily_steps": 7500,
-  "exercise_minutes": 45,
-  "sedentary_time": 480,
-  
-  // Optional Advanced Inputs
-  "genetic_risk_score": 0.35,
-  "autoantibodies": {
-    "gad65": false,
-    "ia2": false,
-    "znt8": false
-  },
-  "microbiome_data": {
-    "diversity_index": 3.8,
-    "firmicutes_bacteroidetes_ratio": 1.2
-  },
-  "metabolomics": {
-    "branched_chain_amino_acids": 0.85,
-    "aromatic_amino_acids": 0.62
-  },
-  "proteomics": {
-    "adiponectin": 8.5,
-    "leptin": 12.3
-  },
-  "epigenetic_clock": {
-    "chronological_age": 45,
-    "biological_age": 48
-  }
+  "stress_level": 7,
+  "heart_rate": 72,
+  "o2_saturation": 97,
+  "family_history": true,
+  "smoking": false,
+  "activity_level": 3
 }
 ```
 

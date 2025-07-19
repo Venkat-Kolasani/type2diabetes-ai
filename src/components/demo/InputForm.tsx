@@ -10,8 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FormData } from "@/pages/Demo";
 import { User, Stethoscope, FlaskConical, Activity, Heart, Moon, Loader2, ChevronDown, ChevronUp, Droplets } from "lucide-react";
 import { cn } from "@/lib/utils";
-// Remove all info icons and related tooltips from the form
-// Ensure all number inputs have proper up/down controls
+
+const hideNumberInputSpinners = "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none";
 
 interface InputFormProps {
   form: UseFormReturn<FormData>;
@@ -110,7 +110,7 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
                 })}
                 disabled={disabled}
                 aria-describedby="bmi-help"
-                className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className={hideNumberInputSpinners}
               />
 
               {errors.bmi && (
@@ -255,28 +255,51 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
 
             <div className="space-y-2">
               <Label htmlFor="glucose">Fasting Glucose (mg/dL)</Label>
-              <div className="space-y-2">
-                <Label htmlFor="o2_saturation">O₂ Saturation (%)</Label>
-                <div className="relative">
-                  <Input
-                    id="o2_saturation"
-                    type="number"
-                    min="70"
-                    max="100"
-                    placeholder="e.g., 98"
-                    {...register("o2_saturation", {
-                      required: "O₂ Saturation is required",
-                      min: { value: 70, message: "O₂ Saturation must be at least 70%" },
-                      max: { value: 100, message: "O₂ Saturation cannot exceed 100%" }
-                    })}
-                    disabled={disabled}
-                    className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                  />
-                </div>
-                {errors.o2_saturation && (
-                  <p className="text-sm text-destructive">{errors.o2_saturation.message}</p>
-                )}
+              <div className="relative">
+                <Input
+                  id="glucose"
+                  type="number"
+                  min="70"
+                  max="200"
+                  placeholder="e.g., 95"
+                  {...register("glucose", {
+                    required: "Fasting glucose is required",
+                    min: { value: 70, message: "Glucose must be at least 70" },
+                    max: { value: 200, message: "Glucose must be less than 200" }
+                  })}
+                  disabled={disabled}
+                  className={hideNumberInputSpinners}
+                />
               </div>
+              {errors.glucose && (
+                <p className="text-sm text-destructive">{errors.glucose.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="o2_saturation">O₂ Saturation (%)</Label>
+              <div className="relative">
+                <Input
+                  id="o2_saturation"
+                  type="number"
+                  min="70"
+                  max="100"
+                  placeholder="e.g., 98"
+                  {...register("o2_saturation", {
+                    required: "O₂ Saturation is required",
+                    min: { value: 70, message: "O₂ Saturation must be at least 70%" },
+                    max: { value: 100, message: "O₂ Saturation cannot exceed 100%" }
+                  })}
+                  disabled={disabled}
+                  className={hideNumberInputSpinners}
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Normal: 95-100%
+              </p>
+              {errors.o2_saturation && (
+                <p className="text-sm text-destructive">{errors.o2_saturation.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -443,7 +466,7 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
                     max: { value: 10, message: "Maximum is 10" }
                   })}
                   disabled={disabled}
-                  className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className={hideNumberInputSpinners}
                 />
               </div>
               {errors.stress_level && (
@@ -463,41 +486,42 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <Label>Activity Level</Label>
-              <div className="text-sm text-muted-foreground">
-                {watchedValues.activity_level ? 
-                  [
-                    'Not set',
-                    'Sedentary',
-                    'Lightly Active',
-                    'Moderately Active',
-                    'Very Active',
-                    'Extremely Active'
-                  ][watchedValues.activity_level] || 'Not set'
-                  : 'Not set'
-                }
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <Label htmlFor="activity_level">Activity Level</Label>
+                <div className="text-sm text-muted-foreground">
+                  {watchedValues.activity_level > 0 ? 
+                    [
+                      'Not set',
+                      'Sedentary',
+                      'Lightly Active',
+                      'Moderately Active',
+                      'Very Active',
+                      'Extremely Active'
+                    ][watchedValues.activity_level]
+                    : 'Not set'
+                  }
+                </div>
+              </div>
+              <Slider
+                id="activity_level"
+                min={1}
+                max={5}
+                step={1}
+                value={[watchedValues.activity_level > 0 ? watchedValues.activity_level : 1]}
+                onValueChange={(value) => setValue("activity_level", value[0] || 1)}
+                disabled={disabled}
+                className="w-full py-2"
+                aria-label="Activity level from 1 (Sedentary) to 5 (Extremely Active)"
+              />
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>1 (Sedentary)</span>
+                <span>5 (Extremely Active)</span>
+              </div>
+              <div className="text-xs text-muted-foreground text-center">
+                Slide to select your activity level
               </div>
             </div>
-            <Slider
-              id="activity_level"
-              min={1}
-              max={5}
-              step={1}
-              value={[watchedValues.activity_level || 0]}
-              onValueChange={(value) => setValue("activity_level", value[0] || null)}
-              disabled={disabled}
-              className="w-full py-2"
-            />
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>1 (Sedentary)</span>
-              <span>5 (Extremely Active)</span>
-            </div>
-            <div className="text-xs text-muted-foreground text-center">
-              Slide to select your activity level
-            </div>
-          </div>
 
           <div className="space-y-4">
             <div className="flex items-center space-x-2">

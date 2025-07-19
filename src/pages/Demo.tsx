@@ -9,40 +9,40 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export type FormData = {
   // Demographic
-  age: number;
+  age: number | null;
+  gender: string | null;
   
   // Clinical Data
-  bmi: number;
-  systolic_bp: number;
-  diastolic_bp: number;
+  bmi: number | null;
+  systolic_bp: number | null;
+  diastolic_bp: number | null;
   num_conditions: number;
   num_visits: number;
   
   // Lab Test Values
-  hba1c: number;
-  glucose: number;
-  triglycerides: number;
-  hdl_cholesterol: number;
-  ldl_cholesterol: number;
+  hba1c: number | null;
+  glucose: number | null;
+  triglycerides: number | null;
+  hdl_cholesterol: number | null;
+  ldl_cholesterol: number | null;
   
   // Lifestyle and Wearable Stats
   daily_steps: number;
-  sleep_duration: number; // in hours
-  stress_level: number; // 1-10 scale
-  heart_rate: number; // bpm
-  o2_saturation: number; // percentage
+  sleep_duration: number | null;
+  stress_level: number | null;
+  heart_rate: number | null;
+  o2_saturation: number | null;
   
   // Advanced/optional fields
-  albumin?: number;
-  serum_creatinine?: number;
-  total_cholesterol?: number;
-  bun_creatinine_ratio?: number;
-  calories_burned?: number;
-  pm25_exposure?: number;
-  nox_exposure?: number;
+  albumin?: number | null;
+  serum_creatinine?: number | null;
+  total_cholesterol?: number | null;
+  bun_creatinine_ratio?: number | null;
+  calories_burned?: number | null;
+  pm25_exposure?: number | null;
+  nox_exposure?: number | null;
   
-  // Existing fields to keep
-  gender: string;
+  // Other fields
   family_history: boolean;
   smoking: boolean;
   activity_level: number;
@@ -66,43 +66,43 @@ export default function Demo() {
   const form = useForm<FormData>({
     defaultValues: {
       // Demographic
-      age: undefined,
-      gender: undefined,
+      age: null,
+      gender: null,
       
       // Clinical Data
-      bmi: undefined,
-      systolic_bp: undefined,
-      diastolic_bp: undefined,
-      num_conditions: undefined,
-      num_visits: undefined,
+      bmi: null,
+      systolic_bp: null,
+      diastolic_bp: null,
+      num_conditions: 0,
+      num_visits: 0,
       
       // Lab Test Values
-      hba1c: undefined,
-      glucose: undefined,
-      triglycerides: undefined,
-      hdl_cholesterol: undefined,
-      ldl_cholesterol: undefined,
+      hba1c: null,
+      glucose: null,
+      triglycerides: null,
+      hdl_cholesterol: null,
+      ldl_cholesterol: null,
       
       // Lifestyle and Wearable Stats
-      daily_steps: undefined,
-      sleep_duration: undefined,
-      stress_level: undefined,
-      heart_rate: undefined,
-      o2_saturation: undefined,
+      daily_steps: 0,
+      sleep_duration: null,
+      stress_level: null,
+      heart_rate: null,
+      o2_saturation: null,
       
       // Advanced/optional fields
-      albumin: undefined,
-      serum_creatinine: undefined,
-      total_cholesterol: undefined,
-      bun_creatinine_ratio: undefined,
-      calories_burned: undefined,
-      pm25_exposure: undefined,
-      nox_exposure: undefined,
+      albumin: null,
+      serum_creatinine: null,
+      total_cholesterol: null,
+      bun_creatinine_ratio: null,
+      calories_burned: null,
+      pm25_exposure: null,
+      nox_exposure: null,
       
       // Existing fields
       family_history: false,
       smoking: false,
-      activity_level: 3,
+      activity_level: 0,
     },
   });
 
