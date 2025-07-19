@@ -25,8 +25,9 @@ export default function Research() {
             Research & Methodology
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Comprehensive analysis of our Type 2 Diabetes risk prediction model, 
-            including dataset information, methodology, and performance metrics
+            Comprehensive analysis of the AI-READI Flagship Type 2 Diabetes Dataset 
+            for ML-based risk prediction, including Dataset overview, Methodology, and 
+            Performance metrices.
           </p>
         </div>
 
@@ -50,23 +51,28 @@ export default function Research() {
               <CardContent className="space-y-4">
                 <div className="prose prose-sm max-w-none">
                   <p className="text-muted-foreground leading-relaxed">
-                    Type 2 Diabetes Mellitus (T2DM) represents a significant global health challenge, 
-                    affecting over 400 million people worldwide. Early detection and risk assessment 
-                    are crucial for preventing the onset of diabetes and its associated complications.
+                    Type 2 Diabetes Mellitus (T2DM) is a significant global health concern affecting 
+                    over 400 million individuals. Early detection and accurate risk assessment are 
+                    essential for preventing disease progression and long-term complications.
                   </p>
                   
                   <p className="text-muted-foreground leading-relaxed">
-                    This research presents an advanced machine learning approach for predicting 
-                    Type 2 Diabetes risk using a comprehensive set of clinical and lifestyle indicators. 
-                    Our model incorporates demographic data, laboratory biomarkers, anthropometric 
-                    measurements, and behavioral factors to provide accurate risk stratification.
+                    This study utilizes the AI READI Flagship Dataset, a comprehensive 
+                    multivariate health dataset designed to support advanced research on 
+                    diabetes. The dataset includes a wide range of clinical, demographic, 
+                    behavioral, and lifestyle variables collected from thousands of 
+                    participants.
                   </p>
                   
                   <p className="text-muted-foreground leading-relaxed">
-                    The developed system achieves 94.2% accuracy in risk prediction and provides 
-                    personalized recommendations for diabetes prevention. By leveraging ensemble 
-                    learning techniques and feature engineering, our model outperforms traditional 
-                    screening methods and offers clinicians a powerful tool for early intervention.
+                    Our goal is to develop a robust machine learning model capable of 
+                    identifying risk patterns for Type 2 Diabetes. We apply ensemble 
+                    learning methods such as XGBoost and focus on high-quality feature 
+                    engineering to enable reliable and interpretable predictions.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Performance metrics and validation results will be shared upon 
+                    completion of the model evaluation phase.
                   </p>
                 </div>
 
@@ -78,13 +84,13 @@ export default function Research() {
                   </div>
                   <div className="text-center p-4 bg-success-light/20 rounded-lg">
                     <Users className="h-8 w-8 text-success mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-foreground">10,000+</div>
+                    <div className="text-2xl font-bold text-foreground">1,067</div>
                     <div className="text-sm text-muted-foreground">Patients</div>
                   </div>
                   <div className="text-center p-4 bg-warning-light/20 rounded-lg">
                     <BarChart3 className="h-8 w-8 text-warning mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-foreground">15</div>
-                    <div className="text-sm text-muted-foreground">Features</div>
+                    <div className="text-2xl font-bold text-foreground">2,700+</div>
+                    <div className="text-sm text-muted-foreground">Multivariate health features</div>
                   </div>
                 </div>
               </CardContent>
@@ -107,23 +113,23 @@ export default function Research() {
                     <div className="space-y-2">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Total Samples:</span>
-                        <span className="font-medium">10,847</span>
+                        <span className="font-medium">10,000+</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Positive Cases:</span>
-                        <span className="font-medium">3,254 (30%)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Negative Cases:</span>
-                        <span className="font-medium">7,593 (70%)</span>
+                        <span className="text-muted-foreground">Data Points</span>
+                        <span className="font-medium">	2,704 curated health variables</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Features:</span>
                         <span className="font-medium">15</span>
                       </div>
                       <div className="flex justify-between">
+                        <span className="text-muted-foreground">Data Types:</span>
+                        <span className="font-medium">Clinical, Laboratory, Lifestyle, Demographic</span>
+                      </div>
+                      <div className="flex justify-between">
                         <span className="text-muted-foreground">Missing Values:</span>
-                        <span className="font-medium">&lt; 2%</span>
+                        <span className="font-medium">	Handled with preprocessing</span>
                       </div>
                     </div>
                   </div>
@@ -171,7 +177,8 @@ export default function Research() {
                       <ul className="text-sm space-y-1 text-muted-foreground">
                         <li>• Age (years)</li>
                         <li>• Gender (male/female)</li>
-                        <li>• BMI (kg/m²)</li>
+                        <li>• Study Group (Pre-diabetes, Insulin-dependent, etc.)</li>
+                        <li>• Clinical Site (UCSD, UW)</li>
                       </ul>
                     </div>
                     <div className="space-y-2">
@@ -179,26 +186,28 @@ export default function Research() {
                       <ul className="text-sm space-y-1 text-muted-foreground">
                         <li>• Fasting Glucose (mg/dL)</li>
                         <li>• HbA1c (%)</li>
-                        <li>• Total Cholesterol (mg/dL)</li>
-                        <li>• Triglycerides (mg/dL)</li>
-                        <li>• HDL Cholesterol (mg/dL)</li>
+                        <li>• Cholesterol Panel (LDL, HDL, Total)</li>
+          
+                        <li>• Kidney Markers (Creatinine, BUN Ratio, Albumin)</li>
                       </ul>
                     </div>
                     <div className="space-y-2">
                       <Badge variant="outline">Clinical</Badge>
                       <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• Systolic Blood Pressure (mmHg)</li>
-                        <li>• Diastolic Blood Pressure (mmHg)</li>
+                        <li>• BMI (computed)</li>
+                        <li>• Average Systolic / Diastolic Blood Pressure (mmHg)</li>
                         <li>• Waist Circumference (cm)</li>
                       </ul>
                     </div>
                     <div className="space-y-2">
-                      <Badge variant="outline">Lifestyle</Badge>
+                      <Badge variant="outline">Lifestyle & Wearables </Badge>
                       <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• Family History (yes/no)</li>
-                        <li>• Smoking Status (yes/no)</li>
-                        <li>• Physical Activity Level (1-5)</li>
-                        <li>• Alcohol Consumption (units/week)</li>
+                        <li>• Daily Steps</li>
+                        <li>• Sleep Duration</li>
+                        <li>• Heart Rate (bpm)</li>
+                        <li>• Air Quality (PM2.5, NOx)</li>
+                        <li>• Stress Level</li>
+                        <li>• Calories Burned</li>
                       </ul>
                     </div>
                   </div>
