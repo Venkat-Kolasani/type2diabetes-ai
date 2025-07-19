@@ -27,7 +27,7 @@ export default function Research() {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Comprehensive analysis of the AI-READI Flagship Type 2 Diabetes Dataset 
             for ML-based risk prediction, including Dataset overview, Methodology, and 
-            Performance metrices.
+            Performance metrics.
           </p>
         </div>
 
