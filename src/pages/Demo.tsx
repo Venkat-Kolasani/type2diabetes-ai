@@ -136,10 +136,12 @@ export default function Demo() {
     }
     
     // Glucose factor
-    if (data.glucose >= 126) {
-      score += 0.2;
-    } else if (data.glucose >= 100) {
-      score += 0.1;
+    if (data.glucose !== null) {
+      if (data.glucose >= 126) {
+        score += 0.2;
+      } else if (data.glucose >= 100) {
+        score += 0.1;
+      }
     }
     
     // Lifestyle factors
