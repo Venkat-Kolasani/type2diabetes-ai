@@ -162,7 +162,7 @@ export default function Demo() {
   const getRecommendations = (data: FormData): string[] => {
     const recs: string[] = [];
     
-    if (data.bmi >= 25) {
+    if (data.bmi !== null && data.bmi >= 25) {
       recs.push("Consider a weight management program to achieve a healthier BMI.");
     }
     
