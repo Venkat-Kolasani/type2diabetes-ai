@@ -111,7 +111,7 @@ export default function Demo() {
     let score = 0;
     
     // Age factor (higher risk over 45)
-    score += Math.min(data.age / 100, 0.15);
+    score += Math.min((data.age ?? 0) / 100, 0.15);
     
     // BMI factor (higher risk if > 25)
     score += Math.max(0, (data.bmi - 25) * 0.01);
