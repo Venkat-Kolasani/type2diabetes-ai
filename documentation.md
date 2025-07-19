@@ -549,37 +549,143 @@ joblib.dump(model, 'backend/models/diabetes_model.pkl')
 ## API Endpoints
 
 ### POST /api/predict
-**Purpose**: Make diabetes risk prediction
+**Description**: Get comprehensive diabetes risk prediction based on health metrics, lifestyle, and optional advanced data
+
 **Request Body**:
 ```json
 {
+  // Demographics
   "age": 45,
   "gender": "male",
+  "ethnicity": "caucasian",
   "bmi": 28.5,
-  "glucose": 120,
-  "hba1c": 6.2,
-  "systolic_bp": 130,
-  "diastolic_bp": 85,
-  "cholesterol": 200,
-  "triglycerides": 150,
-  "activity_level": 4,
+  
+  // Clinical Data
   "family_history": true,
-  "smoking": false
+  "previous_diabetes": false,
+  "gestational_diabetes": false,
+  "hypertension": false,
+  "pcos": false,
+  "medications": ["statins"],
+  
+  // Lab Test Values
+  "glucose": 95,
+  "hba1c": 5.4,
+  "systolic_bp": 125,
+  "diastolic_bp": 82,
+  "cholesterol": 185,
+  "hdl_cholesterol": 55,
+  "ldl_cholesterol": 110,
+  "triglycerides": 150,
+  "fasting_glucose": 92,
+  "two_hour_glucose_tolerance": 135,
+  "c_peptide": 2.1,
+  "insulin_level": 8.5,
+  "homa_ir": 1.9,
+  "crp": 1.2,
+  "vitamin_d": 32,
+  "ferritin": 85,
+  "uric_acid": 5.2,
+  
+  // Lifestyle & Wearable Data
+  "smoking_status": "never",
+  "alcohol_consumption": "occasional",
+  "physical_activity": "moderate",
+  "diet_quality": 7,
+  "sleep_duration": 6.5,
+  "stress_level": 5,
+  "waist_circumference": 92,
+  "hip_circumference": 102,
+  "waist_hip_ratio": 0.9,
+  "body_fat_percentage": 28.5,
+  "muscle_mass_percentage": 65.5,
+  "resting_heart_rate": 68,
+  "hrv": 45,
+  "daily_steps": 7500,
+  "exercise_minutes": 45,
+  "sedentary_time": 480,
+  
+  // Optional Advanced Inputs
+  "genetic_risk_score": 0.35,
+  "autoantibodies": {
+    "gad65": false,
+    "ia2": false,
+    "znt8": false
+  },
+  "microbiome_data": {
+    "diversity_index": 3.8,
+    "firmicutes_bacteroidetes_ratio": 1.2
+  },
+  "metabolomics": {
+    "branched_chain_amino_acids": 0.85,
+    "aromatic_amino_acids": 0.62
+  },
+  "proteomics": {
+    "adiponectin": 8.5,
+    "leptin": 12.3
+  },
+  "epigenetic_clock": {
+    "chronological_age": 45,
+    "biological_age": 48
+  }
 }
 ```
 
 **Response**:
 ```json
 {
-  "risk_score": 0.35,
+  "risk_score": 0.32,
   "risk_level": "medium",
-  "confidence": 0.78,
-  "timeline": "Moderate risk - monitor closely",
-  "top_factors": ["Family history", "High BMI", "Elevated HbA1c"],
-  "recommendations": ["Monitor blood glucose", "Maintain healthy weight"],
-  "timestamp": "2024-01-15T10:30:00"
+  "confidence": 0.92,
+  "timeline": [
+    { "years": 1, "risk": 0.32 },
+    { "years": 3, "risk": 0.45 },
+    { "years": 5, "risk": 0.55 },
+    { "years": 10, "risk": 0.72 }
+  ],
+  "top_factors": [
+    { "factor": "HbA1c", "impact": 0.30 },
+    { "factor": "BMI", "impact": 0.25 },
+    { "factor": "Blood Pressure", "impact": 0.18 },
+    { "factor": "Physical Activity", "impact": 0.15 },
+    { "factor": "Age", "impact": 0.12 }
+  ],
+  "recommendations": [
+    "Consider a weight management program to achieve a healthier BMI.",
+    "Aim for at least 7,000-10,000 steps per day for better health outcomes.",
+    "Try to get 7-9 hours of sleep per night for optimal health.",
+    "Consider stress-reduction techniques like meditation or yoga.",
+    "Monitor your blood sugar levels regularly and consult with a healthcare provider."
+  ],
+  "timestamp": "2023-11-15T14:30:00Z"
 }
 ```
+
+### Risk Assessment Details
+
+#### Risk Score Calculation
+- **Score Range**: 0.0 - 1.0 (low to high risk)
+- **Risk Levels**:
+  - Low: 0.0 - 0.39
+  - Medium: 0.4 - 0.69
+  - High: 0.7 - 1.0
+
+#### Top Factors Considered
+1. **Metabolic Markers**: HbA1c, fasting glucose, insulin resistance (HOMA-IR)
+2. **Anthropometrics**: BMI, waist circumference, body fat percentage
+3. **Lipid Profile**: Cholesterol, triglycerides, HDL/LDL ratio
+4. **Lifestyle Factors**: Physical activity, diet quality, sleep duration
+5. **Inflammatory Markers**: hs-CRP, inflammatory cytokines
+6. **Genetic Predisposition**: Family history, genetic risk score
+
+#### Response Fields
+- `risk_score`: Numeric value between 0 and 1 indicating overall risk
+- `risk_level`: Categorized risk (low/medium/high)
+- `confidence`: Model confidence in prediction (0-1)
+- `timeline`: Projected risk over time
+- `top_factors`: Most influential risk factors
+- `recommendations`: Personalized health recommendations
+- `timestamp`: When the prediction was generated
 
 ### GET /api/health
 **Purpose**: Check backend health status

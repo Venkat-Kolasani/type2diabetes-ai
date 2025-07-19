@@ -8,15 +8,41 @@ import { Loader2, AlertCircle, Info } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export type FormData = {
+  // Demographic
   age: number;
-  gender: string;
+  
+  // Clinical Data
   bmi: number;
-  glucose: number;
-  hba1c: number;
   systolic_bp: number;
   diastolic_bp: number;
-  cholesterol: number;
+  num_conditions: number;
+  num_visits: number;
+  
+  // Lab Test Values
+  hba1c: number;
+  glucose: number;
   triglycerides: number;
+  hdl_cholesterol: number;
+  ldl_cholesterol: number;
+  
+  // Lifestyle and Wearable Stats
+  daily_steps: number;
+  sleep_duration: number; // in hours
+  stress_level: number; // 1-10 scale
+  heart_rate: number; // bpm
+  o2_saturation: number; // percentage
+  
+  // Advanced/optional fields
+  albumin?: number;
+  serum_creatinine?: number;
+  total_cholesterol?: number;
+  bun_creatinine_ratio?: number;
+  calories_burned?: number;
+  pm25_exposure?: number;
+  nox_exposure?: number;
+  
+  // Existing fields to keep
+  gender: string;
   family_history: boolean;
   smoking: boolean;
   activity_level: number;
@@ -39,50 +65,164 @@ export default function Demo() {
 
   const form = useForm<FormData>({
     defaultValues: {
-      age: 45,
-      gender: "male",
-      bmi: 25,
-      glucose: 100,
-      hba1c: 5.7,
-      systolic_bp: 120,
-      diastolic_bp: 80,
-      cholesterol: 200,
-      triglycerides: 150,
+      // Demographic
+      age: undefined,
+      gender: undefined,
+      
+      // Clinical Data
+      bmi: undefined,
+      systolic_bp: undefined,
+      diastolic_bp: undefined,
+      num_conditions: undefined,
+      num_visits: undefined,
+      
+      // Lab Test Values
+      hba1c: undefined,
+      glucose: undefined,
+      triglycerides: undefined,
+      hdl_cholesterol: undefined,
+      ldl_cholesterol: undefined,
+      
+      // Lifestyle and Wearable Stats
+      daily_steps: undefined,
+      sleep_duration: undefined,
+      stress_level: undefined,
+      heart_rate: undefined,
+      o2_saturation: undefined,
+      
+      // Advanced/optional fields
+      albumin: undefined,
+      serum_creatinine: undefined,
+      total_cholesterol: undefined,
+      bun_creatinine_ratio: undefined,
+      calories_burned: undefined,
+      pm25_exposure: undefined,
+      nox_exposure: undefined,
+      
+      // Existing fields
       family_history: false,
       smoking: false,
       activity_level: 3,
     },
   });
 
+  const calculateRiskScore = (data: FormData): number => {
+    // Base risk score (0-1)
+    let score = 0;
+    
+    // Age factor (higher risk over 45)
+    score += Math.min(data.age / 100, 0.15);
+    
+    // BMI factor (higher risk if > 25)
+    score += Math.max(0, (data.bmi - 25) * 0.01);
+    
+    // Blood pressure factors
+    if (data.systolic_bp >= 140 || data.diastolic_bp >= 90) {
+      score += 0.15;
+    } else if (data.systolic_bp >= 130 || data.diastolic_bp >= 85) {
+      score += 0.08;
+    }
+    
+    // HbA1c factor (diabetes indicator)
+    if (data.hba1c >= 6.5) {
+      score += 0.25;
+    } else if (data.hba1c >= 5.7) {
+      score += 0.15;
+    } else if (data.hba1c >= 5.5) {
+      score += 0.05;
+    }
+    
+    // Glucose factor
+    if (data.glucose >= 126) {
+      score += 0.2;
+    } else if (data.glucose >= 100) {
+      score += 0.1;
+    }
+    
+    // Lifestyle factors
+    score += (10 - Math.min(10, data.daily_steps / 1000)) * 0.02; // More steps = lower risk
+    score += Math.max(0, 7 - data.sleep_duration) * 0.02; // Less sleep = higher risk
+    score += (data.stress_level - 1) * 0.01; // More stress = higher risk
+    
+    // Cap the score between 0 and 1
+    return Math.min(1, Math.max(0, score));
+  };
+
+  const getRiskLevel = (score: number): string => {
+    if (score >= 0.7) return 'high';
+    if (score >= 0.4) return 'medium';
+    return 'low';
+  };
+
+  const getRecommendations = (data: FormData): string[] => {
+    const recs: string[] = [];
+    
+    if (data.bmi >= 25) {
+      recs.push("Consider a weight management program to achieve a healthier BMI.");
+    }
+    
+    if (data.hba1c >= 5.7) {
+      recs.push("Monitor your blood sugar levels regularly and consult with a healthcare provider.");
+    }
+    
+    if (data.daily_steps < 7000) {
+      recs.push("Aim for at least 7,000-10,000 steps per day for better health outcomes.");
+    }
+    
+    if (data.sleep_duration < 7) {
+      recs.push("Try to get 7-9 hours of sleep per night for optimal health.");
+    }
+    
+    if (data.stress_level >= 7) {
+      recs.push("Consider stress-reduction techniques like meditation or yoga.");
+    }
+    
+    if (recs.length === 0) {
+      recs.push("Maintain your healthy lifestyle with balanced nutrition and regular exercise.");
+    }
+    
+    return recs;
+  };
+
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
     setError(null);
     
     try {
-      // Simulate API call for now
-      // In production, replace with actual API call
+      // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Mock prediction result
+      // Calculate risk score based on inputs
+      const riskScore = calculateRiskScore(data);
+      const riskLevel = getRiskLevel(riskScore);
+      const recommendations = getRecommendations(data);
+      
+      // Generate a realistic timeline based on risk factors
+      const baseYearlyIncrease = riskScore * 0.1;
+      const timeline = [
+        { years: 1, risk: Math.min(1, riskScore * (1 + baseYearlyIncrease)) },
+        { years: 3, risk: Math.min(1, riskScore * (1 + baseYearlyIncrease * 3)) },
+        { years: 5, risk: Math.min(1, riskScore * (1 + baseYearlyIncrease * 5)) },
+        { years: 10, risk: Math.min(1, riskScore * (1 + baseYearlyIncrease * 10)) }
+      ];
+      
+      // Identify top risk factors
+      const topFactors = [
+        { factor: "HbA1c", impact: 0.3 },
+        { factor: "BMI", impact: 0.25 },
+        { factor: "Blood Pressure", impact: 0.2 },
+        { factor: "Physical Activity", impact: 0.15 },
+        { factor: "Age", impact: 0.1 }
+      ].sort((a, b) => b.impact - a.impact).slice(0, 3);
+      
+      // Generate mock result
       const mockResult: PredictionResult = {
-        risk_score: 0.25 + Math.random() * 0.5,
-        risk_level: Math.random() > 0.6 ? "high" : Math.random() > 0.3 ? "medium" : "low",
-        confidence: 0.85 + Math.random() * 0.10,
-        timeline: [
-          { years: 1, risk: 0.15 },
-          { years: 5, risk: 0.28 },
-          { years: 10, risk: 0.45 }
-        ],
-        top_factors: [
-          { factor: "BMI", impact: 0.25 },
-          { factor: "Age", impact: 0.20 },
-          { factor: "HbA1c", impact: 0.18 }
-        ],
-        recommendations: [
-          "Consider weight management program",
-          "Increase physical activity to 150 minutes per week",
-          "Regular blood sugar monitoring"
-        ],
+        risk_score: riskScore,
+        risk_level: riskLevel,
+        confidence: 0.85 + Math.random() * 0.10, // 85-95% confidence
+        timeline: timeline,
+        top_factors: topFactors,
+        recommendations: recommendations,
         timestamp: new Date().toISOString()
       };
 
