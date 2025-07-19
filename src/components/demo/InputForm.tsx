@@ -409,11 +409,10 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
                     max: { value: 50000, message: "Maximum 50,000 steps" }
                   })}
                   disabled={disabled}
-                  aria-describedby="steps-help"
+                  className={hideNumberInputSpinners}
                 />
-
               </div>
-              <p id="steps-help" className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Target: 7,000-10,000 steps/day for health benefits
               </p>
               {errors.daily_steps && (
@@ -437,13 +436,13 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
                     max: { value: 24, message: "Maximum 24 hours" }
                   })}
                   disabled={disabled}
-                  aria-describedby="sleep-help"
+                  className={hideNumberInputSpinners}
                 />
                 <div className="absolute right-2 top-2 text-muted-foreground">
                   <Moon className="h-4 w-4" />
                 </div>
               </div>
-              <p id="sleep-help" className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Recommended: 7-9 hours for adults
               </p>
               {errors.sleep_duration && (
@@ -473,82 +472,38 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
                 <p className="text-sm text-destructive">{errors.stress_level.message}</p>
               )}
             </div>
-          </div>
-        </CardContent>
-      </Card>
 
-      {/* Lifestyle Factors */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Activity className="h-5 w-5" />
-            <span>Lifestyle Factors</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <Label htmlFor="activity_level">Activity Level</Label>
-                <div className="text-sm text-muted-foreground">
-                  {watchedValues.activity_level > 0 ? 
-                    [
-                      'Not set',
-                      'Sedentary',
-                      'Lightly Active',
-                      'Moderately Active',
-                      'Very Active',
-                      'Extremely Active'
-                    ][watchedValues.activity_level]
-                    : 'Not set'
-                  }
+            <div className="space-y-2">
+              <Label htmlFor="heart_rate">Resting Heart Rate (bpm)</Label>
+              <div className="relative">
+                <Input
+                  id="heart_rate"
+                  type="number"
+                  min="30"
+                  max="200"
+                  placeholder="e.g., 72"
+                  {...register("heart_rate", {
+                    required: "Heart rate is required",
+                    min: { value: 30, message: "Heart rate must be at least 30 bpm" },
+                    max: { value: 200, message: "Heart rate must be less than 200 bpm" }
+                  })}
+                  disabled={disabled}
+                  className={hideNumberInputSpinners}
+                />
+                <div className="absolute right-2 top-2 text-muted-foreground">
+                  <Heart className="h-4 w-4" />
                 </div>
               </div>
-              <Slider
-                id="activity_level"
-                min={1}
-                max={5}
-                step={1}
-                value={[watchedValues.activity_level > 0 ? watchedValues.activity_level : 1]}
-                onValueChange={(value) => setValue("activity_level", value[0] || 1)}
-                disabled={disabled}
-                className="w-full py-2"
-                aria-label="Activity level from 1 (Sedentary) to 5 (Extremely Active)"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>1 (Sedentary)</span>
-                <span>5 (Extremely Active)</span>
-              </div>
-              <div className="text-xs text-muted-foreground text-center">
-                Slide to select your activity level
-              </div>
-            </div>
-
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="family_history"
-                checked={watchedValues.family_history || false}
-                onCheckedChange={(checked) => setValue("family_history", Boolean(checked))}
-                disabled={disabled}
-              />
-              <Label htmlFor="family_history" className="font-normal">
-                Family history of diabetes
-              </Label>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="smoking"
-                checked={watchedValues.smoking || false}
-                onCheckedChange={(checked) => setValue("smoking", Boolean(checked))}
-                disabled={disabled}
-              />
-              <Label htmlFor="smoking">Current smoker</Label>
+              <p className="text-xs text-muted-foreground">
+                Normal: 60-100 bpm for adults
+              </p>
+              {errors.heart_rate && (
+                <p className="text-sm text-destructive">{errors.heart_rate.message}</p>
+              )}
             </div>
           </div>
         </CardContent>
       </Card>
-
       {/* Advanced Options */}
       <div className="space-y-4">
         <Button
