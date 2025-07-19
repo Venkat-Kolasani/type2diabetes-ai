@@ -117,7 +117,7 @@ export default function Research() {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Data Points</span>
-                        <span className="font-medium">2,704 curated health variables</span>
+                        <span className="font-medium">2,700+ curated health variables</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Features:</span>
