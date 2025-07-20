@@ -40,17 +40,21 @@ export default function About() {
           <CardContent>
             <div className="prose max-w-none">
               <p className="text-muted-foreground leading-relaxed mb-4">
-                The DiabetesAI project represents a significant advancement in predictive healthcare, 
-                leveraging cutting-edge machine learning techniques to assess Type 2 Diabetes risk 
-                with unprecedented accuracy. Our mission is to democratize access to advanced health 
-                screening tools and enable early intervention for diabetes prevention.
+                DiabetesAI is a research-driven initiative aimed at predicting the 
+                progression of Type 2 Diabetes using artificial intelligence applied to 
+                multivariate health indicators. Leveraging the clinically curated AI-READI 
+                Flagship Dataset, our system analyzes a comprehensive range of health variables, 
+                including clinical markers, lifestyle factors, and wearable device metrics, 
+                to deliver accurate and personalized risk assessments over time.
               </p>
               
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Developed as part of a comprehensive research initiative, this system combines 
-                clinical expertise with advanced data science to create a robust, user-friendly 
-                platform for health risk assessment. The project bridges the gap between complex 
-                medical algorithms and practical healthcare applications.
+                Developed through rigorous research and validation phases, DiabetesAI 
+                integrates real-world patient data, environmental exposures, 
+                and biometric signals to model the progression of Type 2 Diabetes. 
+                The platform translates complex data into user-friendly outputs that 
+                support personalized risk trajectory analysis and help raise awareness 
+                about long-term diabetes outcomes.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
@@ -62,7 +66,7 @@ export default function About() {
                 <div className="text-center p-4 bg-success-light/20 rounded-lg">
                   <Users className="h-8 w-8 text-success mx-auto mb-2" />
                   <div className="font-semibold text-foreground">User-Centered Design</div>
-                  <div className="text-sm text-muted-foreground">Intuitive interface</div>
+                  <div className="text-sm text-muted-foreground">Intuitive and accessible interface</div>
                 </div>
                 <div className="text-center p-4 bg-warning-light/20 rounded-lg">
                   <Database className="h-8 w-8 text-warning mx-auto mb-2" />
@@ -89,7 +93,7 @@ export default function About() {
                 <div className="w-20 h-20 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center">
                   <span className="text-2xl font-bold text-primary-foreground">JS</span>
                 </div>
-                <h3 className="font-semibold text-foreground mb-1">Dr. Jane Smith</h3>
+                <h3 className="font-semibold text-foreground mb-1"> DEMO</h3>
                 <p className="text-sm text-muted-foreground mb-2">Lead Data Scientist</p>
                 <div className="flex justify-center space-x-2 mb-3">
                   <Badge variant="outline">ML/AI</Badge>
@@ -113,7 +117,7 @@ export default function About() {
                 <div className="w-20 h-20 bg-gradient-health rounded-full mx-auto mb-4 flex items-center justify-center">
                   <span className="text-2xl font-bold text-success-foreground">MJ</span>
                 </div>
-                <h3 className="font-semibold text-foreground mb-1">Dr. Michael Johnson</h3>
+                <h3 className="font-semibold text-foreground mb-1">DEMO</h3>
                 <p className="text-sm text-muted-foreground mb-2">Clinical Advisor</p>
                 <div className="flex justify-center space-x-2 mb-3">
                   <Badge variant="outline">Endocrinology</Badge>
@@ -137,7 +141,7 @@ export default function About() {
                 <div className="w-20 h-20 bg-gradient-warning rounded-full mx-auto mb-4 flex items-center justify-center">
                   <span className="text-2xl font-bold text-warning-foreground">SW</span>
                 </div>
-                <h3 className="font-semibold text-foreground mb-1">Sarah Wilson</h3>
+                <h3 className="font-semibold text-foreground mb-1">DEMO</h3>
                 <p className="text-sm text-muted-foreground mb-2">Full Stack Developer</p>
                 <div className="flex justify-center space-x-2 mb-3">
                   <Badge variant="outline">React</Badge>
@@ -176,8 +180,9 @@ export default function About() {
                 <div className="flex-1">
                   <h3 className="font-semibold text-foreground">Research & Data Collection</h3>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Gathered comprehensive diabetes dataset, conducted literature review, 
-                    and established research methodology
+                    Obtained access to the AI-READI Type 2 Diabetes Dataset, performed 
+                    data mapping, and identified 2,700+ curated features including demographics, 
+                    lab tests, vitals, wearables, and environmental exposure variables.
                   </p>
                 </div>
               </div>
