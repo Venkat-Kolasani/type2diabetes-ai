@@ -45,7 +45,7 @@ export default function About() {
                 multivariate health indicators. Leveraging the clinically curated AI-READI 
                 Flagship Dataset, our system analyzes a comprehensive range of health variables, 
                 including clinical markers, lifestyle factors, and wearable device metrics, 
-                to deliver accurate and personalized risk assessments over time
+                to deliver accurate and personalized risk assessments over time.
               </p>
               
               <p className="text-muted-foreground leading-relaxed mb-4">
