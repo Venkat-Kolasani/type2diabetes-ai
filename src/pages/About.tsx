@@ -40,15 +40,17 @@ export default function About() {
           <CardContent>
             <div className="prose max-w-none">
               <p className="text-muted-foreground leading-relaxed mb-4">
-                DiabetesAI is an innovative platform designed to empower individuals and healthcare professionals 
-                with accurate, AI-driven risk assessments for Type 2 Diabetes. By integrating advanced machine 
-                learning models with user-friendly interfaces, our goal is to make early detection and prevention 
-                accessible to everyone.
+                The DiabetesAI project represents a significant advancement in predictive healthcare, 
+                leveraging cutting-edge machine learning techniques to assess Type 2 Diabetes risk 
+                with unprecedented accuracy. Our mission is to democratize access to advanced health 
+                screening tools and enable early intervention for diabetes prevention.
               </p>
+              
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Our interdisciplinary team combines expertise in medicine, data science, and software engineering 
-                to deliver a reliable and secure solution. DiabetesAI bridges the gap between complex analytics 
-                and real-world healthcare needs, supporting proactive health management and research.
+                Developed as part of a comprehensive research initiative, this system combines 
+                clinical expertise with advanced data science to create a robust, user-friendly 
+                platform for health risk assessment. The project bridges the gap between complex 
+                medical algorithms and practical healthcare applications.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
