@@ -114,7 +114,7 @@ export default function Demo() {
     }
     
     // Physical activity factor
-    if (data.physical_activity === "Yes") {
+    if (data.physical_activity?.toLowerCase() === "yes") {
       score += 0.1;
     }
     
