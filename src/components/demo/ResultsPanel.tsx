@@ -11,7 +11,8 @@ import {
   Clock,
   Activity,
   Heart,
-  Shield
+  Shield,
+  AlertTriangle
 } from "lucide-react";
 
 interface ResultsPanelProps {
@@ -45,8 +46,70 @@ export function ResultsPanel({ result }: ResultsPanelProps) {
     }
   };
 
+  const getDiabetesStatusInfo = (status: number) => {
+    switch (status) {
+      case 0:
+        return {
+          label: "No Diabetes",
+          color: "success" as const,
+          icon: <CheckCircle className="h-5 w-5" />,
+          description: "No signs of diabetes detected"
+        };
+      case 1:
+        return {
+          label: "Pre-Diabetic",
+          color: "warning" as const,
+          icon: <AlertTriangle className="h-5 w-5" />,
+          description: "Early warning signs detected - monitor closely"
+        };
+      case 2:
+        return {
+          label: "Diabetic",
+          color: "danger" as const,
+          icon: <AlertCircle className="h-5 w-5" />,
+          description: "Diabetes indicators present - consult healthcare provider"
+        };
+      default:
+        return {
+          label: "Unknown",
+          color: "secondary" as const,
+          icon: <Target className="h-5 w-5" />,
+          description: "Unable to determine status"
+        };
+    }
+  };
+
+  const diabetesStatus = getDiabetesStatusInfo(result.diabetes_status);
+
   return (
     <div className="space-y-6">
+      {/* Diabetes Status */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <Heart className="h-5 w-5" />
+            <span>Diabetes Status</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center space-y-4">
+            <div className="flex items-center justify-center space-x-2">
+              {diabetesStatus.icon}
+              <Badge
+                variant={diabetesStatus.color}
+                className="text-lg px-4 py-2"
+              >
+                {diabetesStatus.label}
+              </Badge>
+            </div>
+            
+            <div className="text-sm text-muted-foreground">
+              {diabetesStatus.description}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Risk Score */}
       <Card>
         <CardHeader>
