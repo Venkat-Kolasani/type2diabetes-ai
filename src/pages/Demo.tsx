@@ -139,7 +139,7 @@ export default function Demo() {
       recs.push("Monitor your blood pressure regularly and consult with a healthcare provider.");
     }
     
-    if (data.high_cholesterol === "Yes" || data.high_cholesterol === "Yes, I have been told I have high cholesterol") {
+    if (data.high_cholesterol === "yes") {
       recs.push("Monitor your cholesterol levels regularly and consult with a healthcare provider.");
     }
     
