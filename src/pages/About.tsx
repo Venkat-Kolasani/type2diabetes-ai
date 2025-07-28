@@ -148,7 +148,7 @@ export default function About() {
                 <div className="flex-1">
                   <h3 className="font-semibold text-foreground">Research & Data Collection</h3>
                   <p className="text-sm text-muted-foreground mt-1">
-                   DiabetesAI uses the preprocessed BRFSS dataset, with over 400,000 responses and 30+ multivariate health indicators (clinical, lifestyle, demographic), to build AI model predicting Type 2 Diabetes progression using AI.
+                   DiabetesAI uses the preprocessed BRFSS dataset, with over 400,000 responses and 30+ multivariate health indicators (clinical, lifestyle, demographic), to build an AI model predicting Type 2 Diabetes progression using AI.
                   </p>
                 </div>
               </div>
