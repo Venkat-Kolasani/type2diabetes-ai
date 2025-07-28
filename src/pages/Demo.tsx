@@ -10,42 +10,32 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 export type FormData = {
   // Demographic
   age: number | null;
-  gender: string | null;
+  sex: string | null;
+  education: string | null;
+  income: string | null;
   
   // Clinical Data
   bmi: number | null;
-  systolic_bp: number | null;
-  diastolic_bp: number | null;
-  num_conditions: number;
-  num_visits: number;
+  high_blood_pressure: string | null;
+  high_cholesterol: string | null;
+  cholesterol_check: string | null;
+  general_health: string | null;
+  difficulty_walking: string | null;
+  couldnt_see_doctor: string | null;
+  has_healthcare: string | null;
   
-  // Lab Test Values
-  hba1c: number | null;
-  glucose: number | null;
-  triglycerides: number | null;
-  hdl_cholesterol: number | null;
-  ldl_cholesterol: number | null;
+  // Lifestyle and Behavioral Stats
+  smoked_100_cigarettes: string | null;
+  heavy_alcohol: string | null;
+  physical_activity: string | null;
+  fruit_consumption: number | null;
+  vegetable_consumption: number | null;
   
-  // Lifestyle and Wearable Stats
-  daily_steps: number;
-  sleep_duration: number | null;
-  stress_level: number | null;
-  heart_rate: number | null;
-  o2_saturation: number | null;
-  
-  // Advanced/optional fields
-  albumin?: number | null;
-  serum_creatinine?: number | null;
-  total_cholesterol?: number | null;
-  bun_creatinine_ratio?: number | null;
-  calories_burned?: number | null;
-  pm25_exposure?: number | null;
-  nox_exposure?: number | null;
-  
-  // Other fields
-  family_history: boolean;
-  smoking: boolean;
-  activity_level: number;
+  // Mental and Physical Health Stats
+  poor_mental_health: number | null;
+  poor_physical_health: number | null;
+  history_stroke: string | null;
+  history_heart_disease: string | null;
 };
 
 export type PredictionResult = {
@@ -56,6 +46,7 @@ export type PredictionResult = {
   top_factors: Array<{ factor: string; impact: number }>;
   recommendations: string[];
   timestamp: string;
+  diabetes_status: number; // 0: no-diabetes, 1: pre-diabetic, 2: diabetic
 };
 
 export default function Demo() {
@@ -67,42 +58,32 @@ export default function Demo() {
     defaultValues: {
       // Demographic
       age: null,
-      gender: null,
+      sex: null,
+      education: null,
+      income: null,
       
       // Clinical Data
       bmi: null,
-      systolic_bp: null,
-      diastolic_bp: null,
-      num_conditions: 0,
-      num_visits: 0,
+      high_blood_pressure: null,
+      high_cholesterol: null,
+      cholesterol_check: null,
+      general_health: null,
+      difficulty_walking: null,
+      couldnt_see_doctor: null,
+      has_healthcare: null,
       
-      // Lab Test Values
-      hba1c: null,
-      glucose: null,
-      triglycerides: null,
-      hdl_cholesterol: null,
-      ldl_cholesterol: null,
+      // Lifestyle and Behavioral Stats
+      smoked_100_cigarettes: null,
+      heavy_alcohol: null,
+      physical_activity: null,
+      fruit_consumption: null,
+      vegetable_consumption: null,
       
-      // Lifestyle and Wearable Stats
-      daily_steps: 0,
-      sleep_duration: null,
-      stress_level: null,
-      heart_rate: null,
-      o2_saturation: null,
-      
-      // Advanced/optional fields
-      albumin: null,
-      serum_creatinine: null,
-      total_cholesterol: null,
-      bun_creatinine_ratio: null,
-      calories_burned: null,
-      pm25_exposure: null,
-      nox_exposure: null,
-      
-      // Existing fields
-      family_history: false,
-      smoking: false,
-      activity_level: 0,
+      // Mental and Physical Health Stats
+      poor_mental_health: null,
+      poor_physical_health: null,
+      history_stroke: null,
+      history_heart_disease: null,
     },
   });
 
@@ -118,36 +99,24 @@ export default function Demo() {
       score += Math.max(0, (data.bmi - 25) * 0.01);
     }
     // Blood pressure factors
-    if ((data.systolic_bp !== null && data.systolic_bp >= 140) || (data.diastolic_bp !== null && data.diastolic_bp >= 90)) {
+    if ((data.high_blood_pressure === "Yes") || (data.high_blood_pressure === "Yes, I have been told I have high blood pressure")) {
       score += 0.15;
-    } else if ((data.systolic_bp !== null && data.systolic_bp >= 130) || (data.diastolic_bp !== null && data.diastolic_bp >= 85)) {
-      score += 0.08;
     }
     
-    // HbA1c factor (diabetes indicator)
-    if (data.hba1c !== null) {
-      if (data.hba1c >= 6.5) {
-        score += 0.25;
-      } else if (data.hba1c >= 5.7) {
-        score += 0.15;
-      } else if (data.hba1c >= 5.5) {
-        score += 0.05;
-      }
+    // Cholesterol factors
+    if ((data.high_cholesterol === "Yes") || (data.high_cholesterol === "Yes, I have been told I have high cholesterol")) {
+      score += 0.15;
     }
     
-    // Glucose factor
-    if (data.glucose !== null) {
-      if (data.glucose >= 126) {
-        score += 0.2;
-      } else if (data.glucose >= 100) {
-        score += 0.1;
-      }
+    // Mental health factor
+    if (data.poor_mental_health !== null && data.poor_mental_health >= 3) { // Poor mental health score >= 3
+      score += 0.2;
     }
     
-    // Lifestyle factors
-    score += (10 - Math.min(10, data.daily_steps / 1000)) * 0.02; // More steps = lower risk
-    score += Math.max(0, 7 - (data.sleep_duration ?? 0)) * 0.02; // Less sleep = higher risk
-    score += (data.stress_level - 1) * 0.01; // More stress = higher risk
+    // Physical activity factor
+    if (data.physical_activity?.toLowerCase() === "yes") {
+      score += 0.1;
+    }
     
     // Cap the score between 0 and 1
     return Math.min(1, Math.max(0, score));
@@ -166,20 +135,20 @@ export default function Demo() {
       recs.push("Consider a weight management program to achieve a healthier BMI.");
     }
     
-    if (data.hba1c !== null && data.hba1c >= 5.7) {
-      recs.push("Monitor your blood sugar levels regularly and consult with a healthcare provider.");
+    if (data.high_blood_pressure === "yes") {
+      recs.push("Monitor your blood pressure regularly and consult with a healthcare provider.");
     }
     
-    if (data.daily_steps < 7000) {
-      recs.push("Aim for at least 7,000-10,000 steps per day for better health outcomes.");
+    if (data.high_cholesterol === "yes") {
+      recs.push("Monitor your cholesterol levels regularly and consult with a healthcare provider.");
     }
     
-    if (data.sleep_duration !== null && data.sleep_duration < 7) {
-      recs.push("Try to get 7-9 hours of sleep per night for optimal health.");
+    if (data.poor_mental_health !== null && data.poor_mental_health >= 3) {
+      recs.push("Consider seeking professional help for mental health concerns.");
     }
     
-    if (data.stress_level >= 7) {
-      recs.push("Consider stress-reduction techniques like meditation or yoga.");
+    if (data.physical_activity === "no") {
+      recs.push("Engage in regular physical activity to improve your overall health.");
     }
     
     if (recs.length === 0) {
@@ -213,11 +182,11 @@ export default function Demo() {
       
       // Identify top risk factors
       const topFactors = [
-        { factor: "HbA1c", impact: 0.3 },
         { factor: "BMI", impact: 0.25 },
         { factor: "Blood Pressure", impact: 0.2 },
-        { factor: "Physical Activity", impact: 0.15 },
-        { factor: "Age", impact: 0.1 }
+        { factor: "Cholesterol", impact: 0.2 },
+        { factor: "Mental Health", impact: 0.15 },
+        { factor: "Physical Activity", impact: 0.1 }
       ].sort((a, b) => b.impact - a.impact).slice(0, 3);
       
       // Generate mock result
@@ -228,7 +197,8 @@ export default function Demo() {
         timeline: timeline,
         top_factors: topFactors,
         recommendations: recommendations,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        diabetes_status: riskScore >= 0.7 ? 2 : (riskScore >= 0.4 ? 1 : 0) // 0: no-diabetes, 1: pre-diabetic, 2: diabetic
       };
 
       setResult(mockResult);
