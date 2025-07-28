@@ -147,7 +147,7 @@ export default function Demo() {
       recs.push("Consider seeking professional help for mental health concerns.");
     }
     
-    if (data.physical_activity === "No") {
+    if (data.physical_activity === "no") {
       recs.push("Engage in regular physical activity to improve your overall health.");
     }
     
