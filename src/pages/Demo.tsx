@@ -135,7 +135,7 @@ export default function Demo() {
       recs.push("Consider a weight management program to achieve a healthier BMI.");
     }
     
-    if (data.high_blood_pressure === "Yes" || data.high_blood_pressure === "Yes, I have been told I have high blood pressure") {
+    if (data.high_blood_pressure === "yes") {
       recs.push("Monitor your blood pressure regularly and consult with a healthcare provider.");
     }
     
