@@ -119,7 +119,7 @@ export default function Landing() {
               Advanced Health Assessment
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive analysis using state of theart machine learning algorithms
+              Comprehensive analysis using state of the art machine learning algorithms
             </p>
           </div>
 
@@ -137,7 +137,7 @@ export default function Landing() {
               <CardContent>
                 <p className="text-muted-foreground mb-4">
                   Applies machine learning algorithms trained on the BRFSS dataset to assess 
-                  Type 2 Diabetes risk based on real-world, population level health indicators.
+                  Type 2 Diabetes risk based on real world, population level health indicators.
                 </p>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
@@ -150,7 +150,7 @@ export default function Landing() {
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Trained on large-scale public health data from 400,000+ respondents
+                    Trained on large-scale public health data from 4,00,000+ respondents
                   </li>
                 </ul>
               </CardContent>
