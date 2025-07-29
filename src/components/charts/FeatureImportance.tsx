@@ -1,16 +1,16 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "HbA1c", importance: 1.0 },
-  { name: "Glucose", importance: 0.85 },
-  { name: "BMI", importance: 0.72 },
-  { name: "Age", importance: 0.68 },
-  { name: "Family History", importance: 0.55 },
-  { name: "Blood Pressure", importance: 0.48 },
-  { name: "Cholesterol", importance: 0.42 },
-  { name: "Triglycerides", importance: 0.38 },
-  { name: "Activity Level", importance: 0.32 },
-  { name: "Smoking", importance: 0.28 }
+  { name: "HbA1c", importance: 0.80 },
+  { name: "Glucose", importance: 0.75 },
+  { name: "BMI", importance: 0.70 },
+  { name: "Age", importance: 0.65 },
+  { name: "Family History", importance: 0.60 },
+  { name: "Blood Pressure", importance: 0.55 },
+  { name: "Cholesterol", importance: 0.50 },
+  { name: "Triglycerides", importance: 0.45 },
+  { name: "Activity Level", importance: 0.40 },
+  { name: "Smoking", importance: 0.35 }
 ];
 
 export function FeatureImportance() {
