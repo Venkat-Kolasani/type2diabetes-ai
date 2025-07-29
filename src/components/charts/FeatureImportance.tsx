@@ -1,16 +1,16 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "HbA1c", importance: 0.80 },
-  { name: "Glucose", importance: 0.75 },
-  { name: "BMI", importance: 0.70 },
-  { name: "Age", importance: 0.65 },
-  { name: "Family History", importance: 0.60 },
-  { name: "Blood Pressure", importance: 0.55 },
-  { name: "Cholesterol", importance: 0.50 },
-  { name: "Triglycerides", importance: 0.45 },
-  { name: "Activity Level", importance: 0.40 },
-  { name: "Smoking", importance: 0.35 }
+  { name: "HbA1c", importance: 8.25 },
+  { name: "Glucose", importance: 6.70 },
+  { name: "BMI", importance: 5.30 },
+  { name: "Age", importance: 4.30 },
+  { name: "Family History", importance: 3.15 },
+  { name: "Blood Pressure", importance: 2.50 },
+  { name: "Cholesterol", importance: 1.80 },
+  { name: "Triglycerides", importance: 1.65 },
+  { name: "Activity Level", importance: 1.40 },
+  { name: "Smoking", importance: 0.90 }
 ];
 
 export function FeatureImportance() {
@@ -21,8 +21,8 @@ export function FeatureImportance() {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis 
             type="number"
-            domain={[0, 1]}
-            tickFormatter={(value) => `${(value * 100).toFixed(0)}%`}
+            domain={[0, 9]}
+            tickFormatter={(value) => `${value.toFixed(1)}%`}
           />
           <YAxis 
             type="category"
@@ -31,7 +31,7 @@ export function FeatureImportance() {
             fontSize={12}
           />
           <Tooltip 
-            formatter={(value: number) => [`${(value * 100).toFixed(1)}%`, "Importance"]}
+            formatter={(value: number) => [`${value.toFixed(1)}%`, "SHAP Importance"]}
           />
           <Bar 
             dataKey="importance"
