@@ -1,5 +1,3 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-
 const data = [
   { feature: "HbA1c", importance: 0.80 },
   { feature: "Glucose", importance: 0.75 },
