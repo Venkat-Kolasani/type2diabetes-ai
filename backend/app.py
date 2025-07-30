@@ -3,6 +3,7 @@ import joblib
 import pandas as pd
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import sys
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -261,9 +262,22 @@ def health_check():
 
 # --- 4. Application Startup ---
 
-if __name__ == '__main__':
-    print("--- Starting Diabetes Risk Prediction Backend ---")
-    load_model()  # Pre-load the model on application startup
-    # Running in debug mode is convenient for development.
-    # For production, use a WSGI server like Gunicorn.
-    app.run(debug=True, port=5001)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5001))
+    
+    print("🚀 Starting Diabetes Risk Prediction Backend")
+    print(f"🐍 Python version: {sys.version}")
+    
+    # Load model before starting
+    load_model()
+    
+    if model is None:
+        print("⚠️  Model failed to load, but starting server anyway")
+    else:
+        print("✅ Model loaded successfully")
+    
+    print(f"🌐 Starting server on 0.0.0.0:{port}")
+    app.run(host="0.0.0.0", port=port, debug=False)
+
+# For Gunicorn compatibility, make app available at module level
+application = app
