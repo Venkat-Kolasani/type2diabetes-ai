@@ -305,7 +305,25 @@ def predict_endpoint():
 def health_check():
     """Health check endpoint to verify service status."""
     status = 'ok' if model is not None else 'error'
-    return jsonify({'status': status, 'model_loaded': model is not None})
+    
+    # Add debugging info about file system
+    debug_info = {
+        'current_dir': os.getcwd(),
+        'files_in_current_dir': os.listdir('.'),
+        'model_path_exists': os.path.exists(MODEL_PATH),
+        'model_path': MODEL_PATH
+    }
+    
+    if os.path.exists('model'):
+        debug_info['model_dir_contents'] = os.listdir('model')
+    else:
+        debug_info['model_dir_exists'] = False
+    
+    return jsonify({
+        'status': status, 
+        'model_loaded': model is not None,
+        'debug': debug_info
+    })
 
 # --- 4. Application Startup ---
 
