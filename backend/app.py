@@ -23,33 +23,70 @@ def load_model():
     try:
         if not os.path.exists(MODEL_PATH):
             print(f"ERROR: Model file not found at '{MODEL_PATH}'.")
+            print(f"Current working directory: {os.getcwd()}")
+            print(f"Contents of current directory: {os.listdir('.')}")
+            if os.path.exists('model'):
+                print(f"Contents of model directory: {os.listdir('model')}")
+            else:
+                print("Model directory does not exist")
             print("Please make sure your trained model is placed in the 'backend/model/' directory and named 'model.pkl'.")
             model = None
             return
             
+        print(f"Loading model from: {MODEL_PATH}")
         # Load the model data
         model_data = joblib.load(MODEL_PATH)
+        print(f"Loaded object type: {type(model_data)}")
         
         # Check if it's a dictionary with preprocessing pipeline
         if isinstance(model_data, dict):
             print(f"SUCCESS: Model dictionary loaded from '{MODEL_PATH}'.")
             print(f"Dictionary keys: {list(model_data.keys())}")
             
-            # Extract components
-            if 'model' in model_data:
-                actual_model = model_data['model']
-                scaler = model_data.get('scaler')
-                poly = model_data.get('poly')
-                selector = model_data.get('selector')
+            # Try different possible key names for the classifier
+            classifier = None
+            for key in ['model', 'classifier', 'lgb_model', 'lgbm_model']:
+                if key in model_data:
+                    classifier = model_data[key]
+                    print(f"Found classifier at key '{key}': {type(classifier).__name__}")
+                    break
+            
+            if classifier is None:
+                # Look for any object that has predict method
+                for key, value in model_data.items():
+                    if hasattr(value, 'predict') and callable(value.predict):
+                        classifier = value
+                        print(f"Found classifier-like object at key '{key}': {type(classifier).__name__}")
+                        break
+            
+            if classifier is not None:
+                # Try different possible key names for preprocessing components
+                scaler = None
+                for key in ['scaler', 'standard_scaler', 'StandardScaler']:
+                    if key in model_data:
+                        scaler = model_data[key]
+                        break
                 
-                print(f"✅ LightGBM Model: {type(actual_model).__name__}")
+                poly = None
+                for key in ['poly', 'polynomial_features', 'PolynomialFeatures']:
+                    if key in model_data:
+                        poly = model_data[key]
+                        break
+                
+                selector = None
+                for key in ['selector', 'feature_selector', 'SelectKBest']:
+                    if key in model_data:
+                        selector = model_data[key]
+                        break
+                
+                print(f"✅ Classifier: {type(classifier).__name__}")
                 print(f"✅ Scaler: {type(scaler).__name__ if scaler else 'None'}")
                 print(f"✅ Polynomial Features: {type(poly).__name__ if poly else 'None'}")
                 print(f"✅ Feature Selector: {type(selector).__name__ if selector else 'None'}")
                 
                 # Store the complete pipeline as a dictionary
                 model = {
-                    'classifier': actual_model,
+                    'classifier': classifier,
                     'scaler': scaler,
                     'poly': poly,
                     'selector': selector,
@@ -59,16 +96,26 @@ def load_model():
                 
                 print(f"🎯 Complete preprocessing pipeline loaded successfully!")
             else:
-                print("ERROR: No 'model' key found in the dictionary")
+                print("ERROR: No classifier found in the dictionary")
+                print(f"Available keys: {list(model_data.keys())}")
                 model = None
         # Handle case where model is directly a scikit-learn model
         elif hasattr(model_data, 'predict') and callable(model_data.predict):
-            model = {'classifier': model_data, 'scaler': None, 'poly': None, 'selector': None}
+            model = {
+                'classifier': model_data, 
+                'scaler': None, 
+                'poly': None, 
+                'selector': None,
+                'feature_names': None,
+                'threshold': 0.5
+            }
             print(f"SUCCESS: Direct model loaded from '{MODEL_PATH}'.")
             print(f"Model type: {type(model_data).__name__}")
         else:
             print("ERROR: The model file does not contain a valid model or dictionary.")
             print(f"Loaded object type: {type(model_data).__name__}")
+            if hasattr(model_data, '__dict__'):
+                print(f"Object attributes: {list(model_data.__dict__.keys())}")
             model = None
             
     except Exception as e:
