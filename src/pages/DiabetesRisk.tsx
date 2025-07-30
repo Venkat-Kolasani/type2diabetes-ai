@@ -4,6 +4,7 @@ import { DiabetesRiskForm } from "@/components/diabetes/DiabetesRiskForm";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { AlertCircle, Loader2 } from "lucide-react";
+import { API_CONFIG } from "@/config/api";
 
 export type FormData = {
   HighBP: number | null; HighChol: number | null; CholCheck: number | null; Smoker: number | null;
@@ -23,23 +24,68 @@ export default function DiabetesRisk() {
   const form = useForm<FormData>({ defaultValues: {} as FormData });
 
   const onSubmit = async (data: FormData) => {
-    setIsLoading(true); setError(null); setPrediction(null);
-    const payload = Object.fromEntries(
-      Object.entries(data).map(([k, v]) => [k, v ?? 0])
-    );
+    setIsLoading(true);
+    setPrediction(null);
+    setError(null);
+
     try {
-      const res = await fetch("http://localhost:5001/predict", {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+      // Convert null values to 0 for API compatibility
+      const payload = Object.fromEntries(
+        Object.entries(data).map(([key, value]) => [key, value ?? 0])
+      );
+
+      // Create timeout controller
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.TIMEOUT);
+
+      const res = await fetch(`${API_CONFIG.BACKEND_URL}${API_CONFIG.ENDPOINTS.PREDICT}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
+
       if (!res.ok) {
-        const e = await res.json().catch(() => ({}));
-        throw new Error(e.error || "Failed to get prediction");
+        // Handle different HTTP status codes
+        if (res.status >= 500) {
+          throw new Error('server');
+        } else if (res.status >= 400) {
+          throw new Error('validation');
+        } else {
+          throw new Error('network');
+        }
       }
-      const json: ApiResponse = await res.json();
+
+      const json = await res.json();
+      
+      // Validate response structure
+      if (typeof json.prediction !== 'number') {
+        throw new Error('validation');
+      }
+      
       setPrediction(json.prediction);
-    } catch (err: any) {
-      setError(err.message || "Unknown error");
-    } finally { setIsLoading(false); }
+    } catch (err) {
+      console.error("Prediction error:", err);
+      
+      // Set appropriate error message based on error type
+      let errorMessage = API_CONFIG.ERROR_MESSAGES.SERVER; // Default
+      
+      if (err instanceof Error) {
+        if (err.name === 'AbortError') {
+          errorMessage = API_CONFIG.ERROR_MESSAGES.TIMEOUT;
+        } else if (err.message === 'network') {
+          errorMessage = API_CONFIG.ERROR_MESSAGES.NETWORK;
+        } else if (err.message === 'validation') {
+          errorMessage = API_CONFIG.ERROR_MESSAGES.VALIDATION;
+        }
+      }
+      
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
