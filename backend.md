@@ -354,284 +354,33 @@ def generate_recommendations(risk_factors: List[str], risk_level: str, diabetes_
             'Schedule regular check-ups with your doctor'
         ])
     else:  # No diabetes
-        recommendations.extend([
-            'Maintain current healthy lifestyle',
-            'Continue regular health screenings',
-            'Focus on preventive care measures'
-        ])
-    
-    # Add general recommendations based on risk level
-    if risk_level == 'high':
-        recommendations.extend([
-            'Schedule comprehensive health screening',
-            'Consider working with a health coach or nutritionist'
-        ])
-    elif risk_level == 'medium':
-        recommendations.extend([
-            'Monitor key health metrics monthly',
-            'Consider lifestyle modification programs'
-        ])
-    
-    # Add universal recommendations
-    recommendations.extend([
-        'Maintain a balanced diet rich in fiber and low in processed foods',
-        'Stay hydrated and get adequate sleep',
-        'Manage stress through relaxation techniques or meditation',
-        'Build a support network for health goals'
-    ])
-    
-    # Remove duplicates and return top 8
-    return list(dict.fromkeys(recommendations))[:8]
-```
+       # Backend Documentation for Diabetes Risk Prediction
 
-### Step 5: Model Utilities Module
+## 1. Overview
 
-Create `utils/model_utils.py`:
-```python
-import joblib
-import numpy as np
-import pandas as pd
-from typing import Dict, Any, Optional, Tuple
-import os
-from .data_preprocessing import calculate_risk_factors, generate_recommendations
+This document outlines the structure and implementation of the Flask backend for the diabetes risk prediction application. The backend is designed to be a clean, production-ready system that serves a binary classification machine learning model.
 
-class ModelManager:
-    """Manages ML model loading and predictions for BRFSS dataset"""
-    
-    def __init__(self, model_path: str):
-        self.model_path = model_path
-        self.model = None
-        self.feature_names = None
-        self.load_model()
-    
-    def load_model(self) -> bool:
-        """
-        Load the ML model from file
-        
-        Returns:
-            bool: True if model loaded successfully
-        """
-        try:
-            if not os.path.exists(self.model_path):
-                raise FileNotFoundError(f"Model file not found: {self.model_path}")
-            
-            self.model = joblib.load(self.model_path)
-            
-            # Get feature names if available
-            if hasattr(self.model, 'feature_names_in_'):
-                self.feature_names = self.model.feature_names_in_
-            
-            print(f"Model loaded successfully from {self.model_path}")
-            return True
-            
-        except Exception as e:
-            print(f"Error loading model: {e}")
-            self.model = None
-            return False
-    
-    def is_model_loaded(self) -> bool:
-        """Check if model is loaded"""
-        return self.model is not None
-    
-    def get_model_info(self) -> Dict[str, Any]:
-        """Get model information"""
-        if not self.model:
-            return {'error': 'Model not loaded'}
-        
-        info = {
-            'model_type': type(self.model).__name__,
-            'feature_count': len(self.feature_names) if self.feature_names else 'Unknown',
-            'has_predict_proba': hasattr(self.model, 'predict_proba'),
-            'has_feature_importance': hasattr(self.model, 'feature_importances_'),
-            'dataset': 'BRFSS'
-        }
-        
-        return info
-    
-    def predict(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """
-        Make prediction using the loaded model
-        
-        Args:
-            data: Preprocessed data DataFrame
-            
-        Returns:
-            Dict containing prediction results
-        """
-        if not self.model:
-            raise Exception("Model not loaded")
-        
-        try:
-            # Make prediction
-            if hasattr(self.model, 'predict_proba'):
-                # Get probability prediction
-                probabilities = self.model.predict_proba(data)
-                
-                # For multi-class classification (0: no-diabetes, 1: pre-diabetic, 2: diabetic)
-                if probabilities.shape[1] == 3:
-                    diabetes_status = int(np.argmax(probabilities[0]))
-                    risk_score = float(np.max(probabilities[0]))
-                else:
-                    # Binary classification
-                    risk_score = float(probabilities[0][1])
-                    diabetes_status = 2 if risk_score > 0.5 else 0
-            else:
-                # Direct prediction
-                prediction = self.model.predict(data)
-                diabetes_status = int(prediction[0])
-                risk_score = float(prediction[0]) / 2.0  # Normalize to 0-1
-            
-            # Determine risk level
-            risk_level = self._determine_risk_level(risk_score, diabetes_status)
-            
-            # Calculate confidence
-            confidence = self._calculate_confidence(risk_score)
-            
-            # Generate timeline
-            timeline = self._generate_timeline(risk_level, diabetes_status)
-            
-            # Get feature importance
-            feature_importance = getattr(self.model, 'feature_importances_', None)
-            
-            return {
-                'risk_score': risk_score,
-                'risk_level': risk_level,
-                'diabetes_status': diabetes_status,
-                'confidence': confidence,
-                'timeline': timeline,
-                'feature_importance': feature_importance.tolist() if feature_importance is not None else None
-            }
-            
-        except Exception as e:
-            raise Exception(f"Prediction error: {e}")
-    
-    def _determine_risk_level(self, risk_score: float, diabetes_status: int) -> str:
-        """Determine risk level based on score and diabetes status"""
-        if diabetes_status == 2:  # Diabetic
-            return 'high'
-        elif diabetes_status == 1:  # Pre-diabetic
-            return 'medium'
-        else:  # No diabetes
-            if risk_score < 0.3:
-                return 'low'
-            elif risk_score < 0.6:
-                return 'medium'
-            else:
-                return 'high'
-    
-    def _calculate_confidence(self, risk_score: float) -> float:
-        """Calculate confidence based on distance from decision boundary"""
-        # Confidence is higher when score is further from 0.5
-        return float(abs(risk_score - 0.5) * 2)
-    
-    def _generate_timeline(self, risk_level: str, diabetes_status: int) -> List[Dict[str, Any]]:
-        """Generate timeline predictions based on risk level and diabetes status"""
-        if diabetes_status == 2:  # Diabetic
-            return [
-                {'years': 1, 'risk': 0.85},
-                {'years': 3, 'risk': 0.90},
-                {'years': 5, 'risk': 0.95},
-                {'years': 10, 'risk': 0.98}
-            ]
-        elif diabetes_status == 1:  # Pre-diabetic
-            return [
-                {'years': 1, 'risk': 0.60},
-                {'years': 3, 'risk': 0.75},
-                {'years': 5, 'risk': 0.85},
-                {'years': 10, 'risk': 0.92}
-            ]
-        else:  # No diabetes
-            base_risk = 0.2 if risk_level == 'medium' else 0.1
-            return [
-                {'years': 1, 'risk': base_risk},
-                {'years': 3, 'risk': base_risk * 1.2},
-                {'years': 5, 'risk': base_risk * 1.5},
-                {'years': 10, 'risk': base_risk * 2.0}
-            ]
+### Key Features
 
-def create_prediction_response(model_result: Dict[str, Any], form_data: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Create comprehensive prediction response for BRFSS data
-    
-    Args:
-        model_result: Result from model prediction
-        form_data: Original form data
-        
-    Returns:
-        Dict containing complete prediction response
-    """
-    from datetime import datetime
-    
-    # Calculate risk factors
-    top_factors = calculate_risk_factors(form_data, model_result.get('feature_importance'))
-    
-    # Generate recommendations
-    recommendations = generate_recommendations(
-        top_factors, 
-        model_result['risk_level'], 
-        model_result['diabetes_status']
-    )
-    
-    # Create response
-    response = {
-        'risk_score': model_result['risk_score'],
-        'risk_level': model_result['risk_level'],
-        'diabetes_status': model_result['diabetes_status'],
-        'confidence': model_result['confidence'],
-        'timeline': model_result['timeline'],
-        'top_factors': [{'factor': factor, 'impact': 0.2} for factor in top_factors],
-        'recommendations': recommendations,
-        'timestamp': datetime.now().isoformat()
-    }
-    
-    return response
-```
+- **Flask API**: A simple and robust RESTful API to handle prediction requests.
+- **Binary Classification**: The ML model predicts two classes: **0 (Diabetic)** and **1 (Pre-diabetic)**.
+- **Model Integration**: Clear instructions for integrating your pre-trained `.pkl` model file.
+- **Clean & Scalable**: No demo data or hardcoded logic. The code is organized for maintainability.
 
-### Step 6: Main Flask Application
+---
 
-Create `app.py`:
-```python
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from utils.data_preprocessing import preprocess_form_data, validate_input_data
-from utils.model_utils import ModelManager, create_prediction_response
-from config import Config
-import traceback
-from datetime import datetime
+## 2. Getting Started: Backend Setup
 
-# Initialize Flask app
-app = Flask(__name__)
-app.config.from_object(Config)
+### **IMPORTANT: Adding Your Model**
 
-# Enable CORS for React frontend
-CORS(app, origins=['http://localhost:5173', 'http://localhost:3000'])
+Before running the backend, you must add your trained model file:
 
-# Initialize model manager
-model_manager = ModelManager(app.config['MODEL_PATH'])
+1.  Create a directory named `model` inside the `backend` folder.
+2.  Place your trained `scikit-learn` model file inside this new directory.
+3.  **Rename the file to `model.pkl`**.
 
-@app.route('/api/health', methods=['GET'])
-def health_check():
-    """Health check endpoint"""
-    return jsonify({
-        'status': 'healthy',
-        'timestamp': datetime.now().isoformat(),
-        'model_loaded': model_manager.is_model_loaded(),
-        'model_info': model_manager.get_model_info(),
-        'dataset': 'BRFSS'
-    })
+Your final directory structure should look like this:
 
-@app.route('/api/predict', methods=['POST'])
-def predict():
-    """Main prediction endpoint for BRFSS data"""
-    try:
-        # Get JSON data from request
-        if not request.is_json:
-            return jsonify({'error': 'Content-Type must be application/json'}), 400
-        
-        form_data = request.get_json()
-        
-        if not form_data:
-            return jsonify({'error': 'No data provided'}), 400
         
         # Validate input data
         validation_result = validate_input_data(form_data)
