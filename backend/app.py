@@ -306,7 +306,7 @@ def health_check():
     """Health check endpoint to verify service status."""
     status = 'ok' if model is not None else 'error'
     
-    # Add debugging info about file system
+    # Add debugging info about file system and model loading
     debug_info = {
         'current_dir': os.getcwd(),
         'files_in_current_dir': os.listdir('.'),
@@ -318,6 +318,25 @@ def health_check():
         debug_info['model_dir_contents'] = os.listdir('model')
     else:
         debug_info['model_dir_exists'] = False
+    
+    # Try to load model and capture the specific error
+    if model is None:
+        try:
+            import joblib
+            test_model = joblib.load(MODEL_PATH)
+            debug_info['model_load_test'] = {
+                'success': True,
+                'type': str(type(test_model)),
+                'is_dict': isinstance(test_model, dict)
+            }
+            if isinstance(test_model, dict):
+                debug_info['model_load_test']['keys'] = list(test_model.keys())
+        except Exception as e:
+            debug_info['model_load_test'] = {
+                'success': False,
+                'error': str(e),
+                'error_type': str(type(e).__name__)
+            }
     
     return jsonify({
         'status': status, 
