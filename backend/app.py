@@ -26,42 +26,48 @@ def load_model():
             model = None
             return
             
-        # Load the model
-        loaded = joblib.load(MODEL_PATH)
+        # Load the model data
+        model_data = joblib.load(MODEL_PATH)
         
-        # Check if the loaded object is a scikit-learn model or similar
-        if hasattr(loaded, 'predict') and callable(loaded.predict):
-            model = loaded
-            print(f"SUCCESS: Model loaded successfully from '{MODEL_PATH}'.")
-            print(f"Model type: {type(model).__name__}")
+        # Check if it's a dictionary with preprocessing pipeline
+        if isinstance(model_data, dict):
+            print(f"SUCCESS: Model dictionary loaded from '{MODEL_PATH}'.")
+            print(f"Dictionary keys: {list(model_data.keys())}")
             
-            # Print model information
-            if hasattr(model, 'feature_name_'):  # LightGBM specific
-                feature_names = model.feature_name_
-                if hasattr(feature_names, 'tolist'):
-                    feature_names = feature_names.tolist()
-                print(f"\nModel expects {len(feature_names)} features:")
-                print(", ".join(feature_names))
-            elif hasattr(model, 'feature_importances_'):
-                print(f"\nModel expects {len(model.feature_importances_)} features")
-            
-            # If it's a scikit-learn model, try to print its parameters
-            if hasattr(model, 'get_params'):
-                print("\nModel parameters:")
-                for param, value in list(model.get_params().items())[:10]:  # Show first 10 params
-                    print(f"  {param}: {value}")
-                if len(model.get_params()) > 10:
-                    print(f"  ... and {len(model.get_params()) - 10} more parameters")
-        # Handle case where model is saved as a dictionary with 'model' key
-        elif isinstance(loaded, dict) and 'model' in loaded and hasattr(loaded['model'], 'predict'):
-            model = loaded['model']
-            print(f"SUCCESS: Model loaded from dictionary at '{MODEL_PATH}'.")
-            print(f"Model type: {type(model).__name__}")
+            # Extract components
+            if 'model' in model_data:
+                actual_model = model_data['model']
+                scaler = model_data.get('scaler')
+                poly = model_data.get('poly')
+                selector = model_data.get('selector')
+                
+                print(f"✅ LightGBM Model: {type(actual_model).__name__}")
+                print(f"✅ Scaler: {type(scaler).__name__ if scaler else 'None'}")
+                print(f"✅ Polynomial Features: {type(poly).__name__ if poly else 'None'}")
+                print(f"✅ Feature Selector: {type(selector).__name__ if selector else 'None'}")
+                
+                # Store the complete pipeline as a dictionary
+                model = {
+                    'classifier': actual_model,
+                    'scaler': scaler,
+                    'poly': poly,
+                    'selector': selector,
+                    'feature_names': model_data.get('feature_names'),
+                    'threshold': model_data.get('threshold', 0.5)
+                }
+                
+                print(f"🎯 Complete preprocessing pipeline loaded successfully!")
+            else:
+                print("ERROR: No 'model' key found in the dictionary")
+                model = None
+        # Handle case where model is directly a scikit-learn model
+        elif hasattr(model_data, 'predict') and callable(model_data.predict):
+            model = {'classifier': model_data, 'scaler': None, 'poly': None, 'selector': None}
+            print(f"SUCCESS: Direct model loaded from '{MODEL_PATH}'.")
+            print(f"Model type: {type(model_data).__name__}")
         else:
-            print("ERROR: The model file does not appear to be a valid scikit-learn model.")
-            print(f"Loaded object type: {type(loaded).__name__}")
-            print("If you saved a dictionary, make sure the model is stored under a 'model' key.")
-            print("For example, use: joblib.dump({'model': your_model}, 'model.pkl')")
+            print("ERROR: The model file does not contain a valid model or dictionary.")
+            print(f"Loaded object type: {type(model_data).__name__}")
             model = None
             
     except Exception as e:
@@ -144,50 +150,89 @@ def predict_endpoint():
 
     # Make prediction
     try:
-        print("\n=== Prediction Debug Info ===")
-        print(f"Input data shape: {data_df.shape}")
-        print(f"Input data columns: {data_df.columns.tolist()}")
-        print(f"Input data dtypes: {data_df.dtypes.to_dict()}")
-        print(f"First row values: {data_df.iloc[0].to_dict()}")
+        print("\n=== 🔍 DETAILED PREDICTION DEBUG ===")
+        print(f"📊 Received JSON data: {json_data}")
+        print(f"📏 Input data shape: {data_df.shape}")
+        print(f"📋 Input data columns: {data_df.columns.tolist()}")
+        print(f"� First row values: {data_df.iloc[0].to_dict()}")
         
-        # Get model's expected features
-        expected_features = []
-        if hasattr(model, 'feature_name_'):  # LightGBM
-            expected_features = model.feature_name_
-            if hasattr(expected_features, 'tolist'):
-                expected_features = expected_features.tolist()
-        elif hasattr(model, 'feature_names_in_'):  # scikit-learn
-            expected_features = model.feature_names_in_.tolist()
+        # Check if model is properly loaded with preprocessing pipeline
+        if not isinstance(model, dict) or 'classifier' not in model:
+            print("❌ Model not properly loaded or missing preprocessing components")
+            return jsonify({'error': 'Model not properly configured'}), 500
         
-        if expected_features:
-            print(f"\nModel expects {len(expected_features)} features:")
-            print(", ".join(expected_features))
+        classifier = model['classifier']
+        scaler = model['scaler']
+        poly = model['poly']
+        selector = model['selector']
+        threshold = model.get('threshold', 0.5)
+        
+        print(f"🎯 Model components loaded:")
+        print(f"  Classifier: {type(classifier).__name__}")
+        print(f"  Scaler: {type(scaler).__name__ if scaler else 'None'}")
+        print(f"  Polynomial: {type(poly).__name__ if poly else 'None'}")
+        print(f"  Selector: {type(selector).__name__ if selector else 'None'}")
+        print(f"  Threshold: {threshold}")
+        
+        # Apply preprocessing pipeline in correct order
+        processed_data = data_df.copy()
+        
+        # Step 1: Apply polynomial features FIRST (21 → 231 features)
+        if poly is not None:
+            print("🔄 Applying PolynomialFeatures...")
+            processed_array = poly.transform(processed_data)
+            print(f"📏 After polynomial: shape {processed_array.shape}")
             
-            # If there's a mismatch, create a DataFrame with all expected features
-            if set(data_df.columns) != set(expected_features):
-                print("\nFeature mismatch detected. Adjusting input features...")
-                # Create a new DataFrame with all expected features, filled with 0
-                adjusted_df = pd.DataFrame(0, index=[0], columns=expected_features)
-                # Fill in the values we have
-                for col in data_df.columns:
-                    if col in adjusted_df.columns:
-                        adjusted_df[col] = data_df[col].values
-                data_df = adjusted_df
-                print(f"Adjusted input shape: {data_df.shape}")
+            # Get feature names if available
+            try:
+                poly_feature_names = poly.get_feature_names_out(processed_data.columns)
+                processed_data = pd.DataFrame(processed_array, columns=poly_feature_names)
+            except:
+                processed_data = pd.DataFrame(processed_array)
         
-        # Make prediction with disabled shape check for LightGBM
-        if hasattr(model, 'predict') and 'lightgbm' in str(type(model)).lower():
-            import lightgbm as lgb
-            prediction = model.predict(data_df, predict_disable_shape_check=True)
+        # Step 2: Apply feature selection SECOND (231 → 75 features)
+        if selector is not None:
+            print("🔄 Applying SelectKBest...")
+            processed_array = selector.transform(processed_data)
+            print(f"📏 After selection: shape {processed_array.shape}")
+            
+            # Create DataFrame with selected features
+            try:
+                selected_features = selector.get_feature_names_out()
+                processed_data = pd.DataFrame(processed_array, columns=selected_features)
+            except:
+                processed_data = pd.DataFrame(processed_array)
+        
+        # Step 3: Apply scaling LAST (75 features)
+        if scaler is not None:
+            print("🔄 Applying StandardScaler...")
+            processed_data = pd.DataFrame(
+                scaler.transform(processed_data),
+                columns=processed_data.columns
+            )
+            print(f"📊 After scaling: shape {processed_data.shape}")
+        
+        print(f"✅ Final processed data shape: {processed_data.shape}")
+        
+        # Make prediction with the classifier
+        prediction_proba = classifier.predict_proba(processed_data)[0]
+        prediction_class = classifier.predict(processed_data)[0]
+        
+        print(f"📊 Prediction probabilities: {prediction_proba}")
+        print(f"🎯 Prediction class: {prediction_class}")
+        print(f"🎯 Using threshold: {threshold}")
+        
+        # Apply custom threshold if specified
+        if len(prediction_proba) >= 2:
+            diabetes_probability = prediction_proba[1]  # Probability of diabetes
+            final_prediction = 1 if diabetes_probability >= threshold else 0
+            print(f"📈 Diabetes probability: {diabetes_probability:.4f}")
+            print(f"🏁 Final prediction (with threshold): {final_prediction}")
         else:
-            prediction = model.predict(data_df)
-            
-        print(f"Prediction result: {prediction}")
+            final_prediction = int(prediction_class)
+            print(f"🏁 Final prediction (direct): {final_prediction}")
         
-        # The result is a numpy array, get the first element
-        result = int(prediction[0])
-        # The model predicts 0 (Diabetic) or 1 (Pre-diabetic)
-        return jsonify({'prediction': result})
+        return jsonify({'prediction': final_prediction})
 
     except Exception as e:
         import traceback
