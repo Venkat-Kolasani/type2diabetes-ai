@@ -1,218 +1,78 @@
-# BRFSS Diabetes Risk Assessment Platform - Complete Documentation
+# Diabetes Risk Prediction Platform - Documentation
 
-## Table of Contents
-1. [Project Overview](#project-overview)
-2. [Project Structure](#project-structure)
-3. [Frontend Architecture](#frontend-architecture)
-4. [Component Documentation](#component-documentation)
-5. [Pages Documentation](#pages-documentation)
-6. [UI Components](#ui-components)
-7. [Data Flow](#data-flow)
-8. [Flask Backend Implementation](#flask-backend-implementation)
-9. [ML Model Integration](#ml-model-integration)
-10. [API Endpoints](#api-endpoints)
-11. [Setup Instructions](#setup-instructions)
-12. [Troubleshooting](#troubleshooting)
+## 1. Project Overview
 
-## Project Overview
+This document provides comprehensive documentation for the Diabetes Risk Prediction platform, a full-stack application designed to predict a user's diabetic status based on a set of health and lifestyle indicators. The platform features a React frontend for data input and a Flask backend that serves a binary classification machine learning model.
 
-This is a comprehensive diabetes risk assessment platform built with React, TypeScript, and Tailwind CSS on the frontend, designed to integrate with a Flask backend and machine learning model trained on the BRFSS (Behavioral Risk Factor Surveillance System) dataset for real-time predictions.
+### Core Functionality
 
-### Key Features
-- Interactive form for BRFSS health data collection
-- Real-time diabetes risk assessment using ML model
-- Three-class diabetes status prediction (0: no-diabetes, 1: pre-diabetic, 2: diabetic)
-- Visual risk representation with charts
-- Responsive design with dark/light theme support
-- Comprehensive results with personalized recommendations
+-   **User-Friendly Form**: An interactive form for users to input 26 health and lifestyle metrics.
+-   **Binary Classification**: The backend uses a pre-trained model to classify users into one of two categories:
+    -   `0`: **Diabetic**
+    -   `1`: **Pre-diabetic**
+-   **Clean Architecture**: The system is designed with a clear separation between the frontend and a production-ready backend.
 
-### Technology Stack
-- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS
-- **UI Components**: Radix UI, Shadcn/ui
-- **Charts**: Recharts
-- **Forms**: React Hook Form
-- **Routing**: React Router DOM
-- **Backend**: Flask (Python)
-- **ML**: Scikit-learn, Pandas, NumPy
-- **Dataset**: BRFSS (Behavioral Risk Factor Surveillance System)
+---
 
-## Project Structure
+## 2. Project & Directory Structure
+
+The project is organized into two main parts: a `frontend` directory for the React application and a `backend` directory for the Flask API.
 
 ```
-├── public/
-│   ├── favicon.ico
-│   ├── robots.txt
-│   └── placeholder.svg
-├── src/
-│   ├── components/
-│   │   ├── charts/           # Chart components
-│   │   ├── demo/             # Demo page components
-│   │   ├── layout/           # Layout components
-│   │   └── ui/               # Reusable UI components
-│   ├── hooks/                # Custom React hooks
-│   ├── lib/                  # Utility functions
-│   ├── pages/                # Page components
-│   ├── App.tsx               # Main App component
-│   ├── index.css             # Global styles & design tokens
-│   └── main.tsx              # Application entry point
-├── backend/                  # Flask backend (to be created)
-│   ├── app.py               # Flask application
-│   ├── requirements.txt     # Python dependencies
-│   ├── models/              # ML model directory
-│   └── utils/               # Helper functions
-├── documentation.md          # This file
-└── backend.md               # Backend documentation
+/diabetes-risk-predict
+|-- /backend
+|   |-- /model
+|   |   |-- model.pkl  <-- YOUR TRAINED MODEL GOES HERE
+|   |-- app.py
+|   |-- requirements.txt
+|   |-- Dockerfile
+|
+|-- /frontend
+|   |-- /src
+|   |   |-- /components
+|   |   |-- ... (other React files)
+|   |-- package.json
+|
+|-- backend.md
+|-- documentation.md
+|-- README.md
 ```
 
-## Frontend Architecture
+---
 
-### Design System
-The project uses a comprehensive design system with:
-- **Color Tokens**: HSL-based semantic colors in `index.css`
-- **Component Variants**: Customizable UI components with multiple variants
-- **Typography**: Consistent font scales and weights
-- **Spacing**: Systematic spacing using Tailwind utilities
-- **Responsive Design**: Mobile-first approach with breakpoints
+## 3. Backend Guide
 
-### Key Files
-- `index.css`: Design tokens, CSS variables, and global styles
-- `tailwind.config.ts`: Tailwind configuration with custom theme
-- `lib/utils.ts`: Utility functions for className merging
+The backend is a simple yet robust Flask application. For detailed setup, API endpoint definitions, and deployment instructions, please refer to the official backend guide:
 
-## Component Documentation
+**[-> Open Backend Documentation](./backend.md)**
 
-### Charts Components (`src/components/charts/`)
+### **Crucial Step: Adding Your Model**
 
-#### ConfusionMatrix.tsx
-```typescript
-// Displays confusion matrix visualization
-interface ConfusionMatrixProps {
-  data: number[][];
-  labels: string[];
-}
-```
+As outlined in `backend.md`, the single most important setup step is placing your trained model file at `backend/model/model.pkl`.
 
-#### FeatureImportance.tsx
-```typescript
-// Shows feature importance in ML model
-interface FeatureImportanceProps {
-  features: { name: string; importance: number }[];
-}
-```
+---
 
-#### ModelComparison.tsx
-```typescript
-// Compares different ML models
-interface ModelComparisonProps {
-  models: { name: string; accuracy: number; precision: number; recall: number }[];
-}
-```
+## 4. Frontend Guide
 
-#### ROCCurve.tsx
-```typescript
-// Displays ROC curve for model evaluation
-interface ROCCurveProps {
-  data: { fpr: number; tpr: number }[];
-  auc: number;
-}
-```
+The frontend is a modern React application built with TypeScript and styled with Tailwind CSS.
 
-### Demo Components (`src/components/demo/`)
+### Technologies
 
-#### InputForm.tsx
-**Purpose**: Collects BRFSS health data for diabetes risk assessment
-**Key Features**:
-- Form validation using React Hook Form
-- Organized sections: Demographics, Clinical Data, Lifestyle & Behavioral Stats, Mental & Physical Health Stats
-- Real-time validation with error messages
-- Responsive design
+-   **React**: The core library for building the user interface.
+-   **TypeScript**: Provides static typing for improved code quality and maintainability.
+-   **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+-   **react-hook-form**: Manages form state and validation efficiently.
+-   **axios**: A promise-based HTTP client for making API calls to the backend.
 
-```typescript
-interface InputFormProps {
-  form: UseFormReturn<FormData>;
-  onSubmit: (data: FormData) => void;
-  isLoading: boolean;
-  disabled: boolean;
-}
+### API Communication
 
-// Form sections:
-// 1. Demographics: Age (slider), Sex (radio), Education (select), Income (select)
-// 2. Clinical Data: BMI, High Blood Pressure, High Cholesterol, etc.
-// 3. Lifestyle & Behavioral: Smoking, Alcohol, Physical Activity, Diet
-// 4. Mental & Physical Health: Mental health days, Physical health days, Medical history
-```
+The frontend sends user data to the backend's `/predict` endpoint.
 
-#### ResultsPanel.tsx
-**Purpose**: Displays prediction results and recommendations
-**Key Features**:
-- Diabetes status display (No Diabetes, Pre-Diabetic, Diabetic)
-- Risk level visualization with color coding
-- Progress bars for risk scores
-- Timeline predictions
-- Top risk factors identification
-- Personalized recommendations
-- Medical disclaimer
+-   **Request**: A `POST` request is made with a JSON object containing the 26 features from the form.
+-   **Response**: It expects a JSON response from the backend with a `prediction` key (e.g., `{"prediction": 1}`).
 
-```typescript
-interface ResultsPanelProps {
-  result: PredictionResult;
-}
+**Example API Call Snippet:**
 
-// Diabetes status: 0 (No Diabetes), 1 (Pre-Diabetic), 2 (Diabetic)
-// Risk levels: Low (green), Medium (orange), High (red)
-// Components: Badge, Progress, Card, Alert
-```
-
-#### RiskVisualization.tsx
-**Purpose**: Visual representation of risk score using pie chart
-**Key Features**:
-- Donut chart showing risk percentage
-- Dynamic color based on risk level
-- Centered risk score display
-- Responsive design
-
-```typescript
-interface RiskVisualizationProps {
-  riskScore: number; // 0-1 scale
-}
-
-// Colors: Green (<30%), Orange (30-70%), Red (>70%)
-```
-
-### Layout Components (`src/components/layout/`)
-
-#### Navigation.tsx
-**Purpose**: Main navigation component
-**Features**:
-- Responsive navigation menu
-- Active route highlighting
-- Mobile-friendly hamburger menu
-- Theme integration
-
-#### Footer.tsx
-**Purpose**: Site footer with links and information
-**Features**:
-- Copyright information
-- Social media links
-- Additional navigation
-
-## Pages Documentation
-
-### Index.tsx
-**Purpose**: Homepage/landing page
-**Content**: Welcome message, platform introduction, navigation to demo
-
-### About.tsx
-**Purpose**: Information about the platform
-**Content**: Platform description, methodology, team information
-
-### Demo.tsx
-**Purpose**: Main diabetes risk assessment interface using BRFSS data
-**Key Features**:
-- Form management with React Hook Form
-- State management for loading, results, and errors
-- API integration (currently mocked)
-- Result display and form reset functionality
 
 ```typescript
 export type FormData = {
