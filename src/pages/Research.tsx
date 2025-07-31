@@ -103,21 +103,22 @@ export default function Research() {
                   <span>Dataset Information</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <CardContent className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* Dataset Statistics */}
                   <div>
                     <h3 className="font-semibold mb-3">Dataset Statistics</h3>
-                    <div className="space-y-2">
+                    <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Total Samples:</span>
                         <span className="font-medium">200,000+</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Data Points</span>
+                        <span className="text-muted-foreground">Data Points:</span>
                         <span className="font-medium">30+ health indicators</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Features:</span>
+                        <span className="text-muted-foreground">Features Used for Prediction:</span>
                         <span className="font-medium">10</span>
                       </div>
                       <div className="flex justify-between">
@@ -130,73 +131,73 @@ export default function Research() {
                       </div>
                     </div>
                   </div>
-
+                  {/* Feature Categories */}
                   <div>
                     <h3 className="font-semibold mb-3">Feature Categories</h3>
-                    <div className="space-y-3">
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm text-muted-foreground">Demographic</span>
-                          <span className="text-sm font-medium">2 features</span>
-                        </div>
-                        <Progress value={20} className="h-2" />
+                    <div className="space-y-3 text-sm">
+                      <div className="flex items-center">
+                        <span className="text-muted-foreground w-56">Demographic</span>
+                        <Progress value={30} className="h-2 flex-1 mx-2" />
+                        <span className="font-medium w-20 text-right">4 features</span>
                       </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm text-muted-foreground">Clinical</span>
-                          <span className="text-sm font-medium">3 features</span>
-                        </div>
-                        <Progress value={30} className="h-2" />
+                      <div className="flex items-center">
+                        <span className="text-muted-foreground w-56">Clinical</span>
+                        <Progress value={80} className="h-2 flex-1 mx-2" />
+                        <span className="font-medium w-20 text-right">8 features</span>
                       </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm text-muted-foreground">Laboratory</span>
-                          <span className="text-sm font-medium">3 features</span>
-                        </div>
-                        <Progress value={30} className="h-2" />
+                      <div className="flex items-center">
+                        <span className="text-muted-foreground w-56">Lifestyle & Behavioral Stats</span>
+                        <Progress value={25} className="h-2 flex-1 mx-2" />
+                        <span className="font-medium w-20 text-right">3 features</span>
                       </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm text-muted-foreground">Lifestyle</span>
-                          <span className="text-sm font-medium">2 features</span>
-                        </div>
-                        <Progress value={20} className="h-2" />
+                      <div className="flex items-center">
+                        <span className="text-muted-foreground w-56">Mental & Physical Health Stats</span>
+                        <Progress value={25} className="h-2 flex-1 mx-2" />
+                        <span className="font-medium w-20 text-right">3 features</span>
                       </div>
                     </div>
                   </div>
                 </div>
-
+                {/* Feature Descriptions */}
                 <div>
                   <h3 className="font-semibold mb-3">Feature Descriptions</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Badge variant="outline">Demographic</Badge>
-                      <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• Age (years)</li>
-                        <li>• Family History</li>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                    <div>
+                      <Badge variant="outline" className="mb-2">Demographic Information</Badge>
+                      <ul className="space-y-1 text-muted-foreground">
+                        <li><span className="font-medium">Age</span> – Participant’s age</li>
+                        <li><span className="font-medium">Sex</span> – Biological sex (Male/Female/Other)</li>
+                        <li><span className="font-medium">Education</span> – Highest level of education attained</li>
+                        <li><span className="font-medium">Income</span> – Income level (actual or categorical)</li>
                       </ul>
                     </div>
-                    <div className="space-y-2">
-                      <Badge variant="outline">Clinical</Badge>
-                      <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• BMI (Body Mass Index)</li>
-                        <li>• Blood Pressure (mmHg)</li>
-                        <li>• Smoking</li>
+                    <div>
+                      <Badge variant="outline" className="mb-2">Lifestyle & Behavioral Stats</Badge>
+                      <ul className="space-y-1 text-muted-foreground">
+                        <li><span className="font-medium">Smoked 100 Cigarettes in Life</span> – Ever smoked at least 100 cigarettes (Yes/No)</li>
+                        <li><span className="font-medium">Heavy Alcohol Consumption</span> – Engages in heavy drinking</li>
+                        <li><span className="font-medium">Physical Activity (last 30 days)</span> – Participated in any physical activity recently (Yes/No)</li>
                       </ul>
                     </div>
-                    <div className="space-y-2">
-                      <Badge variant="outline">Laboratory</Badge>
-                      <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• Fasting Glucose (mg/dL)</li>
-                        <li>• HbA1c (%)</li>
-                        <li>• Cholesterol & Triglycerides (mg/dL)</li>
+                    <div>
+                      <Badge variant="outline" className="mb-2">Clinical Data</Badge>
+                      <ul className="space-y-1 text-muted-foreground">
+                        <li><span className="font-medium">BMI</span> – Body Mass Index</li>
+                        <li><span className="font-medium">High Blood Pressure</span> – Diagnosed with hypertension (Yes/No)</li>
+                        <li><span className="font-medium">High Cholesterol</span> – Diagnosed with high cholesterol (Yes/No)</li>
+                        <li><span className="font-medium">Cholesterol Check (past 5 years)</span> – Had a cholesterol check within the past 5 years (Yes/No)</li>
+                        <li><span className="font-medium">General Health Rating</span> – Self-assessment of general health</li>
+                        <li><span className="font-medium">Difficulty Walking</span> – Trouble walking or climbing stairs (Yes/No)</li>
+                        <li><span className="font-medium">Couldn’t See Doctor Due to Cost</span> – Skipped care due to cost (Yes/No)</li>
+                        <li><span className="font-medium">Has Any Form of Healthcare</span> – Has insurance or coverage (Yes/No)</li>
                       </ul>
                     </div>
-                    <div className="space-y-2">
-                      <Badge variant="outline">Lifestyle</Badge>
-                      <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• Activity Level</li>
-                        <li>• Study Group</li>
+                    <div>
+                      <Badge variant="outline" className="mb-2">Mental & Physical Health Stats</Badge>
+                      <ul className="space-y-1 text-muted-foreground">
+                        <li><span className="font-medium">Days of Poor Mental Health (last 30)</span> – Number of days mental health was not good</li>
+                        <li><span className="font-medium">Days of Poor Physical Health (last 30)</span> – Number of days physical health was not good</li>
+                        <li><span className="font-medium">History of Stroke</span> – Ever had a stroke (Yes/No)</li>
                       </ul>
                     </div>
                   </div>
