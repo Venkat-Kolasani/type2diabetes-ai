@@ -11,3 +11,6 @@ yarn-debug.log*
 yarn-error.log*
 .DS_Store
 *.log
+
+# Backend training folder - ignore everything except train.py
+backend/training/*
