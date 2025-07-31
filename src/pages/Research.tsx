@@ -119,7 +119,7 @@ export default function Research() {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Features Used for Prediction:</span>
-                        <span className="font-medium">10</span>
+                        <span className="font-medium">75</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Data Types:</span>
