@@ -34,89 +34,49 @@ def load_model():
             return
             
         print(f"Loading model from: {MODEL_PATH}")
-        # Load the model data
-        model_data = joblib.load(MODEL_PATH)
-        print(f"Loaded object type: {type(model_data)}")
         
-        # Check if it's a dictionary with preprocessing pipeline
-        if isinstance(model_data, dict):
-            print(f"SUCCESS: Model dictionary loaded from '{MODEL_PATH}'.")
-            print(f"Dictionary keys: {list(model_data.keys())}")
+        # Load the trained model
+        classifier = joblib.load(MODEL_PATH)
+        print(f"Loaded model type: {type(classifier)}")
+        
+        # Load the preprocessing pipeline
+        pipeline_path = os.path.join(MODEL_DIR, 'preprocessing_pipeline.pkl')
+        if os.path.exists(pipeline_path):
+            preprocessing_pipeline = joblib.load(pipeline_path)
+            print(f"Loaded preprocessing pipeline: {list(preprocessing_pipeline.keys())}")
             
-            # Try different possible key names for the classifier
-            classifier = None
-            for key in ['model', 'classifier', 'lgb_model', 'lgbm_model']:
-                if key in model_data:
-                    classifier = model_data[key]
-                    print(f"Found classifier at key '{key}': {type(classifier).__name__}")
-                    break
+            # Combine model and preprocessing into expected format
+            model = {
+                'classifier': classifier,
+                'scaler': preprocessing_pipeline.get('scaler'),
+                'poly': preprocessing_pipeline.get('poly_features'),
+                'selector': preprocessing_pipeline.get('feature_selector'),
+                'feature_names': preprocessing_pipeline.get('feature_names'),
+                'threshold': 0.5  # Default threshold
+            }
             
-            if classifier is None:
-                # Look for any object that has predict method
-                for key, value in model_data.items():
-                    if hasattr(value, 'predict') and callable(value.predict):
-                        classifier = value
-                        print(f"Found classifier-like object at key '{key}': {type(classifier).__name__}")
-                        break
+            print(f"✅ Model loaded successfully: {type(classifier).__name__}")
+            print(f"✅ Scaler: {type(model['scaler']).__name__ if model['scaler'] else 'None'}")
+            print(f"✅ Polynomial Features: {type(model['poly']).__name__ if model['poly'] else 'None'}")
+            print(f"✅ Feature Selector: {type(model['selector']).__name__ if model['selector'] else 'None'}")
+            print(f"🎯 Complete preprocessing pipeline loaded successfully!")
             
-            if classifier is not None:
-                # Try different possible key names for preprocessing components
-                scaler = None
-                for key in ['scaler', 'standard_scaler', 'StandardScaler']:
-                    if key in model_data:
-                        scaler = model_data[key]
-                        break
-                
-                poly = None
-                for key in ['poly', 'polynomial_features', 'PolynomialFeatures']:
-                    if key in model_data:
-                        poly = model_data[key]
-                        break
-                
-                selector = None
-                for key in ['selector', 'feature_selector', 'SelectKBest']:
-                    if key in model_data:
-                        selector = model_data[key]
-                        break
-                
-                print(f"✅ Classifier: {type(classifier).__name__}")
-                print(f"✅ Scaler: {type(scaler).__name__ if scaler else 'None'}")
-                print(f"✅ Polynomial Features: {type(poly).__name__ if poly else 'None'}")
-                print(f"✅ Feature Selector: {type(selector).__name__ if selector else 'None'}")
-                
-                # Store the complete pipeline as a dictionary
+        else:
+            print("WARNING: Preprocessing pipeline not found. Using model only.")
+            # If no preprocessing pipeline, assume it's a simple model
+            if hasattr(classifier, 'predict'):
                 model = {
                     'classifier': classifier,
-                    'scaler': scaler,
-                    'poly': poly,
-                    'selector': selector,
-                    'feature_names': model_data.get('feature_names'),
-                    'threshold': model_data.get('threshold', 0.5)
+                    'scaler': None,
+                    'poly': None,
+                    'selector': None,
+                    'feature_names': None,
+                    'threshold': 0.5
                 }
-                
-                print(f"🎯 Complete preprocessing pipeline loaded successfully!")
+                print(f"✅ Simple model loaded: {type(classifier).__name__}")
             else:
-                print("ERROR: No classifier found in the dictionary")
-                print(f"Available keys: {list(model_data.keys())}")
+                print("ERROR: Loaded object doesn't have predict method")
                 model = None
-        # Handle case where model is directly a scikit-learn model
-        elif hasattr(model_data, 'predict') and callable(model_data.predict):
-            model = {
-                'classifier': model_data, 
-                'scaler': None, 
-                'poly': None, 
-                'selector': None,
-                'feature_names': None,
-                'threshold': 0.5
-            }
-            print(f"SUCCESS: Direct model loaded from '{MODEL_PATH}'.")
-            print(f"Model type: {type(model_data).__name__}")
-        else:
-            print("ERROR: The model file does not contain a valid model or dictionary.")
-            print(f"Loaded object type: {type(model_data).__name__}")
-            if hasattr(model_data, '__dict__'):
-                print(f"Object attributes: {list(model_data.__dict__.keys())}")
-            model = None
             
     except Exception as e:
         import traceback

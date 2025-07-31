@@ -11,3 +11,12 @@ yarn-debug.log*
 yarn-error.log*
 .DS_Store
 *.log
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Training folder (except train.py)
+backend/training/*
+!backend/training/train.py
