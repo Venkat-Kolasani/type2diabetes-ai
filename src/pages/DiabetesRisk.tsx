@@ -28,7 +28,7 @@ export default function DiabetesRisk() {
       Object.entries(data).map(([k, v]) => [k, v ?? 0])
     );
     try {
-      const res = await fetch("http://localhost:5001/predict", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'https://type2diabetes-ai-backend.up.railway.app'}/predict`, {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
       });
       if (!res.ok) {
