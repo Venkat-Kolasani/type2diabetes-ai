@@ -1,11 +1,11 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "Ensemble", accuracy: 94.2, precision: 91.5, recall: 92.8, f1: 92.1 },
-  { name: "XGBoost", accuracy: 92.8, precision: 89.2, recall: 90.1, f1: 89.6 },
-  { name: "Random Forest", accuracy: 91.5, precision: 88.7, recall: 89.3, f1: 89.0 },
-  { name: "Neural Network", accuracy: 89.3, precision: 86.1, recall: 87.2, f1: 86.6 },
-  { name: "Logistic Regression", accuracy: 85.7, precision: 82.3, recall: 83.8, f1: 83.0 }
+  { name: "Ensemble", accuracy: 85.42 },
+  { name: "XGBoost", accuracy: 84.95 },
+  { name: "Random Forest", accuracy: 76.06 },
+  { name: "Neural Network", accuracy: 73.05 },
+  { name: "Logistic Regression", accuracy: 69.80 },
 ];
 
 export function ModelComparison() {
@@ -22,7 +22,7 @@ export function ModelComparison() {
             fontSize={12}
           />
           <YAxis 
-            domain={[75, 100]}
+            domain={[65, 90]}
             tickFormatter={(value) => `${value}%`}
           />
           <Tooltip 
@@ -39,24 +39,6 @@ export function ModelComparison() {
             fill="hsl(var(--primary))"
             radius={[4, 4, 0, 0]}
             name="Accuracy"
-          />
-          <Bar 
-            dataKey="precision"
-            fill="hsl(var(--success))"
-            radius={[4, 4, 0, 0]}
-            name="Precision"
-          />
-          <Bar 
-            dataKey="recall"
-            fill="hsl(var(--warning))"
-            radius={[4, 4, 0, 0]}
-            name="Recall"
-          />
-          <Bar 
-            dataKey="f1"
-            fill="hsl(var(--danger))"
-            radius={[4, 4, 0, 0]}
-            name="F1-Score"
           />
         </BarChart>
       </ResponsiveContainer>

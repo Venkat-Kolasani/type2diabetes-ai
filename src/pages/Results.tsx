@@ -38,7 +38,7 @@ export default function Results() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Accuracy</p>
-                  <p className="text-2xl font-bold text-foreground">94.2%</p>
+                  <p className="text-2xl font-bold text-foreground">85.37%</p>
                   <div className="flex items-center mt-1">
                     <ArrowUp className="h-4 w-4 text-success mr-1" />
                     <span className="text-sm text-success">+2.1%</span>
@@ -56,7 +56,7 @@ export default function Results() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">AUC-ROC</p>
-                  <p className="text-2xl font-bold text-foreground">0.96</p>
+                  <p className="text-2xl font-bold text-foreground">0.8124</p>
                   <div className="flex items-center mt-1">
                     <ArrowUp className="h-4 w-4 text-success mr-1" />
                     <span className="text-sm text-success">+0.04</span>
@@ -74,7 +74,7 @@ export default function Results() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Precision</p>
-                  <p className="text-2xl font-bold text-foreground">91.5%</p>
+                  <p className="text-2xl font-bold text-foreground">56.71%</p>
                   <div className="flex items-center mt-1">
                     <ArrowUp className="h-4 w-4 text-success mr-1" />
                     <span className="text-sm text-success">+1.8%</span>
@@ -92,7 +92,7 @@ export default function Results() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">F1-Score</p>
-                  <p className="text-2xl font-bold text-foreground">92.1%</p>
+                  <p className="text-2xl font-bold text-foreground">27.8%</p>
                   <div className="flex items-center mt-1">
                     <ArrowUp className="h-4 w-4 text-success mr-1" />
                     <span className="text-sm text-success">+1.9%</span>

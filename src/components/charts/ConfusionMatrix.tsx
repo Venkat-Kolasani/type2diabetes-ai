@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 
 const matrix = [
-  [{ value: 1856, label: "TN" }, { value: 94, label: "FP" }],
-  [{ value: 78, label: "FN" }, { value: 642, label: "TP" }]
+  [{ value: 22731, label: "TN" }, { value: 594, label: "FP" }],
+  [{ value: 3434, label: "FN" }, { value: 778, label: "TP" }]
 ];
 
 export function ConfusionMatrix() {
