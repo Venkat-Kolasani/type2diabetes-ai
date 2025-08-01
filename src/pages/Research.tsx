@@ -352,7 +352,7 @@ export default function Research() {
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="text-center p-4 bg-primary-light/20 rounded-lg">
-                    <div className="text-2xl font-bold text-foreground">85.37%</div>
+                    <div className="text-2xl font-bold text-foreground">85.42%</div>
                     <div className="text-sm text-muted-foreground">Accuracy</div>
                   </div>
                   <div className="text-center p-4 bg-success-light/20 rounded-lg">
@@ -402,7 +402,7 @@ export default function Research() {
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
                         <span>LightGBM</span>
-                        <span className="font-medium text-success">85.37%</span>
+                        <span className="font-medium text-success">85.42%</span>
                       </div>
                       
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
