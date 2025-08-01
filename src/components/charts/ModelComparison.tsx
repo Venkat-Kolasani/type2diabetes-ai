@@ -1,11 +1,11 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "Ensemble", accuracy: 85.42 },
+  { name: "LightGBM", accuracy: 85.42 },
   { name: "XGBoost", accuracy: 84.95 },
   { name: "Random Forest", accuracy: 76.06 },
   { name: "Neural Network", accuracy: 73.05 },
-  { name: "Logistic Regression", accuracy: 69.80 },
+  { name: "Log. Regression", accuracy: 69.80 },
 ];
 
 export function ModelComparison() {
