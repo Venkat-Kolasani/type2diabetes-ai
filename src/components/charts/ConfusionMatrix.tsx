@@ -52,16 +52,7 @@ export function ConfusionMatrix() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 text-center text-xs">
-        <div>
-          <div className="font-medium text-success">Accuracy: 94.2%</div>
-          <div className="text-muted-foreground">Correct predictions</div>
-        </div>
-        <div>
-          <div className="font-medium text-danger">Error Rate: 5.8%</div>
-          <div className="text-muted-foreground">Incorrect predictions</div>
-        </div>
-      </div>
+     
     </div>
   );
 }
