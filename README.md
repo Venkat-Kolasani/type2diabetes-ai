@@ -8,7 +8,7 @@
 
 **A state-of-the-art machine learning platform for predicting Type 2 Diabetes progression using the BRFSS dataset**
 
-[🚀 Live Demo](https://your-vercel-app.vercel.app) • [📖 Documentation](./documentation.md) • [🔬 Research](./src/pages/Research.tsx) • [⚡ API Docs](./backend.md)
+[🚀 Live Demo](https://t2d-ai.venkatkolasani.xyz/) • [📖 Documentation](./documentation.md) • [🔬 Research](https://type2diabetes-ai.vercel.app/research) • [⚡ API Docs](./backend.md)
 
 </div>
 
