@@ -402,7 +402,7 @@ export default function Research() {
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
                         <span>LightGBM</span>
-                        <span className="font-medium text-success">85.42%</span>
+                        <span className="font-medium text-success">85.37%</span>
                       </div>
                       
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
