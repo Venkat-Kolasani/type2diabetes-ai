@@ -7,8 +7,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FormData } from "@/pages/Demo";
-import { User, Stethoscope, FlaskConical, Activity, Heart, Moon, Loader2, ChevronDown, ChevronUp, Droplets } from "lucide-react";
+import { User, Stethoscope, FlaskConical, Activity, Heart, Moon, Loader2, ChevronDown, ChevronUp, Droplets, Brain, Apple } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const hideNumberInputSpinners = "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none";
@@ -32,7 +33,7 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <User className="h-5 w-5" />
-            <span>Demographics</span>
+            <span>Demographic Information</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -40,13 +41,13 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
             <div className="flex justify-between items-center">
               <Label htmlFor="age">Age</Label>
               <div className="text-sm text-muted-foreground">
-                {watchedValues.age || '18-100'}
+                {watchedValues.age || '18-99'}
               </div>
             </div>
             <Slider
               id="age"
               min={18}
-              max={100}
+              max={99}
               step={1}
               value={[watchedValues.age || 0]}
               onValueChange={(value) => setValue("age", value[0])}
@@ -56,7 +57,7 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
             />
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>18</span>
-              <span>100</span>
+              <span>99</span>
             </div>
             {errors.age && (
               <p className="text-sm text-destructive">{errors.age.message}</p>
@@ -64,12 +65,12 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
           </div>
 
           <div className="space-y-2">
-            <Label>Gender</Label>
+            <Label>Sex</Label>
             <RadioGroup
-              value={watchedValues.gender}
-              onValueChange={(value) => setValue("gender", value)}
+              value={watchedValues.sex}
+              onValueChange={(value) => setValue("sex", value)}
               disabled={disabled}
-              aria-label="Gender selection"
+              aria-label="Sex selection"
             >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="male" id="male" />
@@ -79,7 +80,59 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
                 <RadioGroupItem value="female" id="female" />
                 <Label htmlFor="female">Female</Label>
               </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="other" id="other" />
+                <Label htmlFor="other">Other</Label>
+              </div>
             </RadioGroup>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="education">Education Level</Label>
+            <Select
+              value={watchedValues.education}
+              onValueChange={(value) => setValue("education", value)}
+              disabled={disabled}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select education level" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="never_attended">Never attended school</SelectItem>
+                <SelectItem value="grades_1_8">Grades 1–8</SelectItem>
+                <SelectItem value="grades_9_11">Grades 9–11</SelectItem>
+                <SelectItem value="high_school">High School Graduate</SelectItem>
+                <SelectItem value="some_college">Some College</SelectItem>
+                <SelectItem value="college_graduate">College Graduate</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.education && (
+              <p className="text-sm text-destructive">{errors.education.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="income">Income Level</Label>
+            <Select
+              value={watchedValues.income}
+              onValueChange={(value) => setValue("income", value)}
+              disabled={disabled}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select income level" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="under_15000">&lt; 15,000</SelectItem>
+                <SelectItem value="15000_24999">15,000 – 24,999</SelectItem>
+                <SelectItem value="25000_34999">25,000 – 34,999</SelectItem>
+                <SelectItem value="35000_49999">35,000 – 49,999</SelectItem>
+                <SelectItem value="50000_74999">50,000 – 74,999</SelectItem>
+                <SelectItem value="75000_plus">75,000+</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.income && (
+              <p className="text-sm text-destructive">{errors.income.message}</p>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -112,618 +165,372 @@ export function InputForm({ form, onSubmit, isLoading, disabled }: InputFormProp
                 aria-describedby="bmi-help"
                 className={hideNumberInputSpinners}
               />
-
+              <p id="bmi-help" className="text-xs text-muted-foreground">
+                Normal: 18.5-24.9, Overweight: 25-29.9, Obese: ≥30
+              </p>
               {errors.bmi && (
                 <p className="text-sm text-destructive">{errors.bmi.message}</p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="systolic_bp">Systolic BP (mmHg)</Label>
-              <Input
-                id="systolic_bp"
-                type="number"
-                min="70"
-                max="200"
-                placeholder="e.g., 120"
-                {...register("systolic_bp", {
-                  required: "Systolic BP is required",
-                  min: { value: 70, message: "Systolic BP must be at least 70" },
-                  max: { value: 200, message: "Systolic BP must be less than 200" }
-                })}
+              <Label htmlFor="high_blood_pressure">High Blood Pressure</Label>
+              <RadioGroup
+                value={watchedValues.high_blood_pressure}
+                onValueChange={(value) => setValue("high_blood_pressure", value)}
                 disabled={disabled}
-                aria-describedby="systolic-help"
-              />
-              <p id="systolic-help" className="text-xs text-muted-foreground">
-                Normal: &lt;120 mmHg
-              </p>
-              {errors.systolic_bp && (
-                <p className="text-sm text-destructive">{errors.systolic_bp.message}</p>
+                aria-label="High blood pressure selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="hbp_yes" />
+                  <Label htmlFor="hbp_yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="hbp_no" />
+                  <Label htmlFor="hbp_no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="high_cholesterol">High Cholesterol</Label>
+              <RadioGroup
+                value={watchedValues.high_cholesterol}
+                onValueChange={(value) => setValue("high_cholesterol", value)}
+                disabled={disabled}
+                aria-label="High cholesterol selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="hc_yes" />
+                  <Label htmlFor="hc_yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="hc_no" />
+                  <Label htmlFor="hc_no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="cholesterol_check">Cholesterol Check (past 5 years)</Label>
+              <RadioGroup
+                value={watchedValues.cholesterol_check}
+                onValueChange={(value) => setValue("cholesterol_check", value)}
+                disabled={disabled}
+                aria-label="Cholesterol check selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="cc_yes" />
+                  <Label htmlFor="cc_yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="cc_no" />
+                  <Label htmlFor="cc_no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="general_health">General Health Rating</Label>
+              <Select
+                value={watchedValues.general_health}
+                onValueChange={(value) => setValue("general_health", value)}
+                disabled={disabled}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select health rating" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="excellent">Excellent</SelectItem>
+                  <SelectItem value="very_good">Very Good</SelectItem>
+                  <SelectItem value="good">Good</SelectItem>
+                  <SelectItem value="fair">Fair</SelectItem>
+                  <SelectItem value="poor">Poor</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.general_health && (
+                <p className="text-sm text-destructive">{errors.general_health.message}</p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="diastolic_bp">Diastolic BP (mmHg)</Label>
-              <Input
-                id="diastolic_bp"
-                type="number"
-                min="40"
-                max="120"
-                placeholder="e.g., 80"
-                {...register("diastolic_bp", {
-                  required: "Diastolic BP is required",
-                  min: { value: 40, message: "Diastolic BP must be at least 40" },
-                  max: { value: 120, message: "Diastolic BP must be less than 120" }
-                })}
+              <Label htmlFor="difficulty_walking">Difficulty Walking</Label>
+              <RadioGroup
+                value={watchedValues.difficulty_walking}
+                onValueChange={(value) => setValue("difficulty_walking", value)}
                 disabled={disabled}
-                aria-describedby="diastolic-help"
-              />
-              <p id="diastolic-help" className="text-xs text-muted-foreground">
-                Normal: &lt;80 mmHg
-              </p>
-              {errors.diastolic_bp && (
-                <p className="text-sm text-destructive">{errors.diastolic_bp.message}</p>
-              )}
+                aria-label="Difficulty walking selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="dw_yes" />
+                  <Label htmlFor="dw_yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="dw_no" />
+                  <Label htmlFor="dw_no">No</Label>
+                </div>
+              </RadioGroup>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="num_conditions">Number of Conditions</Label>
-              <Input
-                id="num_conditions"
-                type="number"
-                min="0"
-                max="20"
-                placeholder="e.g., 2"
-                {...register("num_conditions", {
-                  required: "Number of conditions is required",
-                  min: { value: 0, message: "Cannot be negative" },
-                  max: { value: 20, message: "Maximum 20 conditions" }
-                })}
+              <Label htmlFor="couldnt_see_doctor">Couldn't See Doctor Due to Cost</Label>
+              <RadioGroup
+                value={watchedValues.couldnt_see_doctor}
+                onValueChange={(value) => setValue("couldnt_see_doctor", value)}
                 disabled={disabled}
-                aria-describedby="conditions-help"
-              />
-              <p id="conditions-help" className="text-xs text-muted-foreground">
-                Count of diagnosed conditions (e.g., hypertension, high cholesterol)
-              </p>
-              {errors.num_conditions && (
-                <p className="text-sm text-destructive">{errors.num_conditions.message}</p>
-              )}
+                aria-label="Couldn't see doctor selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="csd_yes" />
+                  <Label htmlFor="csd_yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="csd_no" />
+                  <Label htmlFor="csd_no">No</Label>
+                </div>
+              </RadioGroup>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="num_visits">Number of Visits (past year)</Label>
-              <Input
-                id="num_visits"
-                type="number"
-                min="0"
-                max="100"
-                placeholder="e.g., 5"
-                {...register("num_visits", {
-                  required: "Number of visits is required",
-                  min: { value: 0, message: "Cannot be negative" },
-                  max: { value: 100, message: "Maximum 100 visits" }
-                })}
+              <Label htmlFor="has_healthcare">Has Any Form of Healthcare</Label>
+              <RadioGroup
+                value={watchedValues.has_healthcare}
+                onValueChange={(value) => setValue("has_healthcare", value)}
                 disabled={disabled}
-                aria-describedby="visits-help"
-              />
-              <p id="visits-help" className="text-xs text-muted-foreground">
-                Number of healthcare visits in the past 12 months
-              </p>
-              {errors.num_visits && (
-                <p className="text-sm text-destructive">{errors.num_visits.message}</p>
-              )}
+                aria-label="Has healthcare selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="hh_yes" />
+                  <Label htmlFor="hh_yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="hh_no" />
+                  <Label htmlFor="hh_no">No</Label>
+                </div>
+              </RadioGroup>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Lab Test Values */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Droplets className="h-5 w-5" />
-            <span>Lab Test Values</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="hba1c">HbA1c (%)</Label>
-              <div className="relative">
-                <Input
-                  id="hba1c"
-                  type="number"
-                  step="0.1"
-                  min="4.0"
-                  max="15.0"
-                  placeholder="e.g., 5.4"
-                  {...register("hba1c", {
-                    required: "HbA1c is required",
-                    min: { value: 4.0, message: "HbA1c must be at least 4.0" },
-                    max: { value: 15.0, message: "HbA1c must be less than 15.0" }
-                  })}
-                  disabled={disabled}
-                  aria-describedby="hba1c-help"
-                />
-
-              </div>
-
-              {errors.hba1c && (
-                <p className="text-sm text-destructive">{errors.hba1c.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="glucose">Fasting Glucose (mg/dL)</Label>
-              <div className="relative">
-                <Input
-                  id="glucose"
-                  type="number"
-                  min="70"
-                  max="200"
-                  placeholder="e.g., 95"
-                  {...register("glucose", {
-                    required: "Fasting glucose is required",
-                    min: { value: 70, message: "Glucose must be at least 70" },
-                    max: { value: 200, message: "Glucose must be less than 200" }
-                  })}
-                  disabled={disabled}
-                  className={hideNumberInputSpinners}
-                />
-              </div>
-              {errors.glucose && (
-                <p className="text-sm text-destructive">{errors.glucose.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="o2_saturation">O₂ Saturation (%)</Label>
-              <div className="relative">
-                <Input
-                  id="o2_saturation"
-                  type="number"
-                  min="70"
-                  max="100"
-                  placeholder="e.g., 98"
-                  {...register("o2_saturation", {
-                    required: "O₂ Saturation is required",
-                    min: { value: 70, message: "O₂ Saturation must be at least 70%" },
-                    max: { value: 100, message: "O₂ Saturation cannot exceed 100%" }
-                  })}
-                  disabled={disabled}
-                  className={hideNumberInputSpinners}
-                />
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Normal: 95-100%
-              </p>
-              {errors.o2_saturation && (
-                <p className="text-sm text-destructive">{errors.o2_saturation.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="triglycerides">Triglycerides (mg/dL)</Label>
-              <div className="relative">
-                <Input
-                  id="triglycerides"
-                  type="number"
-                  min="30"
-                  max="1000"
-                  placeholder="e.g., 150"
-                  {...register("triglycerides", {
-                    required: "Triglycerides are required",
-                    min: { value: 30, message: "Triglycerides must be at least 30" },
-                    max: { value: 1000, message: "Triglycerides must be less than 1000" }
-                  })}
-                  disabled={disabled}
-                  aria-describedby="triglycerides-help"
-                />
-
-              </div>
-
-              {errors.triglycerides && (
-                <p className="text-sm text-destructive">{errors.triglycerides.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="hdl_cholesterol">HDL Cholesterol (mg/dL)</Label>
-              <div className="relative">
-                <Input
-                  id="hdl_cholesterol"
-                  type="number"
-                  min="10"
-                  max="120"
-                  placeholder="e.g., 60"
-                  {...register("hdl_cholesterol", {
-                    required: "HDL Cholesterol is required",
-                    min: { value: 10, message: "HDL must be at least 10" },
-                    max: { value: 120, message: "HDL must be less than 120" }
-                  })}
-                  disabled={disabled}
-                  aria-describedby="hdl-help"
-                />
-
-              </div>
-              <p id="hdl-help" className="text-xs text-muted-foreground">
-                Optimal: ≥60 mg/dL, Low: &lt;40 mg/dL (men) or &lt;50 mg/dL (women)
-              </p>
-              {errors.hdl_cholesterol && (
-                <p className="text-sm text-destructive">{errors.hdl_cholesterol.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="ldl_cholesterol">LDL Cholesterol (mg/dL)</Label>
-              <div className="relative">
-                <Input
-                  id="ldl_cholesterol"
-                  type="number"
-                  min="30"
-                  max="300"
-                  placeholder="e.g., 100"
-                  {...register("ldl_cholesterol", {
-                    required: "LDL Cholesterol is required",
-                    min: { value: 30, message: "LDL must be at least 30" },
-                    max: { value: 300, message: "LDL must be less than 300" }
-                  })}
-                  disabled={disabled}
-                  aria-describedby="ldl-help"
-                />
-
-              </div>
-              <p id="ldl-help" className="text-xs text-muted-foreground">
-                Optimal: &lt;100 mg/dL, Near Optimal: 100-129 mg/dL, Borderline: 130-159 mg/dL
-              </p>
-              {errors.ldl_cholesterol && (
-                <p className="text-sm text-destructive">{errors.ldl_cholesterol.message}</p>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Lifestyle and Wearable Stats */}
+      {/* Lifestyle and Behavioral Stats */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Activity className="h-5 w-5" />
-            <span>Lifestyle and Wearable Stats</span>
+            <span>Lifestyle and Behavioral Statistics</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="daily_steps">Daily Steps</Label>
-              <div className="relative">
-                <Input
-                  id="daily_steps"
-                  type="number"
-                  min="0"
-                  max="50000"
-                  placeholder="e.g., 7500"
-                  {...register("daily_steps", {
-                    required: "Daily steps are required",
-                    min: { value: 0, message: "Steps cannot be negative" },
-                    max: { value: 50000, message: "Maximum 50,000 steps" }
-                  })}
-                  disabled={disabled}
-                  className={hideNumberInputSpinners}
-                />
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Target: 7,000-10,000 steps/day for health benefits
-              </p>
-              {errors.daily_steps && (
-                <p className="text-sm text-destructive">{errors.daily_steps.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="sleep_duration">Sleep Duration (hours)</Label>
-              <div className="relative">
-                <Input
-                  id="sleep_duration"
-                  type="number"
-                  step="0.5"
-                  min="0"
-                  max="24"
-                  placeholder="e.g., 7.5"
-                  {...register("sleep_duration", {
-                    required: "Sleep duration is required",
-                    min: { value: 0, message: "Cannot be negative" },
-                    max: { value: 24, message: "Maximum 24 hours" }
-                  })}
-                  disabled={disabled}
-                  className={hideNumberInputSpinners}
-                />
-                <div className="absolute right-2 top-2 text-muted-foreground">
-                  <Moon className="h-4 w-4" />
+              <Label htmlFor="smoked_100_cigarettes">Smoked 100 Cigarettes in Life</Label>
+              <RadioGroup
+                value={watchedValues.smoked_100_cigarettes}
+                onValueChange={(value) => setValue("smoked_100_cigarettes", value)}
+                disabled={disabled}
+                aria-label="Smoked 100 cigarettes selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="smoke_yes" />
+                  <Label htmlFor="smoke_yes">Yes</Label>
                 </div>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Recommended: 7-9 hours for adults
-              </p>
-              {errors.sleep_duration && (
-                <p className="text-sm text-destructive">{errors.sleep_duration.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="stress_level">Stress Level (1-10)</Label>
-              <div className="relative">
-                <Input
-                  id="stress_level"
-                  type="number"
-                  min="1"
-                  max="10"
-                  placeholder="1-10, 10 being highest"
-                  {...register("stress_level", {
-                    required: "Stress level is required",
-                    min: { value: 1, message: "Minimum is 1" },
-                    max: { value: 10, message: "Maximum is 10" }
-                  })}
-                  disabled={disabled}
-                  className={hideNumberInputSpinners}
-                />
-              </div>
-              {errors.stress_level && (
-                <p className="text-sm text-destructive">{errors.stress_level.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="heart_rate">Resting Heart Rate (bpm)</Label>
-              <div className="relative">
-                <Input
-                  id="heart_rate"
-                  type="number"
-                  min="30"
-                  max="200"
-                  placeholder="e.g., 72"
-                  {...register("heart_rate", {
-                    required: "Heart rate is required",
-                    min: { value: 30, message: "Heart rate must be at least 30 bpm" },
-                    max: { value: 200, message: "Heart rate must be less than 200 bpm" }
-                  })}
-                  disabled={disabled}
-                  className={hideNumberInputSpinners}
-                />
-                <div className="absolute right-2 top-2 text-muted-foreground">
-                  <Heart className="h-4 w-4" />
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="smoke_no" />
+                  <Label htmlFor="smoke_no">No</Label>
                 </div>
-              </div>
+              </RadioGroup>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="heavy_alcohol">Heavy Alcohol Consumption</Label>
+              <RadioGroup
+                value={watchedValues.heavy_alcohol}
+                onValueChange={(value) => setValue("heavy_alcohol", value)}
+                disabled={disabled}
+                aria-label="Heavy alcohol consumption selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="alcohol_yes" />
+                  <Label htmlFor="alcohol_yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="alcohol_no" />
+                  <Label htmlFor="alcohol_no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="physical_activity">Physical Activity (last 30 days)</Label>
+              <RadioGroup
+                value={watchedValues.physical_activity}
+                onValueChange={(value) => setValue("physical_activity", value)}
+                disabled={disabled}
+                aria-label="Physical activity selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="pa_yes" />
+                  <Label htmlFor="pa_yes">Yes</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="pa_no" />
+                  <Label htmlFor="pa_no">No</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="fruit_consumption">Fruit Consumption (servings/day)</Label>
+              <Input
+                id="fruit_consumption"
+                type="number"
+                min="0"
+                max="10"
+                step="0.5"
+                placeholder="e.g., 2.5"
+                {...register("fruit_consumption", {
+                  required: "Fruit consumption is required",
+                  min: { value: 0, message: "Cannot be negative" },
+                  max: { value: 10, message: "Maximum 10 servings" }
+                })}
+                disabled={disabled}
+                className={hideNumberInputSpinners}
+              />
               <p className="text-xs text-muted-foreground">
-                Normal: 60-100 bpm for adults
+                Recommended: 2-4 servings per day
               </p>
-              {errors.heart_rate && (
-                <p className="text-sm text-destructive">{errors.heart_rate.message}</p>
+              {errors.fruit_consumption && (
+                <p className="text-sm text-destructive">{errors.fruit_consumption.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="vegetable_consumption">Vegetable Consumption (servings/day)</Label>
+              <Input
+                id="vegetable_consumption"
+                type="number"
+                min="0"
+                max="10"
+                step="0.5"
+                placeholder="e.g., 3.0"
+                {...register("vegetable_consumption", {
+                  required: "Vegetable consumption is required",
+                  min: { value: 0, message: "Cannot be negative" },
+                  max: { value: 10, message: "Maximum 10 servings" }
+                })}
+                disabled={disabled}
+                className={hideNumberInputSpinners}
+              />
+              <p className="text-xs text-muted-foreground">
+                Recommended: 3-5 servings per day
+              </p>
+              {errors.vegetable_consumption && (
+                <p className="text-sm text-destructive">{errors.vegetable_consumption.message}</p>
               )}
             </div>
           </div>
         </CardContent>
       </Card>
-      {/* Advanced Options */}
-      <div className="space-y-4">
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full flex items-center justify-between"
-          onClick={() => setShowAdvanced(!showAdvanced)}
-        >
-          <span>{showAdvanced ? 'Hide' : 'Show'} Advanced Metrics</span>
-          {showAdvanced ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-        </Button>
 
-        <div 
-          id="advanced-options"
-          className={cn(
-            "space-y-6 overflow-hidden transition-all duration-300 ease-in-out",
-            showAdvanced ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
-          )}
-        >
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <FlaskConical className="h-5 w-5" />
-                <span>Advanced Lab Tests</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="albumin">Albumin (g/dL)</Label>
-                  <div className="relative">
-                    <Input
-                      id="albumin"
-                      type="number"
-                      step="0.1"
-                      min="1.0"
-                      max="6.0"
-                      {...register("albumin", {
-                        min: { value: 1.0, message: "Albumin must be at least 1.0" },
-                        max: { value: 6.0, message: "Albumin must be less than 6.0" }
-                      })}
-                      disabled={disabled}
-                      aria-describedby="albumin-help"
-                    />
-                  </div>
-                  <p id="albumin-help" className="text-xs text-muted-foreground">
-                    Normal: 3.5-5.0 g/dL
-                  </p>
-                  {errors.albumin && (
-                    <p className="text-sm text-destructive">{errors.albumin.message}</p>
-                  )}
+      {/* Mental and Physical Health Stats */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <Brain className="h-5 w-5" />
+            <span>Mental and Physical Health Statistics</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="poor_mental_health">Days of Poor Mental Health (last 30)</Label>
+              <Input
+                id="poor_mental_health"
+                type="number"
+                min="0"
+                max="30"
+                placeholder="e.g., 5"
+                {...register("poor_mental_health", {
+                  required: "Mental health days is required",
+                  min: { value: 0, message: "Cannot be negative" },
+                  max: { value: 30, message: "Maximum 30 days" }
+                })}
+                disabled={disabled}
+                className={hideNumberInputSpinners}
+              />
+              <p className="text-xs text-muted-foreground">
+                Days when mental health was not good
+              </p>
+              {errors.poor_mental_health && (
+                <p className="text-sm text-destructive">{errors.poor_mental_health.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="poor_physical_health">Days of Poor Physical Health (last 30)</Label>
+              <Input
+                id="poor_physical_health"
+                type="number"
+                min="0"
+                max="30"
+                placeholder="e.g., 3"
+                {...register("poor_physical_health", {
+                  required: "Physical health days is required",
+                  min: { value: 0, message: "Cannot be negative" },
+                  max: { value: 30, message: "Maximum 30 days" }
+                })}
+                disabled={disabled}
+                className={hideNumberInputSpinners}
+              />
+              <p className="text-xs text-muted-foreground">
+                Days when physical health was not good
+              </p>
+              {errors.poor_physical_health && (
+                <p className="text-sm text-destructive">{errors.poor_physical_health.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="history_stroke">History of Stroke</Label>
+              <RadioGroup
+                value={watchedValues.history_stroke}
+                onValueChange={(value) => setValue("history_stroke", value)}
+                disabled={disabled}
+                aria-label="History of stroke selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="stroke_yes" />
+                  <Label htmlFor="stroke_yes">Yes</Label>
                 </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="serum_creatinine">Serum Creatinine (mg/dL)</Label>
-                  <div className="relative">
-                    <Input
-                      id="serum_creatinine"
-                      type="number"
-                      step="0.01"
-                      min="0.1"
-                      max="10.0"
-                      {...register("serum_creatinine", {
-                        min: { value: 0.1, message: "Creatinine must be at least 0.1" },
-                        max: { value: 10.0, message: "Creatinine must be less than 10.0" }
-                      })}
-                      disabled={disabled}
-                      aria-describedby="creatinine-help"
-                    />
-                  </div>
-                  <p id="creatinine-help" className="text-xs text-muted-foreground">
-                    Normal: 0.7-1.3 mg/dL (men), 0.6-1.1 mg/dL (women)
-                  </p>
-                  {errors.serum_creatinine && (
-                    <p className="text-sm text-destructive">{errors.serum_creatinine.message}</p>
-                  )}
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="stroke_no" />
+                  <Label htmlFor="stroke_no">No</Label>
                 </div>
+              </RadioGroup>
+            </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="total_cholesterol">Total Cholesterol (mg/dL)</Label>
-                  <div className="relative">
-                    <Input
-                      id="total_cholesterol"
-                      type="number"
-                      min="100"
-                      max="400"
-                      {...register("total_cholesterol", {
-                        min: { value: 100, message: "Must be at least 100" },
-                        max: { value: 400, message: "Must be less than 400" }
-                      })}
-                      disabled={disabled}
-                      aria-describedby="total-chol-help"
-                    />
-
-                  </div>
-                  <p id="total-chol-help" className="text-xs text-muted-foreground">
-                    Desirable: &lt;200 mg/dL, Borderline: 200-239 mg/dL
-                  </p>
-                  {errors.total_cholesterol && (
-                    <p className="text-sm text-destructive">{errors.total_cholesterol.message}</p>
-                  )}
+            <div className="space-y-2">
+              <Label htmlFor="history_heart_disease">History of Heart Disease or Heart Attack</Label>
+              <RadioGroup
+                value={watchedValues.history_heart_disease}
+                onValueChange={(value) => setValue("history_heart_disease", value)}
+                disabled={disabled}
+                aria-label="History of heart disease selection"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="heart_yes" />
+                  <Label htmlFor="heart_yes">Yes</Label>
                 </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="bun_creatinine_ratio">BUN/Creatinine Ratio</Label>
-                  <div className="relative">
-                    <Input
-                      id="bun_creatinine_ratio"
-                      type="number"
-                      min="5"
-                      max="40"
-                      {...register("bun_creatinine_ratio", {
-                        min: { value: 5, message: "Must be at least 5" },
-                        max: { value: 40, message: "Must be less than 40" }
-                      })}
-                      disabled={disabled}
-                      aria-describedby="bun-ratio-help"
-                    />
-
-                  </div>
-                  <p id="bun-ratio-help" className="text-xs text-muted-foreground">
-                    Normal: 10:1 to 20:1
-                  </p>
-                  {errors.bun_creatinine_ratio && (
-                    <p className="text-sm text-destructive">{errors.bun_creatinine_ratio.message}</p>
-                  )}
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="heart_no" />
+                  <Label htmlFor="heart_no">No</Label>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Activity className="h-5 w-5" />
-                <span>Lifestyle & Environmental Metrics</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="calories_burned">Daily Calories Burned</Label>
-                  <div className="relative">
-                    <Input
-                      id="calories_burned"
-                      type="number"
-                      min="500"
-                      max="5000"
-                      {...register("calories_burned", {
-                        min: { value: 500, message: "Must be at least 500" },
-                        max: { value: 5000, message: "Must be less than 5000" }
-                      })}
-                      disabled={disabled}
-                      aria-describedby="calories-help"
-                    />
-
-                  </div>
-                  <p id="calories-help" className="text-xs text-muted-foreground">
-                    Average: 1,600-3,000 kcal/day
-                  </p>
-                  {errors.calories_burned && (
-                    <p className="text-sm text-destructive">{errors.calories_burned.message}</p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="pm25_exposure">PM 2.5 Exposure (µg/m³)</Label>
-                  <div className="relative">
-                    <Input
-                      id="pm25_exposure"
-                      type="number"
-                      step="0.1"
-                      min="0"
-                      max="100"
-                      {...register("pm25_exposure", {
-                        min: { value: 0, message: "Cannot be negative" },
-                        max: { value: 100, message: "Must be less than 100" }
-                      })}
-                      disabled={disabled}
-                      aria-describedby="pm25-help"
-                    />
-
-                  </div>
-                  <p id="pm25-help" className="text-xs text-muted-foreground">
-                    WHO Guideline: &lt;5 µg/m³ annual mean
-                  </p>
-                  {errors.pm25_exposure && (
-                    <p className="text-sm text-destructive">{errors.pm25_exposure.message}</p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="nox_exposure">NOx Exposure (ppb)</Label>
-                  <div className="relative">
-                    <Input
-                      id="nox_exposure"
-                      type="number"
-                      min="0"
-                      max="200"
-                      {...register("nox_exposure", {
-                        min: { value: 0, message: "Cannot be negative" },
-                        max: { value: 200, message: "Must be less than 200" }
-                      })}
-                      disabled={disabled}
-                      aria-describedby="nox-help"
-                    />
-
-                  </div>
-                  <p id="nox-help" className="text-xs text-muted-foreground">
-                    EPA 1-hour standard: 100 ppb
-                  </p>
-                  {errors.nox_exposure && (
-                    <p className="text-sm text-destructive">{errors.nox_exposure.message}</p>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+              </RadioGroup>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Submit Button */}
       <div className="flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4">

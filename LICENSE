@@ -1,0 +1,123 @@
+CUSTOM RESTRICTIVE LICENSE FOR TYPE 2 DIABETES AI PLATFORM
+================================================================
+
+Copyright (c) 2025 Venkat Kolasani and Contributors
+All rights reserved.
+
+GRANT OF RIGHTS
+===============
+
+Subject to the terms and conditions of this license, the copyright holder hereby grants you a limited, non-exclusive, non-transferable license to:
+
+1. VIEW AND STUDY the source code for educational and research purposes
+2. FORK the repository for personal learning and academic research
+3. CITE this work in academic publications with proper attribution
+
+RESTRICTIONS
+============
+
+You are expressly PROHIBITED from:
+
+1. COMMERCIAL USE
+   - Using this software or any part thereof for commercial purposes
+   - Selling, licensing, or monetizing the software or its derivatives
+   - Using the software in any profit-generating activities
+   - Incorporating the software into commercial products or services
+
+2. MODEL DISTRIBUTION AND REPLICATION
+   - Copying, distributing, or sharing the trained machine learning models
+   - Reverse engineering the model architecture or parameters
+   - Using the model weights or preprocessing pipelines in other projects
+   - Creating derivative models based on our training methodology
+
+3. DERIVATIVE WORKS FOR COMMERCIAL PURPOSES
+   - Creating commercial applications based on this codebase
+   - Modifying the code for commercial distribution
+   - Using substantial portions of the code in commercial projects
+   - Rebranding or white-labeling the application for commercial use
+
+4. INTELLECTUAL PROPERTY VIOLATIONS
+   - Removing or modifying copyright notices
+   - Claiming ownership of the original work
+   - Using the project name or branding for other purposes
+   - Filing patents based on the methodologies or implementations
+
+PERMITTED USES
+==============
+
+You ARE ALLOWED to:
+
+✅ View and examine the source code for learning purposes
+✅ Fork the repository for educational research
+✅ Use the code as reference for academic projects
+✅ Cite the work in academic papers and research
+✅ Contribute improvements back to the original repository
+✅ Use the software for non-commercial academic research
+✅ Teach using this software as an educational example
+
+ATTRIBUTION REQUIREMENTS
+========================
+
+Any use of this software must include:
+
+1. Clear attribution to the original authors
+2. Link to the original repository: https://github.com/Venkat-Kolasani/type2diabetes-ai
+3. Citation in academic work:
+   ```
+   Type 2 Diabetes AI Prediction Platform: 
+   A LightGBM-based Approach Using BRFSS Dataset. 
+   GitHub. https://github.com/Venkat-Kolasani/type2diabetes-ai
+   ```
+
+MACHINE LEARNING MODEL RESTRICTIONS
+===================================
+
+The trained machine learning models, preprocessing pipelines, and associated artifacts included in this repository are PROPRIETARY and subject to additional restrictions:
+
+1. The model files (*.pkl, *.joblib) are licensed separately and cannot be redistributed
+2. Model architectures and hyperparameters are trade secrets
+3. Training methodologies and feature engineering techniques are proprietary
+4. Performance benchmarks and evaluation metrics are confidential
+
+DISCLAIMER AND LIABILITY
+========================
+
+THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+MEDICAL DISCLAIMER: This software is for research and educational purposes only. It is NOT intended for clinical diagnosis or medical decision-making. Always consult qualified healthcare professionals for medical advice.
+
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+TERMINATION
+===========
+
+This license automatically terminates if you violate any of its terms. Upon termination, you must:
+1. Cease all use of the software
+2. Delete all copies of the software
+3. Remove any derivative works based on the software
+
+GOVERNING LAW
+=============
+
+This license shall be governed by and construed in accordance with the laws of [Your Jurisdiction], without regard to its conflict of law provisions.
+
+CONTACT FOR COMMERCIAL LICENSING
+=================================
+
+For commercial licensing inquiries, partnerships, or permissions beyond the scope of this license, please contact:
+
+Email: kolasanivenkat2@gmail.com
+GitHub: https://github.com/Venkat-Kolasani
+Subject: Commercial License Inquiry - Type 2 Diabetes AI Platform
+
+UPDATES TO LICENSE
+==================
+
+The copyright holder reserves the right to update this license. Changes will be posted in the repository and apply to future versions. Continued use constitutes acceptance of modified terms.
+
+---
+
+By using this software, you acknowledge that you have read, understood, and agree to be bound by the terms of this license.
+
+Last Updated: August 1, 2025
+Version: 1.0

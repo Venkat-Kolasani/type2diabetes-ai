@@ -25,8 +25,8 @@ export default function Research() {
             Research & Methodology
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Comprehensive analysis of the AI-READI Flagship Type 2 Diabetes Dataset 
-            for ML-based risk prediction, including Dataset overview, Methodology, and 
+            Comprehensive analysis of the BRFSS Dataset for ML-based Type 2 Diabetes 
+            progression prediction, including Dataset overview, Methodology, and 
             Performance metrics.
           </p>
         </div>
@@ -51,53 +51,50 @@ export default function Research() {
               <CardContent className="space-y-4">
                 <div className="prose prose-sm max-w-none">
                   <p className="text-muted-foreground leading-relaxed">
-                    Type 2 Diabetes Mellitus (T2DM) is a significant global health concern affecting 
-                    over 400 million individuals. Early detection and accurate risk assessment are 
-                    essential for preventing disease progression and long-term complications.
+                    Type 2 Diabetes Mellitus (T2DM) is a significant global health concern affecting over
+                    400 million individuals. Predicting disease progression is critical for managing
+                    complications and improving patient outcomes.
                   </p>
                   
                   <p className="text-muted-foreground leading-relaxed">
-                    This study utilizes the AI READI Flagship Dataset, a comprehensive 
-                    multivariate health dataset designed to support advanced research on 
-                    diabetes. The dataset includes a wide range of clinical, demographic, 
-                    behavioral, and lifestyle variables collected from thousands of 
-                    participants.
+                    This study leverages the Behavioral Risk Factor Surveillance System (BRFSS) dataset,
+                    a large-scale, nationally representative dataset with over 200,000 responses and
+                    30+ multivariate health indicators, including self-reported clinical, lifestyle, laboratory,
+                    and demographic variables relevant to diabetes progression.
                   </p>
                   
                   <p className="text-muted-foreground leading-relaxed">
-                    Our goal is to develop a robust machine learning model capable of 
-                    identifying risk patterns for Type 2 Diabetes. We apply ensemble 
-                    learning methods such as XGBoost and focus on high-quality feature 
-                    engineering to enable reliable and interpretable predictions.
+                    Our objective is to develop a reliable machine learning model using Threshold-Optimized
+                    LightGBM with advanced feature engineering to predict Type 2 Diabetes progression
+                    across diverse populations, supporting personalized interventions and public health strategies.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    Performance metrics and validation results will be shared upon 
-                    completion of the model evaluation phase.
+                    Model performance achieves 85.42% test accuracy, with detailed validation metrics
+                    provided in the performance evaluation.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
                   <div className="text-center p-4 bg-primary-light/20 rounded-lg">
                     <Target className="h-8 w-8 text-primary mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-foreground">94.2%</div>
+                    <div className="text-2xl font-bold text-foreground">85.42%</div>
                     <div className="text-sm text-muted-foreground">Accuracy</div>
                   </div>
                   <div className="text-center p-4 bg-success-light/20 rounded-lg">
                     <Users className="h-8 w-8 text-success mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-foreground">1,067</div>
-                    <div className="text-sm text-muted-foreground">Patients</div>
+                    <div className="text-2xl font-bold text-foreground">200,000+</div>
+                    <div className="text-sm text-muted-foreground">Individuals</div>
                   </div>
                   <div className="text-center p-4 bg-warning-light/20 rounded-lg">
                     <BarChart3 className="h-8 w-8 text-warning mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-foreground">2,700+</div>
-                    <div className="text-sm text-muted-foreground">Multivariate health features</div>
+                    <div className="text-2xl font-bold text-foreground">30+</div>
+                    <div className="text-sm text-muted-foreground">Multivariate health indicators</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Dataset Tab */}
           <TabsContent value="dataset" className="space-y-6">
             <Card className="shadow-card">
               <CardHeader>
@@ -106,22 +103,23 @@ export default function Research() {
                   <span>Dataset Information</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <CardContent className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* Dataset Statistics */}
                   <div>
                     <h3 className="font-semibold mb-3">Dataset Statistics</h3>
-                    <div className="space-y-2">
+                    <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Total Samples:</span>
-                        <span className="font-medium">10,000+</span>
+                        <span className="font-medium">200,000+</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Data Points</span>
-                        <span className="font-medium">2,700+ curated health variables</span>
+                        <span className="text-muted-foreground">Data Points:</span>
+                        <span className="font-medium">30+ health indicators</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Features:</span>
-                        <span className="font-medium">15</span>
+                        <span className="text-muted-foreground">Features Used for Prediction:</span>
+                        <span className="font-medium">75</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Data Types:</span>
@@ -133,80 +131,73 @@ export default function Research() {
                       </div>
                     </div>
                   </div>
-
+                  {/* Feature Categories */}
                   <div>
                     <h3 className="font-semibold mb-3">Feature Categories</h3>
-                    <div className="space-y-3">
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm text-muted-foreground">Demographic</span>
-                          <span className="text-sm font-medium">3 features</span>
-                        </div>
-                        <Progress value={20} className="h-2" />
+                    <div className="space-y-3 text-sm">
+                      <div className="flex items-center">
+                        <span className="text-muted-foreground w-56">Demographic</span>
+                        <Progress value={30} className="h-2 flex-1 mx-2" />
+                        <span className="font-medium w-20 text-right">4 features</span>
                       </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm text-muted-foreground">Laboratory</span>
-                          <span className="text-sm font-medium">5 features</span>
-                        </div>
-                        <Progress value={33} className="h-2" />
+                      <div className="flex items-center">
+                        <span className="text-muted-foreground w-56">Clinical</span>
+                        <Progress value={80} className="h-2 flex-1 mx-2" />
+                        <span className="font-medium w-20 text-right">8 features</span>
                       </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm text-muted-foreground">Lifestyle</span>
-                          <span className="text-sm font-medium">4 features</span>
-                        </div>
-                        <Progress value={27} className="h-2" />
+                      <div className="flex items-center">
+                        <span className="text-muted-foreground w-56">Lifestyle & Behavioral Stats</span>
+                        <Progress value={25} className="h-2 flex-1 mx-2" />
+                        <span className="font-medium w-20 text-right">3 features</span>
                       </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm text-muted-foreground">Clinical</span>
-                          <span className="text-sm font-medium">3 features</span>
-                        </div>
-                        <Progress value={20} className="h-2" />
+                      <div className="flex items-center">
+                        <span className="text-muted-foreground w-56">Mental & Physical Health Stats</span>
+                        <Progress value={25} className="h-2 flex-1 mx-2" />
+                        <span className="font-medium w-20 text-right">3 features</span>
                       </div>
                     </div>
                   </div>
                 </div>
-
+                {/* Feature Descriptions */}
                 <div>
                   <h3 className="font-semibold mb-3">Feature Descriptions</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Badge variant="outline">Demographic</Badge>
-                      <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• Age (years)</li>
-                        <li>• Gender (male/female)</li>
-                        <li>• Study Group (Pre-diabetes, Insulin-dependent, etc.)</li>
-                        <li>• Clinical Site (UCSD, UW)</li>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                    <div>
+                      <Badge variant="outline" className="mb-2">Demographic Information</Badge>
+                      <ul className="space-y-1 text-muted-foreground">
+                        <li><span className="font-medium">Age</span> – Participant’s age</li>
+                        <li><span className="font-medium">Sex</span> – Biological sex (Male/Female/Other)</li>
+                        <li><span className="font-medium">Education</span> – Highest level of education attained</li>
+                        <li><span className="font-medium">Income</span> – Income level (actual or categorical)</li>
                       </ul>
                     </div>
-                    <div className="space-y-2">
-                      <Badge variant="outline">Laboratory</Badge>
-                      <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• Fasting Glucose (mg/dL)</li>
-                        <li>• HbA1c (%)</li>
-                        <li>• Cholesterol Panel (LDL, HDL, Total)</li>
-                        <li>• Kidney Markers (Creatinine, BUN Ratio, Albumin)</li>
+                    <div>
+                      <Badge variant="outline" className="mb-2">Lifestyle & Behavioral Stats</Badge>
+                      <ul className="space-y-1 text-muted-foreground">
+                        <li><span className="font-medium">Smoked 100 Cigarettes in Life</span> – Ever smoked at least 100 cigarettes (Yes/No)</li>
+                        <li><span className="font-medium">Heavy Alcohol Consumption</span> – Engages in heavy drinking</li>
+                        <li><span className="font-medium">Physical Activity (last 30 days)</span> – Participated in any physical activity recently (Yes/No)</li>
                       </ul>
                     </div>
-                    <div className="space-y-2">
-                      <Badge variant="outline">Clinical</Badge>
-                      <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• BMI (computed)</li>
-                        <li>• Average Systolic / Diastolic Blood Pressure (mmHg)</li>
-                        <li>• Waist Circumference (cm)</li>
+                    <div>
+                      <Badge variant="outline" className="mb-2">Clinical Data</Badge>
+                      <ul className="space-y-1 text-muted-foreground">
+                        <li><span className="font-medium">BMI</span> – Body Mass Index</li>
+                        <li><span className="font-medium">High Blood Pressure</span> – Diagnosed with hypertension (Yes/No)</li>
+                        <li><span className="font-medium">High Cholesterol</span> – Diagnosed with high cholesterol (Yes/No)</li>
+                        <li><span className="font-medium">Cholesterol Check (past 5 years)</span> – Had a cholesterol check within the past 5 years (Yes/No)</li>
+                        <li><span className="font-medium">General Health Rating</span> – Self-assessment of general health</li>
+                        <li><span className="font-medium">Difficulty Walking</span> – Trouble walking or climbing stairs (Yes/No)</li>
+                        <li><span className="font-medium">Couldn’t See Doctor Due to Cost</span> – Skipped care due to cost (Yes/No)</li>
+                        <li><span className="font-medium">Has Any Form of Healthcare</span> – Has insurance or coverage (Yes/No)</li>
                       </ul>
                     </div>
-                    <div className="space-y-2">
-                      <Badge variant="outline">Lifestyle & Wearables </Badge>
-                      <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• Daily Steps</li>
-                        <li>• Sleep Duration</li>
-                        <li>• Heart Rate (bpm)</li>
-                        <li>• Air Quality (PM2.5, NOx)</li>
-                        <li>• Stress Level</li>
-                        <li>• Calories Burned</li>
+                    <div>
+                      <Badge variant="outline" className="mb-2">Mental & Physical Health Stats</Badge>
+                      <ul className="space-y-1 text-muted-foreground">
+                        <li><span className="font-medium">Days of Poor Mental Health (last 30)</span> – Number of days mental health was not good</li>
+                        <li><span className="font-medium">Days of Poor Physical Health (last 30)</span> – Number of days physical health was not good</li>
+                        <li><span className="font-medium">History of Stroke</span> – Ever had a stroke (Yes/No)</li>
                       </ul>
                     </div>
                   </div>
@@ -231,11 +222,15 @@ export default function Research() {
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       <li className="flex items-start">
                         <span className="text-primary mr-2">•</span>
-                        Missing value imputation using KNN algorithm
+                        Encoded null values (e.g., 77, 99) replaced with NaN
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-2">•</span>
-                        Outlier detection and treatment using IQR method
+                        Duplicate and constant columns removed
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-primary mr-2">•</span>
+                        Outliers reviewed and retained due to medical relevance
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-2">•</span>
@@ -245,6 +240,10 @@ export default function Research() {
                         <span className="text-primary mr-2">•</span>
                         Categorical encoding using one-hot encoding
                       </li>
+                      <li className="flex items-start">
+                        <span className="text-primary mr-2">•</span>
+                        Label mapping (Target_Label) for readability and visualizations
+                      </li>
                     </ul>
                   </div>
 
@@ -253,19 +252,19 @@ export default function Research() {
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       <li className="flex items-start">
                         <span className="text-primary mr-2">•</span>
-                        Polynomial features for non-linear relationships
+                        Logical interaction features (e.g., BMI × Physical Activity)
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-2">•</span>
-                        Interaction terms between key variables
+                        Age banding applied using binning
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-2">•</span>
-                        Principal Component Analysis (PCA) for dimensionality reduction
+                        Feature importance analyzed via Random Forest and Mutual Information
                       </li>
                       <li className="flex items-start">
                         <span className="text-primary mr-2">•</span>
-                        SHAP values for feature importance analysis
+                        Polynomial features (degree 2) and SelectKBest (ANOVA) for feature selection
                       </li>
                     </ul>
                   </div>
@@ -275,23 +274,23 @@ export default function Research() {
                   <h3 className="font-semibold mb-3">Model Architecture</h3>
                   <div className="bg-muted/50 p-4 rounded-lg">
                     <p className="text-sm text-muted-foreground mb-3">
-                      Our ensemble approach combines multiple algorithms to achieve optimal performance:
+                      Our modeling pipeline explored multiple learners and ensemble methods, with a Threshold-Optimized LightGBM model achieving optimal performance:
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="text-center p-3 bg-card rounded-lg">
-                        <div className="font-medium text-foreground">Random Forest</div>
-                        <div className="text-sm text-muted-foreground">Base Model 1</div>
-                        <div className="text-xs text-primary mt-1">Weight: 0.4</div>
+                        <div className="font-medium text-foreground">LightGBM</div>
+                        <div className="text-sm text-muted-foreground">Primary Model</div>
+                        
                       </div>
                       <div className="text-center p-3 bg-card rounded-lg">
                         <div className="font-medium text-foreground">XGBoost</div>
-                        <div className="text-sm text-muted-foreground">Base Model 2</div>
-                        <div className="text-xs text-primary mt-1">Weight: 0.4</div>
+                        <div className="text-sm text-muted-foreground">Baseline Model</div>
+                        
                       </div>
                       <div className="text-center p-3 bg-card rounded-lg">
-                        <div className="font-medium text-foreground">Neural Network</div>
-                        <div className="text-sm text-muted-foreground">Base Model 3</div>
-                        <div className="text-xs text-primary mt-1">Weight: 0.2</div>
+                        <div className="font-medium text-foreground">Random Forest</div>
+                        <div className="text-sm text-muted-foreground">Baseline Model</div>
+                        
                       </div>
                     </div>
                   </div>
@@ -304,28 +303,35 @@ export default function Research() {
                       <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-medium">1</div>
                       <div>
                         <div className="font-medium">Data Splitting</div>
-                        <div className="text-sm text-muted-foreground">80% training, 20% testing with stratified sampling</div>
+                        <div className="text-sm text-muted-foreground">80-20 or 88-12 stratified train-test split</div>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-medium">2</div>
                       <div>
                         <div className="font-medium">Cross-Validation</div>
-                        <div className="text-sm text-muted-foreground">5-fold cross-validation for robust performance estimation</div>
+                        <div className="text-sm text-muted-foreground">5-fold stratified cross-validation for robust performance estimation</div>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-medium">3</div>
                       <div>
-                        <div className="font-medium">Hyperparameter Tuning</div>
-                        <div className="text-sm text-muted-foreground">Grid search with Bayesian optimization</div>
+                        <div className="font-medium">Feature Selection & Tuning</div>
+                        <div className="text-sm text-muted-foreground">Polynomial feature expansion and GridSearchCV with SelectKBest (ANOVA)</div>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-medium">4</div>
                       <div>
-                        <div className="font-medium">Ensemble Training</div>
-                        <div className="text-sm text-muted-foreground">Weighted voting with performance-based weights</div>
+                        <div className="font-medium">Resampling & Class Balancing</div>
+                        <div className="text-sm text-muted-foreground">SMOTE, SMOTEENN, BorderlineSMOTE for balanced binary dataset</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-medium">5</div>
+                      <div>
+                        <div className="font-medium">Ensemble & Threshold Optimization</div>
+                        <div className="text-sm text-muted-foreground">Voting/stacking ensembles with threshold tuning for diabetic class recall</div>
                       </div>
                     </div>
                   </div>
@@ -346,19 +352,19 @@ export default function Research() {
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="text-center p-4 bg-primary-light/20 rounded-lg">
-                    <div className="text-2xl font-bold text-foreground">94.2%</div>
+                    <div className="text-2xl font-bold text-foreground">85.42%</div>
                     <div className="text-sm text-muted-foreground">Accuracy</div>
                   </div>
                   <div className="text-center p-4 bg-success-light/20 rounded-lg">
-                    <div className="text-2xl font-bold text-foreground">0.96</div>
+                    <div className="text-2xl font-bold text-foreground">N/A</div>
                     <div className="text-sm text-muted-foreground">AUC-ROC</div>
                   </div>
                   <div className="text-center p-4 bg-warning-light/20 rounded-lg">
-                    <div className="text-2xl font-bold text-foreground">92.8%</div>
+                    <div className="text-2xl font-bold text-foreground">17.05%</div>
                     <div className="text-sm text-muted-foreground">Sensitivity</div>
                   </div>
                   <div className="text-center p-4 bg-danger-light/20 rounded-lg">
-                    <div className="text-2xl font-bold text-foreground">95.1%</div>
+                    <div className="text-2xl font-bold text-foreground">97.77%</div>
                     <div className="text-sm text-muted-foreground">Specificity</div>
                   </div>
                 </div>
@@ -370,23 +376,23 @@ export default function Research() {
                       <div>
                         <div className="flex justify-between mb-1">
                           <span className="text-sm text-muted-foreground">Precision</span>
-                          <span className="text-sm font-medium">91.5%</span>
+                          <span className="text-sm font-medium">57.95%</span>
                         </div>
-                        <Progress value={91.5} className="h-2" />
+                        <Progress value={57.95} className="h-2" />
                       </div>
                       <div>
                         <div className="flex justify-between mb-1">
                           <span className="text-sm text-muted-foreground">Recall</span>
-                          <span className="text-sm font-medium">92.8%</span>
+                          <span className="text-sm font-medium">17.05%</span>
                         </div>
-                        <Progress value={92.8} className="h-2" />
+                        <Progress value={17.05} className="h-2" />
                       </div>
                       <div>
                         <div className="flex justify-between mb-1">
                           <span className="text-sm text-muted-foreground">F1-Score</span>
-                          <span className="text-sm font-medium">92.1%</span>
+                          <span className="text-sm font-medium">26%</span>
                         </div>
-                        <Progress value={92.1} className="h-2" />
+                        <Progress value={26} className="h-2" />
                       </div>
                     </div>
                   </div>
@@ -395,24 +401,24 @@ export default function Research() {
                     <h3 className="font-semibold mb-3">Model Comparison</h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
-                        <span>Ensemble Model</span>
-                        <span className="font-medium text-success">94.2%</span>
+                        <span>LightGBM</span>
+                        <span className="font-medium text-success">85.42%</span>
                       </div>
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
                         <span>XGBoost</span>
-                        <span className="font-medium">92.8%</span>
+                        <span className="font-medium">N/A</span>
                       </div>
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
                         <span>Random Forest</span>
-                        <span className="font-medium">91.5%</span>
+                        <span className="font-medium">N/A</span>
                       </div>
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
                         <span>Neural Network</span>
-                        <span className="font-medium">89.3%</span>
+                        <span className="font-medium">N/A</span>
                       </div>
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
                         <span>Logistic Regression</span>
-                        <span className="font-medium">85.7%</span>
+                        <span className="font-medium">N/A</span>
                       </div>
                     </div>
                   </div>
@@ -422,35 +428,35 @@ export default function Research() {
                   <h3 className="font-semibold mb-3">Feature Importance</h3>
                   <div className="space-y-2">
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">HbA1c</div>
+                      <div className="w-24 text-sm text-muted-foreground">BMI</div>
                       <div className="flex-1">
                         <Progress value={100} className="h-3" />
                       </div>
                       <div className="w-12 text-sm font-medium text-right">1.00</div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">Glucose</div>
+                      <div className="w-24 text-sm text-muted-foreground">Age</div>
                       <div className="flex-1">
                         <Progress value={85} className="h-3" />
                       </div>
                       <div className="w-12 text-sm font-medium text-right">0.85</div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">BMI</div>
+                      <div className="w-24 text-sm text-muted-foreground">Activity Level</div>
                       <div className="flex-1">
                         <Progress value={72} className="h-3" />
                       </div>
                       <div className="w-12 text-sm font-medium text-right">0.72</div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">Age</div>
+                      <div className="w-24 text-sm text-muted-foreground">Blood Pressure</div>
                       <div className="flex-1">
                         <Progress value={68} className="h-3" />
                       </div>
                       <div className="w-12 text-sm font-medium text-right">0.68</div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">Family History</div>
+                      <div className="w-24 text-sm text-muted-foreground">Smoking</div>
                       <div className="flex-1">
                         <Progress value={55} className="h-3" />
                       </div>

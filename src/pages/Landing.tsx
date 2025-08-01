@@ -35,8 +35,9 @@ export default function Landing() {
               </span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Our model leverages the AI-READI Flagship Dataset, analyzing diverse clinical, 
-              lifestyle, and physiological indicators for real-time Type 2 Diabetes progression insights.
+              Our model utilizes the Behavioral Risk Factor Surveillance System (BRFSS) dataset, 
+              analyzing a broad range of clinical, lifestyle, and demographic indicators 
+              to provide insights into the progression of Type 2 Diabetes. 
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="shadow-medical">
@@ -66,7 +67,7 @@ export default function Landing() {
                     <Target className="h-8 w-8 text-primary-foreground" />
                   </div>
                 </div>
-                <div className="text-3xl font-bold text-foreground mb-2">94.2%</div>
+                <div className="text-3xl font-bold text-foreground mb-2">85.4%</div>
                 <div className="text-muted-foreground">Accuracy</div>
               </CardContent>
             </Card>
@@ -78,7 +79,7 @@ export default function Landing() {
                     <BarChart3 className="h-8 w-8 text-success-foreground" />
                   </div>
                 </div>
-                <div className="text-3xl font-bold text-foreground mb-2">2000+</div>
+                <div className="text-3xl font-bold text-foreground mb-2">30+</div>
                 <div className="text-muted-foreground">Curated Health Indicators</div>
               </CardContent>
             </Card>
@@ -118,7 +119,7 @@ export default function Landing() {
               Advanced Health Assessment
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive analysis using state-of-the-art machine learning algorithms
+              Comprehensive analysis using state of the art machine learning algorithms
             </p>
           </div>
 
@@ -135,13 +136,13 @@ export default function Landing() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Leverages advanced machine learning algorithms trained on thousands of curated health variables 
-                  from the AI-READI dataset to detect early warning signs of Type 2 Diabetes.
+                  Applies machine learning algorithms trained on the BRFSS dataset to assess 
+                  Type 2 Diabetes risk based on real world, population level health indicators.
                 </p>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    XGBoost model optimized for class imbalance
+                    LightGBM model optimized for class imbalance
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
@@ -149,7 +150,7 @@ export default function Landing() {
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Trained on real-world, multi-dimensional health data (2,700+ variables)
+                    Trained on large-scale public health data from 200,000+ respondents
                   </li>
                 </ul>
               </CardContent>
@@ -173,15 +174,15 @@ export default function Landing() {
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Clinical markers: HbA1c, Glucose, Blood Pressure, BMI
+                     Indicators include BMI, activity level, blood pressure status, and general health
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Lifestyle and behavioral factors: activity level, sleep, diet
+                    Covers lifestyle habits: smoking, alcohol, diet, and physical activity
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Demographics and genetic predispositions
+                    Considers age, income, education, and healthcare access disparities
                   </li>
                 </ul>
               </CardContent>
@@ -199,21 +200,21 @@ export default function Landing() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Delivers individualized risk projections and timeline predictions using explainable AI, 
-                  empowering users to take proactive health decisions.
+                  Generates user-specific insights using explainable models to guide healthier decisions.
+                  
                 </p>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Risk trajectory predictions over time
+                    Highlights influential health indicators for each user
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Explainable AI-based feedback
+                    Offers interpretable model outputs using SHAP and feature ranking
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Tailored health recommendations
+                     Supports proactive health engagement based on individual risk profiles
                   </li>
                 </ul>
               </CardContent>

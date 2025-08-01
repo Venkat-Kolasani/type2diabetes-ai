@@ -16,4 +16,22 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    outDir: 'dist',
+    sourcemap: mode === 'development',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          forms: ['react-hook-form']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000
+  },
+  preview: {
+    port: 8080,
+    host: "::"
+  },
 }));
