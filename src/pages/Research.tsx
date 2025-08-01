@@ -280,17 +280,17 @@ export default function Research() {
                       <div className="text-center p-3 bg-card rounded-lg">
                         <div className="font-medium text-foreground">LightGBM</div>
                         <div className="text-sm text-muted-foreground">Primary Model</div>
-                        <div className="text-xs text-primary mt-1">Weight: 1.0</div>
-                      </div>
-                      <div className="text-center p-3 bg-card rounded-lg">
-                        <div className="font-medium text-foreground">Random Forest</div>
-                        <div className="text-sm text-muted-foreground">Baseline Model</div>
-                        <div className="text-xs text-primary mt-1">Weight: 0.0</div>
+                        
                       </div>
                       <div className="text-center p-3 bg-card rounded-lg">
                         <div className="font-medium text-foreground">XGBoost</div>
                         <div className="text-sm text-muted-foreground">Baseline Model</div>
-                        <div className="text-xs text-primary mt-1">Weight: 0.0</div>
+                        
+                      </div>
+                      <div className="text-center p-3 bg-card rounded-lg">
+                        <div className="font-medium text-foreground">Random Forest</div>
+                        <div className="text-sm text-muted-foreground">Baseline Model</div>
+                        
                       </div>
                     </div>
                   </div>

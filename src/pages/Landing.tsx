@@ -67,7 +67,7 @@ export default function Landing() {
                     <Target className="h-8 w-8 text-primary-foreground" />
                   </div>
                 </div>
-                <div className="text-3xl font-bold text-foreground mb-2">85.3%</div>
+                <div className="text-3xl font-bold text-foreground mb-2">85.4%</div>
                 <div className="text-muted-foreground">Accuracy</div>
               </CardContent>
             </Card>
@@ -150,7 +150,7 @@ export default function Landing() {
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    Trained on large-scale public health data from 4,00,000+ respondents
+                    Trained on large-scale public health data from 200,000+ respondents
                   </li>
                 </ul>
               </CardContent>
