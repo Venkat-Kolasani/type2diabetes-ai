@@ -356,15 +356,15 @@ export default function Research() {
                     <div className="text-sm text-muted-foreground">Accuracy</div>
                   </div>
                   <div className="text-center p-4 bg-success-light/20 rounded-lg">
-                    <div className="text-2xl font-bold text-foreground">N/A</div>
+                    <div className="text-2xl font-bold text-foreground">81.24%</div>
                     <div className="text-sm text-muted-foreground">AUC-ROC</div>
                   </div>
                   <div className="text-center p-4 bg-warning-light/20 rounded-lg">
-                    <div className="text-2xl font-bold text-foreground">17.05%</div>
+                    <div className="text-2xl font-bold text-foreground">18.47%</div>
                     <div className="text-sm text-muted-foreground">Sensitivity</div>
                   </div>
                   <div className="text-center p-4 bg-danger-light/20 rounded-lg">
-                    <div className="text-2xl font-bold text-foreground">97.77%</div>
+                    <div className="text-2xl font-bold text-foreground">97.45%</div>
                     <div className="text-sm text-muted-foreground">Specificity</div>
                   </div>
                 </div>
@@ -376,23 +376,23 @@ export default function Research() {
                       <div>
                         <div className="flex justify-between mb-1">
                           <span className="text-sm text-muted-foreground">Precision</span>
-                          <span className="text-sm font-medium">57.95%</span>
+                          <span className="text-sm font-medium">56.71%</span>
                         </div>
-                        <Progress value={57.95} className="h-2" />
+                        <Progress value={56.71} className="h-2" />
                       </div>
                       <div>
                         <div className="flex justify-between mb-1">
                           <span className="text-sm text-muted-foreground">Recall</span>
-                          <span className="text-sm font-medium">17.05%</span>
+                          <span className="text-sm font-medium">18.47%</span>
                         </div>
-                        <Progress value={17.05} className="h-2" />
+                        <Progress value={18.47} className="h-2" />
                       </div>
                       <div>
                         <div className="flex justify-between mb-1">
                           <span className="text-sm text-muted-foreground">F1-Score</span>
-                          <span className="text-sm font-medium">26%</span>
+                          <span className="text-sm font-medium">27.87%</span>
                         </div>
-                        <Progress value={26} className="h-2" />
+                        <Progress value={27.87} className="h-2" />
                       </div>
                     </div>
                   </div>
@@ -404,21 +404,22 @@ export default function Research() {
                         <span>LightGBM</span>
                         <span className="font-medium text-success">85.42%</span>
                       </div>
+                      
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
                         <span>XGBoost</span>
-                        <span className="font-medium">N/A</span>
+                        <span className="font-medium text-success">84.95%</span>
                       </div>
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
                         <span>Random Forest</span>
-                        <span className="font-medium">N/A</span>
+                        <span className="font-medium text-success">76.06%</span>
                       </div>
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
                         <span>Neural Network</span>
-                        <span className="font-medium">N/A</span>
+                        <span className="font-medium text-success">73.05%</span>
                       </div>
                       <div className="flex justify-between p-2 bg-muted/30 rounded">
                         <span>Logistic Regression</span>
-                        <span className="font-medium">N/A</span>
+                        <span className="font-medium text-success">69.80%</span>
                       </div>
                     </div>
                   </div>
@@ -428,39 +429,39 @@ export default function Research() {
                   <h3 className="font-semibold mb-3">Feature Importance</h3>
                   <div className="space-y-2">
                     <div className="flex items-center space-x-3">
+                      <div className="w-24 text-sm text-muted-foreground">HbA1c</div>
+                      <div className="flex-1">
+                        <Progress value={80} className="h-3" />
+                      </div>
+                      <div className="w-12 text-sm font-medium text-right">80%</div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-24 text-sm text-muted-foreground">Glucose</div>
+                      <div className="flex-1">
+                        <Progress value={75} className="h-3" />
+                      </div>
+                      <div className="w-12 text-sm font-medium text-right">75%</div>
+                    </div>
+                    <div className="flex items-center space-x-3">
                       <div className="w-24 text-sm text-muted-foreground">BMI</div>
                       <div className="flex-1">
-                        <Progress value={100} className="h-3" />
+                        <Progress value={70} className="h-3" />
                       </div>
-                      <div className="w-12 text-sm font-medium text-right">1.00</div>
+                      <div className="w-12 text-sm font-medium text-right">70%</div>
                     </div>
                     <div className="flex items-center space-x-3">
                       <div className="w-24 text-sm text-muted-foreground">Age</div>
                       <div className="flex-1">
-                        <Progress value={85} className="h-3" />
+                        <Progress value={65} className="h-3" />
                       </div>
-                      <div className="w-12 text-sm font-medium text-right">0.85</div>
+                      <div className="w-12 text-sm font-medium text-right">65%</div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">Activity Level</div>
+                      <div className="w-24 text-sm text-muted-foreground">Family History</div>
                       <div className="flex-1">
-                        <Progress value={72} className="h-3" />
+                        <Progress value={60} className="h-3" />
                       </div>
-                      <div className="w-12 text-sm font-medium text-right">0.72</div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">Blood Pressure</div>
-                      <div className="flex-1">
-                        <Progress value={68} className="h-3" />
-                      </div>
-                      <div className="w-12 text-sm font-medium text-right">0.68</div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">Smoking</div>
-                      <div className="flex-1">
-                        <Progress value={55} className="h-3" />
-                      </div>
-                      <div className="w-12 text-sm font-medium text-right">0.55</div>
+                      <div className="w-12 text-sm font-medium text-right">60%</div>
                     </div>
                   </div>
                 </div>
