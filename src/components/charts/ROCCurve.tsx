@@ -2,15 +2,18 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 const data = [
   { fpr: 0.0, tpr: 0.0 },
-  { fpr: 0.1, tpr: 0.85 },
-  { fpr: 0.2, tpr: 0.92 },
-  { fpr: 0.3, tpr: 0.95 },
-  { fpr: 0.4, tpr: 0.97 },
-  { fpr: 0.5, tpr: 0.98 },
-  { fpr: 0.6, tpr: 0.99 },
-  { fpr: 0.7, tpr: 0.995 },
-  { fpr: 0.8, tpr: 0.998 },
-  { fpr: 0.9, tpr: 0.999 },
+  { fpr: 0.05, tpr: 0.32 },
+  { fpr: 0.10, tpr: 0.55 },
+  { fpr: 0.15, tpr: 0.72 },
+  { fpr: 0.20, tpr: 0.80 },
+  { fpr: 0.25, tpr: 0.83 },
+  { fpr: 0.30, tpr: 0.86 },
+  { fpr: 0.40, tpr: 0.89 },
+  { fpr: 0.50, tpr: 0.91 },
+  { fpr: 0.60, tpr: 0.93 },
+  { fpr: 0.70, tpr: 0.95 },
+  { fpr: 0.80, tpr: 0.97 },
+  { fpr: 0.90, tpr: 0.99 },
   { fpr: 1.0, tpr: 1.0 }
 ];
 
