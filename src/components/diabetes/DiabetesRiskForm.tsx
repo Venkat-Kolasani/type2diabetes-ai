@@ -20,6 +20,18 @@ export function DiabetesRiskForm({ form, onSubmit, isLoading, disabled }: Diabet
   const { register, handleSubmit, watch, setValue, formState: { errors } } = form;
   const watchedValues = watch();
 
+  // Check if all required fields are filled
+  const requiredFields: (keyof FormData)[] = [
+    'HighBP', 'HighChol', 'CholCheck', 'Smoker', 'Stroke', 'HeartDiseaseorAttack',
+    'PhysActivity', 'Fruits', 'Veggies', 'HvyAlcoholConsump', 'AnyHealthcare',
+    'NoDocbcCost', 'DiffWalk', 'Sex', 'BMI', 'GenHlth', 'MentHlth', 'PhysHlth',
+    'Age', 'Education', 'Income'
+  ];
+
+  const isFormComplete = requiredFields.every(field => watchedValues[field] !== null && watchedValues[field] !== undefined);
+  const completedFields = requiredFields.filter(field => watchedValues[field] !== null && watchedValues[field] !== undefined).length;
+  const completionPercentage = Math.round((completedFields / requiredFields.length) * 100);
+
   const handleRadioChange = (field: keyof FormData, value: number) => {
     setValue(field, value, { shouldValidate: true });
   };
@@ -27,6 +39,15 @@ export function DiabetesRiskForm({ form, onSubmit, isLoading, disabled }: Diabet
   const handleNumberChange = (field: keyof FormData, value: string) => {
     const numValue = value === '' ? null : Number(value);
     setValue(field, numValue, { shouldValidate: true });
+  };
+
+  const handleFormSubmit = (data: FormData) => {
+    // Double-check validation before submission
+    if (!isFormComplete) {
+      alert('Please fill in all required fields before submitting.');
+      return;
+    }
+    onSubmit(data);
   };
 
   const showBMIHelp = () => {
@@ -39,6 +60,16 @@ Weight: 70kg, Height: 1.75m
 BMI = 70 ÷ (1.75)² = 22.9
 
 Normal BMI range: 18.5 - 24.9`);
+  };
+
+  const isFieldComplete = (field: keyof FormData) => {
+    return watchedValues[field] !== null && watchedValues[field] !== undefined;
+  };
+
+  const getFieldStyle = (field: keyof FormData) => {
+    return isFieldComplete(field) 
+      ? "border-green-200 bg-green-50/50" 
+      : "border-red-200 bg-red-50/50";
   };
 
   const renderRadioGroup = (field: keyof FormData, label: string, options: {value: number, label: string}[]) => (
@@ -71,7 +102,26 @@ Normal BMI range: 18.5 - 24.9`);
 
   return (
     <TooltipProvider>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8" noValidate>
+      <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-8" noValidate>
+        {/* Progress Indicator */}
+        <div className="mb-6 p-4 bg-muted/30 rounded-lg">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium">Form Completion</span>
+            <span className="text-sm text-muted-foreground">
+              {completedFields}/{requiredFields.length} fields completed
+            </span>
+          </div>
+          <div className="w-full bg-muted rounded-full h-2">
+            <div 
+              className="bg-primary h-2 rounded-full transition-all duration-300"
+              style={{ width: `${completionPercentage}%` }}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground mt-1">
+            {isFormComplete ? '✅ All fields completed! Ready to submit.' : '⚠️ Please fill in all fields to get your diabetes risk assessment.'}
+          </p>
+        </div>
+
       {/* Demographics */}
       <Card className="border-l-4 border-l-blue-500">
         <CardHeader>
@@ -179,7 +229,7 @@ Normal BMI range: 18.5 - 24.9`);
             {/* BMI */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Label htmlFor="bmi-input">BMI</Label>
+                <Label htmlFor="bmi-input">BMI <span className="text-red-500">*</span></Label>
                 <Tooltip delayDuration={300}>
                   <TooltipTrigger asChild>
                     <button
@@ -234,7 +284,7 @@ Normal BMI range: 18.5 - 24.9`);
                 disabled={disabled}
                 placeholder="Enter your BMI (e.g., 24.5)"
                 aria-describedby="bmi-help"
-                className="focus:ring-2 focus:ring-primary"
+                className={`focus:ring-2 focus:ring-primary ${getFieldStyle('BMI')}`}
               />
               <p id="bmi-help" className="text-xs text-muted-foreground">
                 Don't know your BMI? <span className="text-blue-500 font-medium">Click the ? icon</span> for the calculation formula
@@ -378,7 +428,7 @@ Normal BMI range: 18.5 - 24.9`);
       <div className="flex justify-end pt-6">
         <Button 
           type="submit" 
-          disabled={isLoading || disabled}
+          disabled={isLoading || disabled || !isFormComplete}
           size="lg"
           className="min-w-[200px] focus:ring-2 focus:ring-primary focus:ring-offset-2"
         >
@@ -387,6 +437,8 @@ Normal BMI range: 18.5 - 24.9`);
               <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
               <span>Analyzing...</span>
             </>
+          ) : !isFormComplete ? (
+            `Complete ${requiredFields.length - completedFields} more fields`
           ) : (
             'Get Diabetes Risk Assessment'
           )}
