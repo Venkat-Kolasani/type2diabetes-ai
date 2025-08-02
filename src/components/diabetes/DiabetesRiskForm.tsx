@@ -29,6 +29,18 @@ export function DiabetesRiskForm({ form, onSubmit, isLoading, disabled }: Diabet
     setValue(field, numValue, { shouldValidate: true });
   };
 
+  const showBMIHelp = () => {
+    alert(`BMI Calculation Formula:
+
+BMI = Weight (kg) ÷ [Height (m)]²
+
+Example:
+Weight: 70kg, Height: 1.75m
+BMI = 70 ÷ (1.75)² = 22.9
+
+Normal BMI range: 18.5 - 24.9`);
+  };
+
   const renderRadioGroup = (field: keyof FormData, label: string, options: {value: number, label: string}[]) => (
     <fieldset className="space-y-3">
       <legend className="text-sm font-medium text-foreground">{label}</legend>
@@ -168,26 +180,43 @@ export function DiabetesRiskForm({ form, onSubmit, isLoading, disabled }: Diabet
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Label htmlFor="bmi-input">BMI</Label>
-                <Tooltip>
+                <Tooltip delayDuration={300}>
                   <TooltipTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex items-center justify-center rounded-full p-1 hover:bg-muted transition-colors"
-                      aria-label="BMI calculation help"
+                      onClick={showBMIHelp}
+                      className="inline-flex items-center justify-center rounded-full p-1 hover:bg-muted/50 transition-colors border-0 bg-transparent"
+                      aria-label="BMI calculation help - click to see formula"
                       tabIndex={0}
+                      onFocus={(e) => e.currentTarget.setAttribute('data-focus', 'true')}
+                      onBlur={(e) => e.currentTarget.removeAttribute('data-focus')}
                     >
-                      <HelpCircle className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                      <HelpCircle className="h-5 w-5 text-blue-500 hover:text-blue-700 transition-colors cursor-pointer" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="max-w-sm p-4" role="tooltip">
-                    <div className="space-y-2">
-                      <p className="font-semibold text-sm">BMI Calculation Formula:</p>
-                      <p className="text-sm">BMI = Weight (kg) ÷ [Height (m)]²</p>
-                      <div className="border-t pt-2">
-                        <p className="text-xs text-muted-foreground">
+                  <TooltipContent 
+                    side="top" 
+                    align="center"
+                    className="max-w-sm p-4 bg-white dark:bg-gray-800 border shadow-lg z-50" 
+                    sideOffset={5}
+                  >
+                    <div className="space-y-3">
+                      <div>
+                        <p className="font-semibold text-sm text-gray-900 dark:text-gray-100">BMI Calculation Formula:</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+                          BMI = Weight (kg) ÷ [Height (m)]²
+                        </p>
+                      </div>
+                      <div className="border-t border-gray-200 dark:border-gray-600 pt-2">
+                        <p className="text-xs text-gray-600 dark:text-gray-400">
                           <strong>Example:</strong><br />
                           Weight: 70kg, Height: 1.75m<br />
-                          BMI = 70 ÷ (1.75)² = 22.9
+                          BMI = 70 ÷ (1.75)² = <strong>22.9</strong>
+                        </p>
+                      </div>
+                      <div className="border-t border-gray-200 dark:border-gray-600 pt-2">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          💡 Normal BMI range: 18.5 - 24.9
                         </p>
                       </div>
                     </div>
@@ -208,7 +237,7 @@ export function DiabetesRiskForm({ form, onSubmit, isLoading, disabled }: Diabet
                 className="focus:ring-2 focus:ring-primary"
               />
               <p id="bmi-help" className="text-xs text-muted-foreground">
-                Don't know your BMI? Click the ? icon for the calculation formula
+                Don't know your BMI? <span className="text-blue-500 font-medium">Click the ? icon</span> for the calculation formula
               </p>
             </div>
 
