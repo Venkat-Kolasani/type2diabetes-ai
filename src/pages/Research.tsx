@@ -429,39 +429,39 @@ export default function Research() {
                   <h3 className="font-semibold mb-3">Feature Importance</h3>
                   <div className="space-y-2">
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">HbA1c</div>
+                      <div className="w-28 text-sm text-muted-foreground">BMI GenHlth</div>
                       <div className="flex-1">
-                        <Progress value={80} className="h-3" />
+                        <Progress value={100} className="h-3" />
                       </div>
-                      <div className="w-12 text-sm font-medium text-right">80%</div>
+                      <div className="w-12 text-sm font-medium text-right">4.5%</div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">Glucose</div>
+                      <div className="w-28 text-sm text-muted-foreground">GenHlth Age</div>
                       <div className="flex-1">
-                        <Progress value={75} className="h-3" />
+                        <Progress value={93.3} className="h-3" />
                       </div>
-                      <div className="w-12 text-sm font-medium text-right">75%</div>
+                      <div className="w-12 text-sm font-medium text-right">4.2%</div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">BMI</div>
+                      <div className="w-28 text-sm text-muted-foreground">Sex Age</div>
                       <div className="flex-1">
-                        <Progress value={70} className="h-3" />
+                        <Progress value={88.9} className="h-3" />
                       </div>
-                      <div className="w-12 text-sm font-medium text-right">70%</div>
+                      <div className="w-12 text-sm font-medium text-right">4.0%</div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">Age</div>
+                      <div className="w-28 text-sm text-muted-foreground">BMI PhysActivity</div>
                       <div className="flex-1">
-                        <Progress value={65} className="h-3" />
+                        <Progress value={84.4} className="h-3" />
                       </div>
-                      <div className="w-12 text-sm font-medium text-right">65%</div>
+                      <div className="w-12 text-sm font-medium text-right">3.8%</div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-24 text-sm text-muted-foreground">Family History</div>
+                      <div className="w-28 text-sm text-muted-foreground">GenHlth Income</div>
                       <div className="flex-1">
-                        <Progress value={60} className="h-3" />
+                        <Progress value={82.2} className="h-3" />
                       </div>
-                      <div className="w-12 text-sm font-medium text-right">60%</div>
+                      <div className="w-12 text-sm font-medium text-right">3.7%</div>
                     </div>
                   </div>
                 </div>

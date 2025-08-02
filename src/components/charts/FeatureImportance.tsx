@@ -1,14 +1,14 @@
 const data = [
-  { feature: "HbA1c", importance: 8.25, displayName: "HbA1c" },
-  { feature: "Glucose", importance: 6.70, displayName: "Glucose" },
-  { feature: "BMI", importance: 5.30, displayName: "BMI" },
-  { feature: "Age", importance: 4.30, displayName: "Age" },
-  { feature: "Family History", importance: 3.15, displayName: "Family History" },
-  { feature: "Blood Pressure", importance: 2.50, displayName: "Blood Pressure" },
-  { feature: "Cholesterol", importance: 1.80 , displayName: "Cholesterol" },
-  { feature: "Triglycerides", importance: 1.65, displayName: "Triglycerides" },
-  { feature: "Activity Level", importance: 1.40, displayName: "Activity Level" },
-  { feature: "Smoking", importance: 0.90, displayName: "Smoking" }
+  { feature: "BMI GenHlth", importance: 4.5, displayName: "BMI GenHlth" },
+  { feature: "GenHlth Age", importance: 4.2, displayName: "GenHlth Age" },
+  { feature: "Sex Age", importance: 4.0, displayName: "Sex Age" },
+  { feature: "BMI PhysActivity", importance: 3.8, displayName: "BMI PhysActivity" },
+  { feature: "GenHlth Income", importance: 3.7, displayName: "GenHlth Income" },
+  { feature: "BMI", importance: 3.5, displayName: "BMI" },
+  { feature: "BMI Fruits", importance: 3.5, displayName: "BMI Fruits" },
+  { feature: "BMI Smoker", importance: 3.4, displayName: "BMI Smoker" },
+  { feature: "GenHlth PhysHlth", importance: 3.3, displayName: "GenHlth PhysHlth" },
+  { feature: "Fruits Age", importance: 3.0, displayName: "Fruits Age" }
 ];
 
 export function FeatureImportance() {
