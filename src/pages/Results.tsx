@@ -56,7 +56,7 @@ export default function Results() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">AUC-ROC</p>
-                  <p className="text-2xl font-bold text-foreground">81.24%</p>
+                  <p className="text-2xl font-bold text-foreground">0.8124%</p>
                   <div className="flex items-center mt-1">
                     <ArrowUp className="h-4 w-4 text-success mr-1" />
                     <span className="text-sm text-success">+0.04</span>

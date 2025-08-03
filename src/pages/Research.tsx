@@ -356,7 +356,7 @@ export default function Research() {
                     <div className="text-sm text-muted-foreground">Accuracy</div>
                   </div>
                   <div className="text-center p-4 bg-success-light/20 rounded-lg">
-                    <div className="text-2xl font-bold text-foreground">81.24%</div>
+                    <div className="text-2xl font-bold text-foreground">0.8124%</div>
                     <div className="text-sm text-muted-foreground">AUC-ROC</div>
                   </div>
                   <div className="text-center p-4 bg-warning-light/20 rounded-lg">
