@@ -42,24 +42,55 @@ def load_model():
         # Load the preprocessing pipeline
         pipeline_path = os.path.join(MODEL_DIR, 'preprocessing_pipeline.pkl')
         if os.path.exists(pipeline_path):
-            preprocessing_pipeline = joblib.load(pipeline_path)
-            print(f"Loaded preprocessing pipeline: {list(preprocessing_pipeline.keys())}")
-            
-            # Combine model and preprocessing into expected format
-            model = {
-                'classifier': classifier,
-                'scaler': preprocessing_pipeline.get('scaler'),
-                'poly': preprocessing_pipeline.get('poly_features'),
-                'selector': preprocessing_pipeline.get('feature_selector'),
-                'feature_names': preprocessing_pipeline.get('feature_names'),
-                'threshold': 0.5  # Default threshold
-            }
-            
-            print(f"✅ Model loaded successfully: {type(classifier).__name__}")
-            print(f"✅ Scaler: {type(model['scaler']).__name__ if model['scaler'] else 'None'}")
-            print(f"✅ Polynomial Features: {type(model['poly']).__name__ if model['poly'] else 'None'}")
-            print(f"✅ Feature Selector: {type(model['selector']).__name__ if model['selector'] else 'None'}")
-            print(f"🎯 Complete preprocessing pipeline loaded successfully!")
+            try:
+                preprocessing_pipeline = joblib.load(pipeline_path)
+                print(f"Loaded preprocessing pipeline type: {type(preprocessing_pipeline)}")
+                
+                # Handle both dict and non-dict preprocessing pipelines
+                if isinstance(preprocessing_pipeline, dict):
+                    print(f"Loaded preprocessing pipeline keys: {list(preprocessing_pipeline.keys())}")
+                    
+                    # Combine model and preprocessing into expected format
+                    model = {
+                        'classifier': classifier,
+                        'scaler': preprocessing_pipeline.get('scaler'),
+                        'poly': preprocessing_pipeline.get('poly_features'),
+                        'selector': preprocessing_pipeline.get('feature_selector'),
+                        'feature_names': preprocessing_pipeline.get('feature_names'),
+                        'threshold': 0.5  # Default threshold
+                    }
+                    
+                    print(f"✅ Model loaded successfully: {type(classifier).__name__}")
+                    print(f"✅ Scaler: {type(model['scaler']).__name__ if model['scaler'] else 'None'}")
+                    print(f"✅ Polynomial Features: {type(model['poly']).__name__ if model['poly'] else 'None'}")
+                    print(f"✅ Feature Selector: {type(model['selector']).__name__ if model['selector'] else 'None'}")
+                    print(f"🎯 Complete preprocessing pipeline loaded successfully!")
+                else:
+                    print(f"WARNING: Preprocessing pipeline is not a dict: {type(preprocessing_pipeline)}")
+                    # Fallback to simple model format
+                    model = {
+                        'classifier': classifier,
+                        'scaler': None,
+                        'poly': None,
+                        'selector': None,
+                        'feature_names': None,
+                        'threshold': 0.5
+                    }
+                    print(f"✅ Simple model loaded: {type(classifier).__name__}")
+                    
+            except Exception as pipeline_error:
+                print(f"ERROR loading preprocessing pipeline: {pipeline_error}")
+                print("Falling back to simple model...")
+                # Fallback to simple model
+                model = {
+                    'classifier': classifier,
+                    'scaler': None,
+                    'poly': None,
+                    'selector': None,
+                    'feature_names': None,
+                    'threshold': 0.5
+                }
+                print(f"✅ Simple model loaded: {type(classifier).__name__}")
             
         else:
             print("WARNING: Preprocessing pipeline not found. Using model only.")
