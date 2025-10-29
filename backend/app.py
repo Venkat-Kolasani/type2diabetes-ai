@@ -16,6 +16,7 @@ MODEL_FILE = 'model.pkl'
 MODEL_PATH = os.path.join(MODEL_DIR, MODEL_FILE)
 
 model = None
+startup_logs = []  # Initialize startup logs list
 
 def log_message(msg):
     """Helper to log messages both to console and startup_logs."""
