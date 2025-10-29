@@ -17,38 +17,43 @@ MODEL_PATH = os.path.join(MODEL_DIR, MODEL_FILE)
 
 model = None
 
+def log_message(msg):
+    """Helper to log messages both to console and startup_logs."""
+    print(msg)
+    startup_logs.append(msg)
+
 def load_model():
     """Load the pre-trained model from disk."""
     global model
     try:
         if not os.path.exists(MODEL_PATH):
-            print(f"ERROR: Model file not found at '{MODEL_PATH}'.")
-            print(f"Current working directory: {os.getcwd()}")
-            print(f"Contents of current directory: {os.listdir('.')}")
+            log_message(f"ERROR: Model file not found at '{MODEL_PATH}'.")
+            log_message(f"Current working directory: {os.getcwd()}")
+            log_message(f"Contents of current directory: {os.listdir('.')}")
             if os.path.exists('model'):
-                print(f"Contents of model directory: {os.listdir('model')}")
+                log_message(f"Contents of model directory: {os.listdir('model')}")
             else:
-                print("Model directory does not exist")
-            print("Please make sure your trained model is placed in the 'backend/model/' directory and named 'model.pkl'.")
+                log_message("Model directory does not exist")
+            log_message("Please make sure your trained model is placed in the 'backend/model/' directory and named 'model.pkl'.")
             model = None
             return
             
-        print(f"Loading model from: {MODEL_PATH}")
+        log_message(f"Loading model from: {MODEL_PATH}")
         
         # Load the trained model
         classifier = joblib.load(MODEL_PATH)
-        print(f"Loaded model type: {type(classifier)}")
+        log_message(f"Loaded model type: {type(classifier)}")
         
         # Load the preprocessing pipeline
         pipeline_path = os.path.join(MODEL_DIR, 'preprocessing_pipeline.pkl')
         if os.path.exists(pipeline_path):
             try:
                 preprocessing_pipeline = joblib.load(pipeline_path)
-                print(f"Loaded preprocessing pipeline type: {type(preprocessing_pipeline)}")
+                log_message(f"Loaded preprocessing pipeline type: {type(preprocessing_pipeline)}")
                 
                 # Handle both dict and non-dict preprocessing pipelines
                 if isinstance(preprocessing_pipeline, dict):
-                    print(f"Loaded preprocessing pipeline keys: {list(preprocessing_pipeline.keys())}")
+                    log_message(f"Loaded preprocessing pipeline keys: {list(preprocessing_pipeline.keys())}")
                     
                     # Combine model and preprocessing into expected format
                     model = {
@@ -60,13 +65,13 @@ def load_model():
                         'threshold': 0.5  # Default threshold
                     }
                     
-                    print(f"✅ Model loaded successfully: {type(classifier).__name__}")
-                    print(f"✅ Scaler: {type(model['scaler']).__name__ if model['scaler'] else 'None'}")
-                    print(f"✅ Polynomial Features: {type(model['poly']).__name__ if model['poly'] else 'None'}")
-                    print(f"✅ Feature Selector: {type(model['selector']).__name__ if model['selector'] else 'None'}")
-                    print(f"🎯 Complete preprocessing pipeline loaded successfully!")
+                    log_message(f"✅ Model loaded successfully: {type(classifier).__name__}")
+                    log_message(f"✅ Scaler: {type(model['scaler']).__name__ if model['scaler'] else 'None'}")
+                    log_message(f"✅ Polynomial Features: {type(model['poly']).__name__ if model['poly'] else 'None'}")
+                    log_message(f"✅ Feature Selector: {type(model['selector']).__name__ if model['selector'] else 'None'}")
+                    log_message(f"🎯 Complete preprocessing pipeline loaded successfully!")
                 else:
-                    print(f"WARNING: Preprocessing pipeline is not a dict: {type(preprocessing_pipeline)}")
+                    log_message(f"WARNING: Preprocessing pipeline is not a dict: {type(preprocessing_pipeline)}")
                     # Fallback to simple model format
                     model = {
                         'classifier': classifier,
@@ -76,11 +81,12 @@ def load_model():
                         'feature_names': None,
                         'threshold': 0.5
                     }
-                    print(f"✅ Simple model loaded: {type(classifier).__name__}")
+                    log_message(f"✅ Simple model loaded: {type(classifier).__name__}")
                     
             except Exception as pipeline_error:
-                print(f"ERROR loading preprocessing pipeline: {pipeline_error}")
-                print("Falling back to simple model...")
+                log_message(f"ERROR loading preprocessing pipeline: {pipeline_error}")
+                log_message(f"Error traceback: {traceback.format_exc()}")
+                log_message("Falling back to simple model...")
                 # Fallback to simple model
                 model = {
                     'classifier': classifier,
@@ -90,10 +96,10 @@ def load_model():
                     'feature_names': None,
                     'threshold': 0.5
                 }
-                print(f"✅ Simple model loaded: {type(classifier).__name__}")
+                log_message(f"✅ Simple model loaded: {type(classifier).__name__}")
             
         else:
-            print("WARNING: Preprocessing pipeline not found. Using model only.")
+            log_message("WARNING: Preprocessing pipeline not found. Using model only.")
             # If no preprocessing pipeline, assume it's a simple model
             if hasattr(classifier, 'predict'):
                 model = {
@@ -104,18 +110,18 @@ def load_model():
                     'feature_names': None,
                     'threshold': 0.5
                 }
-                print(f"✅ Simple model loaded: {type(classifier).__name__}")
+                log_message(f"✅ Simple model loaded: {type(classifier).__name__}")
             else:
-                print("ERROR: Loaded object doesn't have predict method")
+                log_message("ERROR: Loaded object doesn't have predict method")
                 model = None
             
     except Exception as e:
         import traceback
-        print("\n=== ERROR LOADING MODEL ===")
-        print(f"Error type: {type(e).__name__}")
-        print(f"Error message: {str(e)}")
-        print("\nFull traceback:")
-        print(traceback.format_exc())
+        log_message("\n=== ERROR LOADING MODEL ===")
+        log_message(f"Error type: {type(e).__name__}")
+        log_message(f"Error message: {str(e)}")
+        log_message("\nFull traceback:")
+        log_message(traceback.format_exc())
         model = None
 
 # --- 2. Feature Validation and Preprocessing ---
@@ -292,6 +298,9 @@ def predict_endpoint():
             'type': type(e).__name__
         }), 500
 
+# Global variable to store startup logs
+startup_logs = []
+
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint to verify service status."""
@@ -302,7 +311,8 @@ def health_check():
         'current_dir': os.getcwd(),
         'files_in_current_dir': os.listdir('.'),
         'model_path_exists': os.path.exists(MODEL_PATH),
-        'model_path': MODEL_PATH
+        'model_path': MODEL_PATH,
+        'startup_logs': startup_logs[-20:] if startup_logs else []  # Last 20 log entries
     }
     
     if os.path.exists('model'):
