@@ -124,6 +124,9 @@ def load_model():
         log_message(traceback.format_exc())
         model = None
 
+# Load model when module is imported (for Gunicorn/WSGI servers)
+load_model()
+
 # --- 2. Feature Validation and Preprocessing ---
 
 def validate_and_prepare_data(json_data):
