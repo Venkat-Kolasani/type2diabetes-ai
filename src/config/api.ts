@@ -1,7 +1,7 @@
 // API configuration for diabetes prediction backend
 export const API_CONFIG = {
   // Update this when your new model backend is ready
-  BACKEND_URL: process.env.VITE_BACKEND_URL || "https://type2diabetes-ai-backend.onrender.com",
+  BACKEND_URL: process.env.VITE_BACKEND_URL || "https://type2diabetes-ai.onrender.com",
   
   // Endpoints
   ENDPOINTS: {
